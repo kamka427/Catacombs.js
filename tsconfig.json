@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+    "noImplicitAny": true,
+    "module": "System",
+    "preserveConstEnums": true,
+    "target": "ES6",
+    "outFile": "app.js",
+    }
+}
