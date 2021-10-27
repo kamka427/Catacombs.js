@@ -1,19 +1,19 @@
 type piece = "topleft" | "topright" | "bottomleft" | "bottomright" |
-    "linevertical" | "linehorizontal" | "lineright" | "lineleft" | "lineup" |
-    "linedown" | "random"
+    "vertical" | "horizontal" | "tripleright" | "tripleleft" | "tripleup" |
+    "tripledown" | "r"
 
 const pieceTypes: Array<piece> = ["topleft", "topright", "bottomleft", "bottomright",
-    "linevertical", "linehorizontal", "lineright", "lineleft", "lineup",
-    "linedown"]
+    "vertical", "horizontal", "tripleright", "tripleleft", "tripleup",
+    "tripledown"]
 
 const startmap: Array<Array<piece>> = [
-    ["topleft", "random", "linedown", "random", "linedown", "random", "topright"],
-    ["random", "random", "random", "random", "random", "random", "random"],
-    ["lineright", "random", "lineright", "random", "linedown", "random", "linevertical"],
-    ["random", "random", "random", "random", "random", "random", "random"],
-    ["lineright", "random", "lineup", "random", "lineleft", "random", "linevertical"],
-    ["random", "random", "random", "random", "random", "random", "random"],
-    ["bottomleft", "random", "lineup", "random", "lineup", "random", "bottomright"],
+    ["topleft", "r", "tripledown", "r", "tripledown", "r", "topright"],
+    ["r", "r", "r", "r", "r", "r", "r"],
+    ["tripleright", "r", "tripleright", "r", "tripledown", "r", "vertical"],
+    ["r", "r", "r", "r", "r", "r", "r"],
+    ["tripleright", "r", "tripleup", "r", "tripleleft", "r", "vertical"],
+    ["r", "r", "r", "r", "r", "r", "r"],
+    ["bottomleft", "r", "tripleup", "r", "tripleup", "r", "bottomright"],
 ]
 
 class GameMap {
@@ -25,7 +25,7 @@ class GameMap {
         this.randomfield = pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
     }
 
-    generateMap = () => startmap.map(e => e.map(e => e === 'random' ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)] : e))
+    generateMap = () => startmap.map(e => e.map(e => e === 'r' ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)] : e))
 }
 
 let gameMap: GameMap = new GameMap();
@@ -56,7 +56,7 @@ function rotate(e: MouseEvent): void {
     let x: number = Math.floor((gameMap.map.length * e.clientX) / (gameMap.map.length * 50)) -1
     let y: number = Math.floor((gameMap.map.length * e.clientY) / (gameMap.map.length * 50)) -1
     if(x >= 0 && x < gameMap.map.length && y >= 0 && y < gameMap.map.length)
-    gameMap.map[x][y] = 'lineup'
+    gameMap.map[x][y] = 'tripleup'
     drawMap()
 }
 
