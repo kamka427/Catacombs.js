@@ -82,6 +82,8 @@
 // // document.addEventListener("dblclick", rotate)
 // // document.addEventListener("click", selectField)
 // document.addEventListener("drag", drag)
+
+
 // calcPos() {
 //     this.randomtlx = 500;
 //     this.randomtly = 0;
@@ -92,52 +94,17 @@
 //     this.randombrx = this.randomtlx + 50;
 //     this.randombry = this.randomtly + 50;
 // }
+
 // public calcPos() {
 //     this.randomtlx = 500
 //     this.randomtly = 0
+
 //     this.randomtrx = this.randomtlx + 50
 //     this.randomtry = this.randomtly
+
 //     this.randomblx = this.randomtlx
 //     this.randombly = this.randomtly + 50
+
 //     this.randombrx = this.randomtlx + 50
 //     this.randombry = this.randomtly + 50
 // }
-const pieceTypes = ["topleft", "topright", "bottomleft", "bottomright",
-    "vertical", "horizontal", "tripleright", "tripleleft", "tripleup",
-    "tripledown"];
-const startmap = [
-    ["topleft", "r", "tripledown", "r", "tripledown", "r", "topright"],
-    ["r", "r", "r", "r", "r", "r", "r"],
-    ["tripleright", "r", "tripleright", "r", "tripledown", "r", "vertical"],
-    ["r", "r", "r", "r", "r", "r", "r"],
-    ["tripleright", "r", "tripleup", "r", "tripleleft", "r", "vertical"],
-    ["r", "r", "r", "r", "r", "r", "r"],
-    ["bottomleft", "r", "tripleup", "r", "tripleup", "r", "bottomright"],
-];
-class GameMap {
-    constructor() {
-        this.generateMap = () => startmap.map(e => e.map(e => e === 'r' ?
-            pieceTypes[Math.floor(Math.random() * pieceTypes.length)] : e));
-        this.map = this.generateMap();
-        this.randomfield = pieceTypes[Math.floor(Math.random() * pieceTypes.length)];
-    }
-}
-let gameMap = new GameMap();
-const fields = document.querySelectorAll("div.field");
-let gameArea = Array.from(fields);
-split();
-function split() {
-    let results = [];
-    while (gameArea.length > 0) {
-        results.push(gameArea.splice(0, 7));
-    }
-    gameArea = Array.from(results);
-}
-updateMap();
-function updateMap() {
-    for (let i = 0; i < gameMap.map.length; i++) {
-        for (let j = 0; j < gameMap.map.length; j++) {
-            gameArea[i][j].innerText = gameMap.map[i][j];
-        }
-    }
-}
