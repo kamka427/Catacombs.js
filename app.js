@@ -114,6 +114,19 @@ const startmap = [
     ["r", "r", "r", "r", "r", "r", "r"],
     ["bottomleft", "r", "tripleup", "r", "tripleup", "r", "bottomright"],
 ];
+const gemTypes = ["ruby", "diamond", "gold", "silver", "emerald"];
+const startLocations = [[0, 0], [6, 6], [0, 6], [6, 0]];
+const treasureLocations = [];
+/// ki kell venni a kezdohelyeket
+const genTreasureLocations = () => {
+    for (let i = 0; i < startmap.length; i++) {
+        for (let j = 0; j < startmap.length; j++) {
+            treasureLocations.push([i, j]);
+        }
+    }
+};
+genTreasureLocations();
+const randomBetween = (min, max) => Math.floor(Math.random() * (max - min));
 class GameMap {
     constructor() {
         this.generateMap = () => startmap.map(e => e.map(e => e === 'r' ?
@@ -122,7 +135,49 @@ class GameMap {
         this.randomfield = pieceTypes[Math.floor(Math.random() * pieceTypes.length)];
     }
 }
-let gameMap = new GameMap();
+class Treasure {
+    constructor() {
+        this.x = randomBetween(0, startmap.length);
+        this.y = randomBetween(0, startmap.length);
+        this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
+    }
+}
+class Player {
+    constructor(x, y, tNumber) {
+        this.x = x;
+        this.y = y;
+        this.treasureCards = [];
+        for (let i = 0; i < tNumber; i++) {
+            this.treasureCards.push(new Treasure());
+        }
+    }
+}
+class Game {
+    constructor(playerNum, treasurePerPlayer) {
+        this.playerNum = playerNum;
+        this.treasurePerPlayer = treasurePerPlayer;
+        this.treasureSum = playerNum * treasurePerPlayer;
+        this.gameMap = new GameMap();
+        this.players = [];
+        this.treasuresAll = [];
+        this.genPlayers();
+        this.addTreasure();
+    }
+    genPlayers() {
+        let remainingLoc = [...startLocations];
+        for (let i = 0; i < this.playerNum; i++) {
+            let loc = remainingLoc[randomBetween(0, remainingLoc.length)];
+            remainingLoc.splice(remainingLoc.indexOf(loc), 1);
+            this.players.push(new Player(loc[0], loc[1], this.treasurePerPlayer));
+        }
+    }
+    addTreasure() {
+        for (let i = 0; i < this.players.length; i++) {
+            this.players[i].treasureCards.forEach(e => this.treasuresAll.push(e));
+        }
+    }
+}
+let game = new Game(2, 2);
 const fields = document.querySelectorAll("div.field");
 let gameArea = Array.from(fields);
 split();
@@ -135,9 +190,16 @@ function split() {
 }
 updateMap();
 function updateMap() {
-    for (let i = 0; i < gameMap.map.length; i++) {
-        for (let j = 0; j < gameMap.map.length; j++) {
-            gameArea[i][j].innerText = gameMap.map[i][j];
+    for (let i = 0; i < game.gameMap.map.length; i++) {
+        for (let j = 0; j < game.gameMap.map.length; j++) {
+            gameArea[i][j].innerText = game.gameMap.map[i][j];
         }
     }
+    for (let i = 0; i < game.treasuresAll.length; i++) {
+        gameArea[game.treasuresAll[i].x][game.treasuresAll[i].y].style.color = "red";
+    }
+    for (let i = 0; i < game.players.length; i++) {
+        gameArea[game.players[i].x][game.players[i].y].style.color = "blue";
+    }
 }
+const arrows = document.querySelectorAll("div.arrow");
