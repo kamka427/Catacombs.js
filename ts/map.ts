@@ -1,16 +1,15 @@
 import { Game, DraggableField } from "./classes.js";
-import { swap } from "./utils.js";
+import { push } from "./utils.js";
 import { getMousePosition } from "./mouse.js";
 import { drawMap, drawRandom } from "./graphics.js";
-import { createTextChangeRange } from "../node_modules/typescript/lib/typescript.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 
 const game = new Game(2, 2);
 const drag = new DraggableField();
 
-drawMap(game);
-drawRandom(game, drag);
+drawMap(game,drag);
+// drawRandom(game, drag);
 
 function rotate(e: MouseEvent): void {
   const pos = getMousePosition(gameArea, e);
@@ -59,32 +58,26 @@ function rotate(e: MouseEvent): void {
         break;
     }
   }
-  drawMap(game);
-  drawRandom(game, drag);
+  drawMap(game,drag);
+  // drawRandom(game, drag);
 }
 
-function pushRow(rowNum: number, direction: string) {
-  if (direction === "left") {
-    console.log(swap(game.gameMap.map[0][rowNum], game.gameMap.randomfield));
-    console.log(game.gameMap.map[0][rowNum]);
-    console.log(game.gameMap.randomfield);
-
-    drawMap(game);
-    drawRandom(game, drag);
-  }
+function pushRow(index: number, direction: string) {
+  push(index, game, direction);
+  drawMap(game,drag);
+  // drawRandom(game, drag);
 }
-
 
 function dragStart() {
   drag.isDragged = true;
 }
 
 function dragEvt(e: MouseEvent) {
-  if (drag.isDragged) {
-    drag.updatePos(e.clientX, e.clientY);
-
-    drawMap(game);
-    drawRandom(game, drag);
+  const pos = getMousePosition(gameArea, e);
+  if (drag.isDragged) { //kell hogy fölötte álljon
+    drag.updatePos(pos.x - drag.width / 2, pos.y - drag.height / 2);
+    drawMap(game,drag);
+    // drawRandom(game, drag);
   }
 }
 
@@ -92,7 +85,8 @@ function dragEnd() {
   drag.isDragged = false;
 }
 
-gameArea.addEventListener("mousedown",dragStart)
+gameArea.addEventListener("mousedown", dragStart);
 gameArea.addEventListener("mousemove", dragEvt);
-gameArea.addEventListener("mouseup",dragEnd)
-gameArea.addEventListener("click", (e) => rotate(e));
+gameArea.addEventListener("mouseup", dragEnd);
+gameArea.addEventListener("click", rotate);
+// gameArea.addEventListener("click",()=>pushRow(1,"up"))
