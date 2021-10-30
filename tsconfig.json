@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
     "noImplicitAny": true,
-    "module": "System",
+    "module": "ES6",
     "preserveConstEnums": true,
     "target": "ES6",
     "sourceMap": true,
-    "outFile": "app.js",
+    "outDir": "js"
     }
 }

@@ -35,7 +35,13 @@ export const startmap: Array<Array<Piece>> = [
 ];
 
 export type Gem = "ruby" | "diamond" | "gold" | "silver" | "emerald";
-export const gemTypes: Array<Gem> = ["ruby", "diamond", "gold", "silver", "emerald"];
+export const gemTypes: Array<Gem> = [
+  "ruby",
+  "diamond",
+  "gold",
+  "silver",
+  "emerald",
+];
 export const startLocations: Array<Array<number>> = [
   [0, 0],
   [6, 6],

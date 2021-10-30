@@ -1,54 +1,29 @@
-import { Game, DraggableField } from "./classes";
-import {swap} from "./utils"
+import { Game, DraggableField } from "./classes.js";
+import { swap } from "./utils.js";
+import { getMousePosition } from "./mouse.js";
+import { drawMap, drawRandom } from "./graphics.js";
+import { createTextChangeRange } from "../node_modules/typescript/lib/typescript.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
-const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
 
 const game = new Game(2, 2);
 const drag = new DraggableField();
 
-function drawMap(): void {
-  ctx.clearRect(0, 0, gameArea.width, gameArea.height);
-  for (let i = 0; i < game.gameMap.map.length + 2; i++) {
-    for (let j = 0; j < game.gameMap.map.length + 2; j++) {
-      if (
-        i === 0 ||
-        j === 0 ||
-        i === game.gameMap.map.length + 1 ||
-        j === game.gameMap.map.length + 1
-      ) {
-        ctx.fillText("side", i * 50, j * 50 + 25);
-      } else ctx.fillText(game.gameMap.map[i - 1][j - 1], i * 50, j * 50 + 25);
-      ctx.strokeRect(i * 50, j * 50, 50, 50);
-    }
-  }
-}
-drawMap();
-
-function drawRandom() {
-  ctx.strokeRect(drag.x, drag.y, drag.width, drag.height);
-  ctx.fillText(game.gameMap.randomfield, drag.x, drag.y + 25);
-}
-drawRandom();
-
-function selectField(e: MouseEvent) {
-  const x: number =
-    Math.floor(
-      (game.gameMap.map.length * e.clientX) / (game.gameMap.map.length * 50)
-    ) - 1;
-  const y: number =
-    Math.floor(
-      (game.gameMap.map.length * e.clientY) / (game.gameMap.map.length * 50)
-    ) - 1;
-  console.log(e);
-  console.log(x);
-  console.log(y);
-}
-
-document.addEventListener("click", selectField);
+drawMap(game);
+drawRandom(game, drag);
 
 function rotate(e: MouseEvent): void {
-  if (e.clientX >= 10 * 50 && e.clientX <= 12 * 50 && e.clientY <= 50) {
+  const pos = getMousePosition(gameArea, e);
+  console.log(pos);
+  console.log(drag);
+
+  if (
+    pos.x >= drag.x &&
+    pos.x <= drag.x + drag.width &&
+    pos.y >= drag.y &&
+    pos.y <= drag.y + drag.height
+  ) {
+    console.log(game.gameMap.randomfield);
     switch (game.gameMap.randomfield) {
       case "topleft":
         game.gameMap.randomfield = "topright";
@@ -84,7 +59,8 @@ function rotate(e: MouseEvent): void {
         break;
     }
   }
-  drawMap();
+  drawMap(game);
+  drawRandom(game, drag);
 }
 
 function pushRow(rowNum: number, direction: string) {
@@ -93,7 +69,30 @@ function pushRow(rowNum: number, direction: string) {
     console.log(game.gameMap.map[0][rowNum]);
     console.log(game.gameMap.randomfield);
 
-    drawMap();
-    drawRandom();
+    drawMap(game);
+    drawRandom(game, drag);
   }
 }
+
+
+function dragStart() {
+  drag.isDragged = true;
+}
+
+function dragEvt(e: MouseEvent) {
+  if (drag.isDragged) {
+    drag.updatePos(e.clientX, e.clientY);
+
+    drawMap(game);
+    drawRandom(game, drag);
+  }
+}
+
+function dragEnd() {
+  drag.isDragged = false;
+}
+
+gameArea.addEventListener("mousedown",dragStart)
+gameArea.addEventListener("mousemove", dragEvt);
+gameArea.addEventListener("mouseup",dragEnd)
+gameArea.addEventListener("click", (e) => rotate(e));
