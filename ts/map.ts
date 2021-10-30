@@ -1,152 +1,99 @@
-type Piece = "topleft" | "topright" | "bottomleft" | "bottomright" |
-    "vertical" | "horizontal" | "tripleright" | "tripleleft" | "tripleup" |
-    "tripledown" | "r"
-const pieceTypes: Array<Piece> = ["topleft", "topright", "bottomleft", "bottomright",
-    "vertical", "horizontal", "tripleright", "tripleleft", "tripleup",
-    "tripledown"]
-const startmap: Array<Array<Piece>> = [
-    ["topleft", "r", "tripledown", "r", "tripledown", "r", "topright"],
-    ["r", "r", "r", "r", "r", "r", "r"],
-    ["tripleright", "r", "tripleright", "r", "tripledown", "r", "vertical"],
-    ["r", "r", "r", "r", "r", "r", "r"],
-    ["tripleright", "r", "tripleup", "r", "tripleleft", "r", "vertical"],
-    ["r", "r", "r", "r", "r", "r", "r"],
-    ["bottomleft", "r", "tripleup", "r", "tripleup", "r", "bottomright"],
-]
-type Gem = "ruby" | "diamond" | "gold" | "silver" | "emerald"
-const gemTypes: Array<Gem> = ["ruby", "diamond", "gold", "silver", "emerald"]
-const startLocations: Array<Array<number>> = [[0, 0], [6,6], [0, 6], [6, 0]]
-const treasureLocations: Array<Array<number>> = []
+import { Game, DraggableField } from "./classes";
+import {swap} from "./utils"
 
+const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
+const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
 
-/// ki kell venni a kezdohelyeket
-const genTreasureLocations = () => {
-    for (let i = 0; i < startmap.length; i++) {
-        for (let j = 0; j < startmap.length; j++) {
-            treasureLocations.push([i,j])   
-        } 
+const game = new Game(2, 2);
+const drag = new DraggableField();
+
+function drawMap(): void {
+  ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+  for (let i = 0; i < game.gameMap.map.length + 2; i++) {
+    for (let j = 0; j < game.gameMap.map.length + 2; j++) {
+      if (
+        i === 0 ||
+        j === 0 ||
+        i === game.gameMap.map.length + 1 ||
+        j === game.gameMap.map.length + 1
+      ) {
+        ctx.fillText("side", i * 50, j * 50 + 25);
+      } else ctx.fillText(game.gameMap.map[i - 1][j - 1], i * 50, j * 50 + 25);
+      ctx.strokeRect(i * 50, j * 50, 50, 50);
     }
+  }
 }
-genTreasureLocations()
-const randomBetween = (min: number, max: number) => Math.floor(Math.random() * (max - min))
-class GameMap {
-    map: Array<Array<Piece>>
-    randomfield: Piece
+drawMap();
 
-    constructor() {
-        this.map = this.generateMap()
-        this.randomfield = pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
-    }
-    generateMap = () => startmap.map(e => e.map(e => e === 'r' ?
-        pieceTypes[Math.floor(Math.random() * pieceTypes.length)] : e))
+function drawRandom() {
+  ctx.strokeRect(drag.x, drag.y, drag.width, drag.height);
+  ctx.fillText(game.gameMap.randomfield, drag.x, drag.y + 25);
 }
+drawRandom();
 
-class Treasure {
-    x: number
-    y: number
-    type: Gem
-
-    constructor() {
-        this.x = randomBetween(0, startmap.length)
-        this.y = randomBetween(0, startmap.length)
-        this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)]
-    }
+function selectField(e: MouseEvent) {
+  const x: number =
+    Math.floor(
+      (game.gameMap.map.length * e.clientX) / (game.gameMap.map.length * 50)
+    ) - 1;
+  const y: number =
+    Math.floor(
+      (game.gameMap.map.length * e.clientY) / (game.gameMap.map.length * 50)
+    ) - 1;
+  console.log(e);
+  console.log(x);
+  console.log(y);
 }
 
-class Player {
-    x: number
-    y: number
-    treasureCards: Array<Treasure>
+document.addEventListener("click", selectField);
 
-    constructor(x: number, y: number, tNumber: number) {
-        this.x = x
-        this.y = y
-        this.treasureCards = []
-        for (let i = 0; i < tNumber; i++) {
-            this.treasureCards.push(new Treasure())
-        }
+function rotate(e: MouseEvent): void {
+  if (e.clientX >= 10 * 50 && e.clientX <= 12 * 50 && e.clientY <= 50) {
+    switch (game.gameMap.randomfield) {
+      case "topleft":
+        game.gameMap.randomfield = "topright";
+        break;
+      case "topright":
+        game.gameMap.randomfield = "bottomright";
+        break;
+      case "bottomright":
+        game.gameMap.randomfield = "bottomleft";
+        break;
+      case "bottomleft":
+        game.gameMap.randomfield = "topleft";
+        break;
+      case "vertical":
+        game.gameMap.randomfield = "horizontal";
+        break;
+      case "horizontal":
+        game.gameMap.randomfield = "vertical";
+        break;
+      case "tripleright":
+        game.gameMap.randomfield = "tripledown";
+        break;
+      case "tripledown":
+        game.gameMap.randomfield = "tripleleft";
+        break;
+      case "tripleleft":
+        game.gameMap.randomfield = "tripleup";
+        break;
+      case "tripleup":
+        game.gameMap.randomfield = "tripleright";
+        break;
+      default:
+        break;
     }
+  }
+  drawMap();
 }
 
-class Game {
-    playerNum: number
-    treasurePerPlayer: number
-    treasureSum: number
-    gameMap: GameMap
-    players: Array<Player>
-    treasuresAll: Array<Treasure>
-    constructor(playerNum: number, treasurePerPlayer: number) {
-        this.playerNum = playerNum
-        this.treasurePerPlayer = treasurePerPlayer
-        this.treasureSum= playerNum * treasurePerPlayer
-        this.gameMap = new GameMap()
-        this.players =[]
-        this.treasuresAll = []
-        this.genPlayers()
-        this.addTreasure()
-    }
-    genPlayers() {
-        let remainingLoc: Array<Array<number>> = [...startLocations]
-        for (let i = 0; i < this.playerNum; i++) {
-            let loc: number[] = remainingLoc[randomBetween(0, remainingLoc.length)]
-            remainingLoc.splice(remainingLoc.indexOf(loc), 1)      
-            this.players.push(new Player(loc[0], loc[1], this.treasurePerPlayer))
-        }
-    }
-    addTreasure() {
-        for (let i = 0; i < this.players.length; i++) {
-            this.players[i].treasureCards.forEach(e => this.treasuresAll.push(e))
-        }
-    }
-}
+function pushRow(rowNum: number, direction: string) {
+  if (direction === "left") {
+    console.log(swap(game.gameMap.map[0][rowNum], game.gameMap.randomfield));
+    console.log(game.gameMap.map[0][rowNum]);
+    console.log(game.gameMap.randomfield);
 
-
-let game = new Game(2, 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const fields = document.querySelectorAll("div.field")
-let gameArea: any = Array.from(fields)
-
-split()
-function split() {
-    let results = []
-    while (gameArea.length > 0) {
-        results.push(gameArea.splice(0, 7))
-    }
-    gameArea = Array.from(results);
-}
-
-updateMap()
-function updateMap() {
-    for (let i = 0; i < game.gameMap.map.length; i++) {
-        for (let j = 0; j < game.gameMap.map.length; j++) {
-            gameArea[i][j].innerText = game.gameMap.map[i][j]
-        }
-    }
-    for (let i = 0; i < game.treasuresAll.length; i++) {
-        gameArea[game.treasuresAll[i].x][game.treasuresAll[i].y].style.color = "red";
-
-    }
-    for (let i = 0; i < game.players.length; i++) {
-        gameArea[game.players[i].x][game.players[i].y].style.color = "blue";
-
-    }
-}
-
-const arrows = document.querySelectorAll("div.arrow")
-
-function arrowPush() {
-
+    drawMap();
+    drawRandom();
+  }
 }

@@ -4,6 +4,7 @@
     "module": "System",
     "preserveConstEnums": true,
     "target": "ES6",
+    "sourceMap": true,
     "outFile": "app.js",
     }
 }

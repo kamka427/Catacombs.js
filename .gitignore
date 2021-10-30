@@ -1,0 +1,11 @@
+node_modules
+package.json
+package-lock.json
+.eslintrc.json
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/Var-zslatos-katakomba.iml
+index2.html
+styles.css
+.idea/modules.xml
+.idea/.gitignore
