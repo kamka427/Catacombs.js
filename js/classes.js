@@ -33,6 +33,7 @@ export class Game {
         this.treasurePerPlayer = treasurePerPlayer;
         this.treasureSum = playerNum * treasurePerPlayer;
         this.gameMap = new GameMap();
+        this.draggableField = new DraggableField();
         this.players = [];
         this.treasuresAll = [];
         this.genPlayers();

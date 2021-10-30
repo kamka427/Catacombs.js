@@ -5,3 +5,6 @@ canvas {
   margin-right: auto;
   display: block;
 }
+.hidden {
+  display: none;
+}

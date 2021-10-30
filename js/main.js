@@ -2,9 +2,20 @@ import { Game } from "./classes.js";
 import { push } from "./utils.js";
 import { getMousePosition } from "./mouse.js";
 import { drawMap } from "./graphics.js";
+const startBtn = document.querySelector("#start");
+const manualBtn = document.querySelector("#manual");
+const pCount = document.querySelector("#pcount").value;
+const tCount = document.querySelector("#tcountpp")
+    .value;
 const gameArea = document.querySelector("canvas#gameArea");
-const game = new Game(2, 2);
-drawMap(game);
+let game;
+function startGame() {
+    game = new Game(pCount, tCount);
+    console.log(game);
+    gameArea.classList.remove("hidden");
+    drawMap(game);
+}
+startBtn.addEventListener("click", startGame);
 function rotate(e) {
     const pos = getMousePosition(gameArea, e);
     console.log(pos);
@@ -49,12 +60,10 @@ function rotate(e) {
         }
     }
     drawMap(game);
-    // drawRandom(game, drag);
 }
 function pushRow(index, direction) {
     push(index, game, direction);
     drawMap(game);
-    // drawRandom(game, drag);
 }
 function dragStart() {
     game.draggableField.isDragged = true;
@@ -79,4 +88,4 @@ gameArea.addEventListener("mousemove", dragEvt);
 gameArea.addEventListener("mouseup", dragEnd);
 gameArea.addEventListener("click", rotate);
 // gameArea.addEventListener("click",()=>pushRow(1,"up"))
-//# sourceMappingURL=map.js.map
+//# sourceMappingURL=main.js.map

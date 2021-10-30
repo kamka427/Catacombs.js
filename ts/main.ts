@@ -1,26 +1,36 @@
-import { Game, DraggableField } from "./classes.js";
+import { Game } from "./classes.js";
 import { push } from "./utils.js";
 import { getMousePosition } from "./mouse.js";
-import { drawMap, drawRandom } from "./graphics.js";
+import { drawMap } from "./graphics.js";
 
+const startBtn = document.querySelector("#start");
+const manualBtn = document.querySelector("#manual");
+const pCount: any = (<HTMLInputElement>document.querySelector("#pcount")).value;
+const tCount: any = (<HTMLInputElement>document.querySelector("#tcountpp"))
+  .value;
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 
-const game = new Game(2, 2);
-const drag = new DraggableField();
+let game: Game
+function startGame() {
+  game = new Game(pCount, tCount);
+  console.log(game);
+  gameArea.classList.remove("hidden")
+  drawMap(game);
+}
 
-drawMap(game,drag);
-// drawRandom(game, drag);
+startBtn.addEventListener("click", startGame);
+
+
 
 function rotate(e: MouseEvent): void {
   const pos = getMousePosition(gameArea, e);
   console.log(pos);
-  console.log(drag);
 
   if (
-    pos.x >= drag.x &&
-    pos.x <= drag.x + drag.width &&
-    pos.y >= drag.y &&
-    pos.y <= drag.y + drag.height
+    pos.x >= game.draggableField.x &&
+    pos.x <= game.draggableField.x + game.draggableField.width &&
+    pos.y >= game.draggableField.y &&
+    pos.y <= game.draggableField.y + game.draggableField.height
   ) {
     console.log(game.gameMap.randomfield);
     switch (game.gameMap.randomfield) {
@@ -58,31 +68,39 @@ function rotate(e: MouseEvent): void {
         break;
     }
   }
-  drawMap(game,drag);
-  // drawRandom(game, drag);
+  drawMap(game);
+
 }
 
 function pushRow(index: number, direction: string) {
   push(index, game, direction);
-  drawMap(game,drag);
-  // drawRandom(game, drag);
+  drawMap(game);
+
 }
 
 function dragStart() {
-  drag.isDragged = true;
+  game.draggableField.isDragged = true;
 }
 
 function dragEvt(e: MouseEvent) {
   const pos = getMousePosition(gameArea, e);
-  if (drag.isDragged) { //kell hogy fölötte álljon
-    drag.updatePos(pos.x - drag.width / 2, pos.y - drag.height / 2);
-    drawMap(game,drag);
-    // drawRandom(game, drag);
+  if (game.draggableField.isDragged
+    && 
+      pos.x >= game.draggableField.x &&
+      pos.x <= game.draggableField.x + game.draggableField.width &&
+      pos.y >= game.draggableField.y &&
+      pos.y <= game.draggableField.y + game.draggableField.height
+    ){
+    game.draggableField.updatePos(
+      pos.x - game.draggableField.width / 2,
+      pos.y - game.draggableField.height / 2
+    );
+    drawMap(game);
   }
 }
 
 function dragEnd() {
-  drag.isDragged = false;
+  game.draggableField.isDragged = false;
 }
 
 gameArea.addEventListener("mousedown", dragStart);
