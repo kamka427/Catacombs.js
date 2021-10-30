@@ -23,9 +23,9 @@ Minimálisan teljesítendő (enélkül nem fogadjuk el, 8 pont)
 
 Az alap feladatok (12 pont)
 
-[ ] Kezdőképernyő: játékosszám beállítása (0,5 pont)
-[ ] Kezdőképernyő: játékosonkénti kincskártyák számának beállítása (0,5 pont)
-[ ] Kezdőképernyő: Start gombra megjelenik a játéktér (0,5 pont)
+[x] Kezdőképernyő: játékosszám beállítása (0,5 pont)
+[x] Kezdőképernyő: játékosonkénti kincskártyák számának beállítása (0,5 pont)
+[x] Kezdőképernyő: Start gombra megjelenik a játéktér (0,5 pont)
 [ ] Kezdőképernyő: megtekinthető a játékleírás (0,5 pont)
 [x] Játéktér: a kincsek a beállításoknak megfelelően jelennek meg (0,5 pont)
 [x] Játéktér: a figurák a sarkokban megjelennek (0,5 pont)

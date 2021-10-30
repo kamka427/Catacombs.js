@@ -1,5 +1,7 @@
 import { Game } from "./classes.js";
 import { Piece } from "./constants.js";
+import { drawMap } from "./graphics.js";
+import { getMousePosition } from "./mouse.js";
 
 export const randomBetween = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min));
@@ -46,4 +48,54 @@ export function push(index: number, game: Game, direction: string) {
       game.gameMap.randomfield = tmp;
       break;
   }
+  drawMap(game)
+}
+
+export function rotate(game:Game, gameArea:HTMLCanvasElement, e: MouseEvent): void {
+  const pos = getMousePosition(gameArea, e);
+  console.log(pos);
+
+  if (
+    pos.x >= game.draggableField.x &&
+    pos.x <= game.draggableField.x + game.draggableField.width &&
+    pos.y >= game.draggableField.y &&
+    pos.y <= game.draggableField.y + game.draggableField.height
+  ) {
+    console.log(game.gameMap.randomfield);
+    switch (game.gameMap.randomfield) {
+      case "topleft":
+        game.gameMap.randomfield = "topright";
+        break;
+      case "topright":
+        game.gameMap.randomfield = "bottomright";
+        break;
+      case "bottomright":
+        game.gameMap.randomfield = "bottomleft";
+        break;
+      case "bottomleft":
+        game.gameMap.randomfield = "topleft";
+        break;
+      case "vertical":
+        game.gameMap.randomfield = "horizontal";
+        break;
+      case "horizontal":
+        game.gameMap.randomfield = "vertical";
+        break;
+      case "tripleright":
+        game.gameMap.randomfield = "tripledown";
+        break;
+      case "tripledown":
+        game.gameMap.randomfield = "tripleleft";
+        break;
+      case "tripleleft":
+        game.gameMap.randomfield = "tripleup";
+        break;
+      case "tripleup":
+        game.gameMap.randomfield = "tripleright";
+        break;
+      default:
+        break;
+    }
+  }
+  drawMap(game);
 }

@@ -1,3 +1,6 @@
+import { Game } from "./classes.js";
+import { drawMap } from "./graphics.js";
+
 export function getMousePosition(canvas: HTMLCanvasElement, event: MouseEvent) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
@@ -8,4 +11,31 @@ export function getMousePosition(canvas: HTMLCanvasElement, event: MouseEvent) {
   return position;
 }
 
- 
+export function dragStart(game: Game) {
+  game.draggableField.isDragged = true;
+}
+
+export function dragEvt(
+  game: Game,
+  gameArea: HTMLCanvasElement,
+  e: MouseEvent
+) {
+  const pos = getMousePosition(gameArea, e);
+  if (
+    game.draggableField.isDragged &&
+    pos.x >= game.draggableField.x &&
+    pos.x <= game.draggableField.x + game.draggableField.width &&
+    pos.y >= game.draggableField.y &&
+    pos.y <= game.draggableField.y + game.draggableField.height
+  ) {
+    game.draggableField.updatePos(
+      pos.x - game.draggableField.width / 2,
+      pos.y - game.draggableField.height / 2
+    );
+    drawMap(game);
+  }
+}
+
+export function dragEnd(game: Game) {
+  game.draggableField.isDragged = false;
+}
