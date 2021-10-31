@@ -31,8 +31,7 @@ export function drawMap(game) {
     dImage(game.gameMap.randomfield, game.draggableField.x, game.draggableField.y);
     drawPlayers(game);
     drawTreasures(game);
-    if (game.fallenTreasure != null)
-        dTreasure(game.draggableField.x, game.draggableField.y);
+    // if(game.fallenTreasure !== null)
 }
 function dImage(type, x, y) {
     const img = new Image(50, 50);
@@ -99,6 +98,13 @@ function drawTreasures(game) {
     for (let i = 0; i < game.treasuresAll.length; i++) {
         dTreasure(game.treasuresAll[i].x, game.treasuresAll[i].y);
     }
+    if (game.fallenTreasure !== null)
+        dFallenT(game.draggableField.x, game.draggableField.y);
+}
+function dFallenT(x, y) {
+    const img = new Image(50, 50);
+    img.src = "../assets/player.png";
+    img.onload = () => ctx.drawImage(img, x, y, 10, 10);
 }
 function dTreasure(x, y) {
     const img = new Image(50, 50);

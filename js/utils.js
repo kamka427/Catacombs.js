@@ -100,7 +100,6 @@ export function push(index, game, direction) {
                     game.treasuresAll[i].y++;
             }
             console.log(game.fallenTreasure);
-            console.log(game);
             if (!fell && game.fallenTreasure !== null) {
                 game.fallenTreasure.x = index;
                 game.fallenTreasure.y = 0;
