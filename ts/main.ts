@@ -15,8 +15,8 @@ const manual = document.querySelector("p")
 let game: Game;
 
 function startGame() {
-  const pCount: any = (<HTMLInputElement>document.querySelector("#pcount")).value;
-  const tCount: any = (<HTMLInputElement>document.querySelector("#tcountpp")).value;
+  const pCount: number = <number><unknown>(<HTMLInputElement>document.querySelector("#pcount")).value;
+  const tCount: number =  <number><unknown>(<HTMLInputElement>document.querySelector("#tcountpp")).value;
 
   game = new Game(pCount, tCount);
   console.log(game);

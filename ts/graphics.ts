@@ -1,4 +1,4 @@
-import { DraggableField, Game } from "./classes.js";
+import { Game } from "./classes.js";
 import { Piece } from "./constants.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
