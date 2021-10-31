@@ -5,6 +5,7 @@ import {
   pieceTypes,
   Gem,
   gemTypes,
+  genTreasureLocations,
 } from "./constants.js";
 import { randomBetween } from "./utils.js";
 export class GameMap {
@@ -26,26 +27,37 @@ export class GameMap {
     );
 }
 
+const treasureLocations = genTreasureLocations();
 export class Treasure {
   x: number;
   y: number;
   type: Gem;
 
   constructor() {
-    this.x = randomBetween(0, startmap.length);
-    this.y = randomBetween(0, startmap.length);
+    const loc = this.genTLoc();
+    this.x = loc[0];
+    this.y = loc[1];
     this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
+  }
+  genTLoc() {
+    const loc = treasureLocations[randomBetween(0, treasureLocations.length)];
+    treasureLocations.splice(treasureLocations.indexOf(loc), 1);
+    return loc;
   }
 }
 
 export class Player {
   x: number;
   y: number;
+  startX: number;
+  startY: number;
   treasureCards: Array<Treasure>;
 
   constructor(x: number, y: number, tNumber: number) {
     this.x = x;
     this.y = y;
+    this.startX = x;
+    this.startY = y;
     this.treasureCards = [];
     for (let i = 0; i < tNumber; i++) {
       this.treasureCards.push(new Treasure());
@@ -58,7 +70,7 @@ export class Game {
   treasurePerPlayer: number;
   treasureSum: number;
   gameMap: GameMap;
-  draggableField: DraggableField
+  draggableField: DraggableField;
   players: Array<Player>;
   treasuresAll: Array<Treasure>;
   constructor(playerNum: number, treasurePerPlayer: number) {
@@ -92,14 +104,14 @@ export class DraggableField {
   y: number;
   width: number;
   height: number;
-  isDragged: boolean
+  isDragged: boolean;
 
   constructor() {
     this.x = 500;
     this.y = 0;
     this.width = 50;
     this.height = 50;
-    this.isDragged = false
+    this.isDragged = false;
   }
 
   updatePos(newX: number, newY: number) {
