@@ -1,4 +1,4 @@
-import { Game } from "./classes.js";
+import { DraggableField, Game } from "./classes.js";
 import { Piece } from "./constants.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
@@ -25,14 +25,14 @@ export function drawMap(game: Game): void {
         // ctx.fillText("side", i * 50, j * 50 + 25);
         dArrow(i * 50, j * 50, game);
       } else if (
-        i === 0 ||
-        j === 0 ||
-        i === game.gameMap.map.length + 1 ||
-        j === game.gameMap.map.length + 1
-      )
-        continue;
-      // ctx.strokeRect(i * 50, j * 50, 50, 50);
-      else dImage(game.gameMap.map[j - 1][i - 1], i * 50, j * 50);
+        !(i === 0 ||
+          j === 0 ||
+          i === game.gameMap.map.length + 1 ||
+          j === game.gameMap.map.length + 1)
+      ) {
+        dImage(game.gameMap.map[j - 1][i - 1], i * 50, j * 50);
+      }
+      // ctx.strokeRect(i * 50, j * 50, 50, 50)
     }
   }
   dImage(
@@ -42,6 +42,8 @@ export function drawMap(game: Game): void {
   );
   drawPlayers(game);
   drawTreasures(game);
+  if(game.fallenTreasure != null)
+    dTreasure(game.draggableField.x,game.draggableField.y)
 }
 
 function dImage(type: Piece, x: number, y: number) {
@@ -110,15 +112,15 @@ function dPlayer(x: number, y: number) {
   img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 20, 20);
 }
 
-function drawTreasures (game: Game)
-{
+function drawTreasures(game: Game) {
   for (let i = 0; i < game.treasuresAll.length; i++) {
     dTreasure(game.treasuresAll[i].x, game.treasuresAll[i].y);
   }
+  
 }
 
 
-function dTreasure(x:number,y:number){
+function dTreasure(x: number, y: number) {
   const img = new Image(50, 50);
 
   // if(game.players[i].number === 1)

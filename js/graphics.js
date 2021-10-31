@@ -19,19 +19,20 @@ export function drawMap(game) {
                 // ctx.fillText("side", i * 50, j * 50 + 25);
                 dArrow(i * 50, j * 50, game);
             }
-            else if (i === 0 ||
+            else if (!(i === 0 ||
                 j === 0 ||
                 i === game.gameMap.map.length + 1 ||
-                j === game.gameMap.map.length + 1)
-                continue;
-            // ctx.strokeRect(i * 50, j * 50, 50, 50);
-            else
+                j === game.gameMap.map.length + 1)) {
                 dImage(game.gameMap.map[j - 1][i - 1], i * 50, j * 50);
+            }
+            // ctx.strokeRect(i * 50, j * 50, 50, 50)
         }
     }
     dImage(game.gameMap.randomfield, game.draggableField.x, game.draggableField.y);
     drawPlayers(game);
     drawTreasures(game);
+    if (game.fallenTreasure != null)
+        dTreasure(game.draggableField.x, game.draggableField.y);
 }
 function dImage(type, x, y) {
     const img = new Image(50, 50);

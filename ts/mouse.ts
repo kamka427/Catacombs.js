@@ -8,8 +8,7 @@ export function getMousePosition(canvas: HTMLCanvasElement, event: MouseEvent) {
   const y = event.clientY - rect.top;
   const convX = Math.floor((x * 11) / canvas.width) - 1;
   const convY = Math.floor((y * 9) / canvas.height) - 1;
-  const position = { convX: convX, convY: convY, x: x, y: y };
-  return position;
+  return { convX: convX, convY: convY, x: x, y: y };
 }
 
 export function dragStart(game: Game) {

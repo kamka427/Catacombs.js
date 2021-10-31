@@ -1,6 +1,6 @@
 import { Game } from "./classes.js";
 import { drawMap } from "./graphics.js";
-import { rotate } from "./utils.js";
+import { rotate, step } from "./utils.js";
 import { clickArrow, dragStart } from "./mouse.js";
 import { dragEnd } from "./mouse.js";
 import { dragEvt } from "./mouse.js";
@@ -9,6 +9,7 @@ const manualBtn = document.querySelector("#manual");
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const gameArea = document.querySelector("canvas#gameArea");
+const manual = document.querySelector("p");
 let game;
 function startGame() {
     const pCount = document.querySelector("#pcount").value;
@@ -18,11 +19,17 @@ function startGame() {
     gameArea.classList.remove("hidden");
     drawMap(game);
 }
+function showManual() {
+    manual.classList.toggle("hidden");
+    gameArea.classList.add("hidden");
+}
 startBtn.addEventListener("click", startGame);
+manualBtn.addEventListener("click", showManual);
 gameArea.addEventListener("mousedown", () => dragStart(game));
 gameArea.addEventListener("mousemove", (e) => dragEvt(game, gameArea, e));
 gameArea.addEventListener("mouseup", () => dragEnd(game));
 gameArea.addEventListener("click", (e) => rotate(game, gameArea, e));
 gameArea.addEventListener("click", (e) => clickArrow(game, gameArea, e));
+gameArea.addEventListener("click", (e) => step(gameArea, game, e));
 // gameArea.addEventListener("click",()=>push(1,game,"up"))
 //# sourceMappingURL=main.js.map

@@ -71,6 +71,8 @@ export class Game {
   players: Array<Player>;
   treasuresAll: Array<Treasure>;
   treasureLocations: Array<Array<number>>;
+  fallenTreasure: Treasure
+  currentPlayer: number
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -80,8 +82,11 @@ export class Game {
     this.players = [];
     this.treasuresAll = [];
     this.treasureLocations = genTreasureLocations();
+    console.log(this.treasureLocations)
     this.genPlayers();
     this.addTreasure();
+    this.fallenTreasure = null
+    this.currentPlayer = 0
   }
   genPlayers() {
     const remainingLoc: Array<Array<number>> = [...startLocations];
