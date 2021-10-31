@@ -1,4 +1,3 @@
-import { createTextChangeRange, sortAndDeduplicateDiagnostics } from "../node_modules/typescript/lib/typescript.js";
 import { Game } from "./classes.js";
 import { Piece } from "./constants.js";
 
@@ -7,6 +6,8 @@ const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
 
 export function drawMap(game: Game): void {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+  ctx.fillStyle = "green";
+  ctx.fillRect(0, 0, gameArea.height, gameArea.height);
   for (let i = 0; i < game.gameMap.map.length + 2; i++) {
     for (let j = 0; j < game.gameMap.map.length + 2; j++) {
       if (
@@ -21,28 +22,24 @@ export function drawMap(game: Game): void {
           i < game.gameMap.map.length &&
           i % 2 === 0)
       ) {
-        ctx.fillText("side", i * 50, j * 50 + 25);
+        // ctx.fillText("side", i * 50, j * 50 + 25);
+        dArrow(i * 50, j * 50, game);
       } else if (
         i === 0 ||
         j === 0 ||
         i === game.gameMap.map.length + 1 ||
         j === game.gameMap.map.length + 1
       )
-        ctx.strokeRect(i * 50, j * 50, 50, 50);
-      else dImage(game.gameMap.map[j - 1][i - 1], i * 50, j * 50); //ctx.fillText(game.gameMap.map[j - 1][i - 1], i * 50, j * 50 + 25);
+        continue;
       // ctx.strokeRect(i * 50, j * 50, 50, 50);
-      // dEdge(i*50, j*50)
+      else dImage(game.gameMap.map[j - 1][i - 1], i * 50, j * 50);
     }
   }
   dImage(
     game.gameMap.randomfield,
     game.draggableField.x,
-    game.draggableField.y,);
-  // ctx.fillText(
-  //   game.gameMap.randomfield,
-  //   game.draggableField.x,
-  //   game.draggableField.y + 25
-  // );
+    game.draggableField.y
+  );
 }
 
 function dImage(type: Piece, x: number, y: number) {
@@ -83,9 +80,16 @@ function dImage(type: Piece, x: number, y: number) {
   }
   img.onload = () => ctx.drawImage(img, x, y, 50, 50);
 }
-function dEdge(x: number, y:number){
-  const img = new Image(50, 50);
-  img.src = "../assets/edge.png";
-  img.onload = () => ctx.drawImage(img, x, y, 50, 50);
 
+function dArrow(x: number, y: number, game: Game) {
+  const img = new Image(50, 50);
+
+  if (x === 0) img.src = "../assets/rightarrow.png";
+  else if (x / 50 === game.gameMap.map.length + 1)
+    img.src = "../assets/leftarrow.png";
+  else if (y === 0) img.src = "../assets/downarrow.png";
+  else if (y / 50 === game.gameMap.map.length + 1)
+    img.src = "../assets/uparrow.png";
+
+  img.onload = () => ctx.drawImage(img, x, y, 50, 50);
 }
