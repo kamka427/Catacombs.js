@@ -24,6 +24,12 @@ export function push(index: number, game: Game, direction: string) {
         else if (game.players[i].y === index) game.players[i].x--;
       }
       fell = false;
+      if (!fell && game.fallenTreasure !== null) {
+        game.fallenTreasure.x = 7;
+        game.fallenTreasure.y = index;
+        game.treasuresAll.push(game.fallenTreasure);
+        game.fallenTreasure = null;
+      }
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (game.treasuresAll[i].x === 0 && game.treasuresAll[i].y === index) {
           game.fallenTreasure = game.treasuresAll[i];
@@ -35,15 +41,9 @@ export function push(index: number, game: Game, direction: string) {
           );
           fell = true;
           // game.treasuresAll[i].x--
-        } else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x--;
+        } if (game.treasuresAll[i].y === index) game.treasuresAll[i].x--;
       }
       console.log(game.fallenTreasure);
-      if (!fell && game.fallenTreasure !== null) {
-        game.fallenTreasure.x = 6;
-        game.fallenTreasure.y = index;
-        game.treasuresAll.push(game.fallenTreasure);
-        game.fallenTreasure = null;
-      }
 
       break;
 
@@ -57,6 +57,12 @@ export function push(index: number, game: Game, direction: string) {
         else if (game.players[i].y === index) game.players[i].x++;
       }
       fell = false;
+      if (!fell && game.fallenTreasure !== null) {
+        game.fallenTreasure.x = -1;
+        game.fallenTreasure.y = index;
+        game.treasuresAll.push(game.fallenTreasure);
+        game.fallenTreasure = null;
+      }
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (game.treasuresAll[i].x === 6 && game.treasuresAll[i].y === index) {
           game.fallenTreasure = game.treasuresAll[i];
@@ -68,15 +74,9 @@ export function push(index: number, game: Game, direction: string) {
           );
           fell = true;
           // game.treasuresAll[i].x++
-        } else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x++;
+        } if (game.treasuresAll[i].y === index) game.treasuresAll[i].x++;
       }
       console.log(game.fallenTreasure);
-      if (!fell && game.fallenTreasure !== null) {
-        game.fallenTreasure.x = 0;
-        game.fallenTreasure.y = index;
-        game.treasuresAll.push(game.fallenTreasure);
-        game.fallenTreasure = null;
-      }
       break;
 
     case "down":
@@ -92,9 +92,15 @@ export function push(index: number, game: Game, direction: string) {
       for (let i = 0; i < game.players.length; i++) {
         if (game.players[i].y === index && game.players[i].x === 6)
           game.players[i].y = 0;
-        else if (game.players[i].x === index) game.players[i].y++;
-      }
-      fell = false;
+          else if (game.players[i].x === index) game.players[i].y++;
+        }
+        fell = false;
+        if (!fell && game.fallenTreasure !== null) {
+          game.fallenTreasure.x = index;
+          game.fallenTreasure.y = -1;
+          game.treasuresAll.push(game.fallenTreasure);
+          game.fallenTreasure = null;
+        }
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (game.treasuresAll[i].x === index && game.treasuresAll[i].y === 6) {
           game.fallenTreasure = game.treasuresAll[i];
@@ -106,15 +112,9 @@ export function push(index: number, game: Game, direction: string) {
           );
           fell = true;
           // game.treasuresAll[i].y++
-        } else if (game.treasuresAll[i].x === index) game.treasuresAll[i].y++;
+        } if (game.treasuresAll[i].x === index) game.treasuresAll[i].y++;
       }
       console.log(game.fallenTreasure);
-      if (!fell && game.fallenTreasure !== null) {
-        game.fallenTreasure.x = index;
-        game.fallenTreasure.y = 0;
-        game.treasuresAll.push(game.fallenTreasure);
-        game.fallenTreasure = null;
-      }
       break;
 
     case "up":
@@ -133,6 +133,12 @@ export function push(index: number, game: Game, direction: string) {
         else if (game.players[i].x === index) game.players[i].y--;
       }
       fell = false;
+      if (!fell && game.fallenTreasure !== null) {
+        game.fallenTreasure.x = index;
+        game.fallenTreasure.y = 7;
+        game.treasuresAll.push(game.fallenTreasure);
+        game.fallenTreasure = null;
+      }
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (game.treasuresAll[i].x === index && game.treasuresAll[i].y === 0) {
           game.fallenTreasure = game.treasuresAll[i];
@@ -144,15 +150,9 @@ export function push(index: number, game: Game, direction: string) {
           );
           fell = true;
           // game.treasuresAll[i].y--
-        } else if (game.treasuresAll[i].x === index) game.treasuresAll[i].y--;
+        } if (game.treasuresAll[i].x === index) game.treasuresAll[i].y--;
       }
       console.log(game.fallenTreasure);
-      if (!fell && game.fallenTreasure !== null) {
-        game.fallenTreasure.x = index;
-        game.fallenTreasure.y = 6;
-        game.treasuresAll.push(game.fallenTreasure);
-        game.fallenTreasure = null;
-      }
       break;
   }
   drawMap(game);
