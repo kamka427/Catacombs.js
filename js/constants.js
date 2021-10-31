@@ -32,14 +32,24 @@ export const startLocations = [
     [0, 6],
     [6, 0],
 ];
-export const treasureLocations = [];
-/// ki kell venni a kezdohelyeket
+// export const treasureLocations: Array<Array<number>> = [];
 export const genTreasureLocations = () => {
+    const treasureLocations = [];
     for (let i = 0; i < startmap.length; i++) {
         for (let j = 0; j < startmap.length; j++) {
-            treasureLocations.push([i, j]);
+            if (i === 0 && j === 0)
+                continue;
+            else if (i === 6 && j === 6)
+                continue;
+            else if (i === 0 && j === 6)
+                continue;
+            else if (i === 6 && j === 0)
+                continue;
+            else
+                treasureLocations.push([i, j]);
         }
     }
+    return treasureLocations;
 };
 // genTreasureLocations();
 //# sourceMappingURL=constants.js.map

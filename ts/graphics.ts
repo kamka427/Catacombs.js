@@ -40,6 +40,8 @@ export function drawMap(game: Game): void {
     game.draggableField.x,
     game.draggableField.y
   );
+  drawPlayers(game);
+  drawTreasures(game);
 }
 
 function dImage(type: Piece, x: number, y: number) {
@@ -92,4 +94,35 @@ function dArrow(x: number, y: number, game: Game) {
     img.src = "../assets/uparrow.png";
 
   img.onload = () => ctx.drawImage(img, x, y, 50, 50);
+}
+
+function drawPlayers(game: Game) {
+  for (let i = 0; i < game.players.length; i++) {
+    dPlayer(game.players[i].x, game.players[i].y);
+  }
+}
+function dPlayer(x: number, y: number) {
+  const img = new Image(50, 50);
+
+  // if(game.players[i].number === 1)
+
+  img.src = "../assets/player.png";
+  img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 20, 20);
+}
+
+function drawTreasures (game: Game)
+{
+  for (let i = 0; i < game.treasuresAll.length; i++) {
+    dTreasure(game.treasuresAll[i].x, game.treasuresAll[i].y);
+  }
+}
+
+
+function dTreasure(x:number,y:number){
+  const img = new Image(50, 50);
+
+  // if(game.players[i].number === 1)
+
+  img.src = "../assets/player.png";
+  img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 10, 10);
 }

@@ -7,13 +7,12 @@ import { dragEvt } from "./mouse.js";
 const startBtn = document.querySelector("#start");
 const manualBtn = document.querySelector("#manual");
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const pCount = document.querySelector("#pcount").value;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const tCount = document.querySelector("#tcountpp")
-    .value;
 const gameArea = document.querySelector("canvas#gameArea");
 let game;
 function startGame() {
+    const pCount = document.querySelector("#pcount").value;
+    const tCount = document.querySelector("#tcountpp").value;
     game = new Game(pCount, tCount);
     console.log(game);
     gameArea.classList.remove("hidden");

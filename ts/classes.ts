@@ -27,22 +27,15 @@ export class GameMap {
     );
 }
 
-const treasureLocations = genTreasureLocations();
 export class Treasure {
   x: number;
   y: number;
   type: Gem;
 
-  constructor() {
-    const loc = this.genTLoc();
-    this.x = loc[0];
-    this.y = loc[1];
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
     this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
-  }
-  genTLoc() {
-    const loc = treasureLocations[randomBetween(0, treasureLocations.length)];
-    treasureLocations.splice(treasureLocations.indexOf(loc), 1);
-    return loc;
   }
 }
 
@@ -51,17 +44,21 @@ export class Player {
   y: number;
   startX: number;
   startY: number;
+  number: number;
   treasureCards: Array<Treasure>;
 
-  constructor(x: number, y: number, tNumber: number) {
+  constructor(
+    x: number,
+    y: number,
+    pNumber: number,
+    treasures: Array<Treasure>
+  ) {
     this.x = x;
     this.y = y;
     this.startX = x;
     this.startY = y;
-    this.treasureCards = [];
-    for (let i = 0; i < tNumber; i++) {
-      this.treasureCards.push(new Treasure());
-    }
+    this.number = pNumber;
+    this.treasureCards = treasures;
   }
 }
 
@@ -73,6 +70,7 @@ export class Game {
   draggableField: DraggableField;
   players: Array<Player>;
   treasuresAll: Array<Treasure>;
+  treasureLocations: Array<Array<number>>;
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -81,6 +79,7 @@ export class Game {
     this.draggableField = new DraggableField();
     this.players = [];
     this.treasuresAll = [];
+    this.treasureLocations = genTreasureLocations();
     this.genPlayers();
     this.addTreasure();
   }
@@ -89,8 +88,24 @@ export class Game {
     for (let i = 0; i < this.playerNum; i++) {
       const loc: number[] = remainingLoc[randomBetween(0, remainingLoc.length)];
       remainingLoc.splice(remainingLoc.indexOf(loc), 1);
-      this.players.push(new Player(loc[0], loc[1], this.treasurePerPlayer));
+      this.players.push(
+        new Player(loc[0], loc[1], i, this.genTreasure(this.treasurePerPlayer))
+      );
     }
+  }
+  genTLoc() {
+    const loc =
+      this.treasureLocations[randomBetween(0, this.treasureLocations.length)];
+    this.treasureLocations.splice(this.treasureLocations.indexOf(loc), 1);
+    return loc;
+  }
+  genTreasure(n: number) {
+    const treasures = [];
+    for (let i = 0; i < n; i++) {
+      const loc = this.genTLoc();
+      treasures.push(new Treasure(loc[0], loc[1]));
+    }
+    return treasures;
   }
   addTreasure() {
     for (let i = 0; i < this.players.length; i++) {

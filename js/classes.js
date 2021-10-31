@@ -1,4 +1,4 @@
-import { startmap, startLocations, pieceTypes, gemTypes, } from "./constants.js";
+import { startmap, startLocations, pieceTypes, gemTypes, genTreasureLocations, } from "./constants.js";
 import { randomBetween } from "./utils.js";
 export class GameMap {
     constructor() {
@@ -11,20 +11,20 @@ export class GameMap {
     }
 }
 export class Treasure {
-    constructor() {
-        this.x = randomBetween(0, startmap.length);
-        this.y = randomBetween(0, startmap.length);
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
         this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
     }
 }
 export class Player {
-    constructor(x, y, tNumber) {
+    constructor(x, y, pNumber, treasures) {
         this.x = x;
         this.y = y;
-        this.treasureCards = [];
-        for (let i = 0; i < tNumber; i++) {
-            this.treasureCards.push(new Treasure());
-        }
+        this.startX = x;
+        this.startY = y;
+        this.number = pNumber;
+        this.treasureCards = treasures;
     }
 }
 export class Game {
@@ -36,6 +36,7 @@ export class Game {
         this.draggableField = new DraggableField();
         this.players = [];
         this.treasuresAll = [];
+        this.treasureLocations = genTreasureLocations();
         this.genPlayers();
         this.addTreasure();
     }
@@ -44,8 +45,21 @@ export class Game {
         for (let i = 0; i < this.playerNum; i++) {
             const loc = remainingLoc[randomBetween(0, remainingLoc.length)];
             remainingLoc.splice(remainingLoc.indexOf(loc), 1);
-            this.players.push(new Player(loc[0], loc[1], this.treasurePerPlayer));
+            this.players.push(new Player(loc[0], loc[1], i, this.genTreasure(this.treasurePerPlayer)));
         }
+    }
+    genTLoc() {
+        const loc = this.treasureLocations[randomBetween(0, this.treasureLocations.length)];
+        this.treasureLocations.splice(this.treasureLocations.indexOf(loc), 1);
+        return loc;
+    }
+    genTreasure(n) {
+        const treasures = [];
+        for (let i = 0; i < n; i++) {
+            const loc = this.genTLoc();
+            treasures.push(new Treasure(loc[0], loc[1]));
+        }
+        return treasures;
     }
     addTreasure() {
         for (let i = 0; i < this.players.length; i++) {

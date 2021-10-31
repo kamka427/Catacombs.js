@@ -30,6 +30,8 @@ export function drawMap(game) {
         }
     }
     dImage(game.gameMap.randomfield, game.draggableField.x, game.draggableField.y);
+    drawPlayers(game);
+    drawTreasures(game);
 }
 function dImage(type, x, y) {
     const img = new Image(50, 50);
@@ -80,5 +82,27 @@ function dArrow(x, y, game) {
     else if (y / 50 === game.gameMap.map.length + 1)
         img.src = "../assets/uparrow.png";
     img.onload = () => ctx.drawImage(img, x, y, 50, 50);
+}
+function drawPlayers(game) {
+    for (let i = 0; i < game.players.length; i++) {
+        dPlayer(game.players[i].x, game.players[i].y);
+    }
+}
+function dPlayer(x, y) {
+    const img = new Image(50, 50);
+    // if(game.players[i].number === 1)
+    img.src = "../assets/player.png";
+    img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 20, 20);
+}
+function drawTreasures(game) {
+    for (let i = 0; i < game.treasuresAll.length; i++) {
+        dTreasure(game.treasuresAll[i].x, game.treasuresAll[i].y);
+    }
+}
+function dTreasure(x, y) {
+    const img = new Image(50, 50);
+    // if(game.players[i].number === 1)
+    img.src = "../assets/player.png";
+    img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 10, 10);
 }
 //# sourceMappingURL=graphics.js.map
