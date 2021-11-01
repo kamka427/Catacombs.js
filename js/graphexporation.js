@@ -1,113 +1,113 @@
-export function graphNext(x, y, game) {
+export function graphNext(row, col, game) {
     let availableFields = [];
-    switch (game.gameMap.map[x][y]) {
+    switch (game.gameMap.map[row][col]) {
         case "topleft":
-            if (y + 1 < game.gameMap.map.length && (game.gameMap.map[x][y + 1] === "horizontal" ||
-                game.gameMap.map[x][y + 1] === "bottomright" ||
-                game.gameMap.map[x][y + 1] === "topright" ||
-                game.gameMap.map[x][y + 1] === "tripledown" ||
-                game.gameMap.map[x][y + 1] === "tripleup" ||
-                game.gameMap.map[x][y + 1] === "tripleleft"))
-                availableFields.push([x, y + 1]);
-            if (x + 1 < game.gameMap.map.length && (game.gameMap.map[x + 1][y] === "vertical" ||
-                game.gameMap.map[x + 1][y] === "bottomright" ||
-                game.gameMap.map[x + 1][y] === "bottomleft" ||
-                game.gameMap.map[x + 1][y] === "tripleright" ||
-                game.gameMap.map[x + 1][y] === "tripleup" ||
-                game.gameMap.map[x + 1][y] === "tripleleft"))
-                availableFields.push([x + 1, y]);
+            if (col + 1 < game.gameMap.map.length && (game.gameMap.map[row][col + 1] === "horizontal" ||
+                game.gameMap.map[row][col + 1] === "bottomright" ||
+                game.gameMap.map[row][col + 1] === "topright" ||
+                game.gameMap.map[row][col + 1] === "tripledown" ||
+                game.gameMap.map[row][col + 1] === "tripleup" ||
+                game.gameMap.map[row][col + 1] === "tripleleft"))
+                availableFields.push([row, col + 1]);
+            if (row + 1 < game.gameMap.map.length && (game.gameMap.map[row + 1][col] === "vertical" ||
+                game.gameMap.map[row + 1][col] === "bottomright" ||
+                game.gameMap.map[row + 1][col] === "bottomleft" ||
+                game.gameMap.map[row + 1][col] === "tripleright" ||
+                game.gameMap.map[row + 1][col] === "tripleup" ||
+                game.gameMap.map[row + 1][col] === "tripleleft"))
+                availableFields.push([row + 1, col]);
             break;
         case "topright":
-            if (y - 1 > -1 && (game.gameMap.map[x][y - 1] === "horizontal" ||
-                game.gameMap.map[x][y - 1] === "bottomleft" ||
-                game.gameMap.map[x][y - 1] === "topleft" ||
-                game.gameMap.map[x][y - 1] === "tripledown" ||
-                game.gameMap.map[x][y - 1] === "tripleup" ||
-                game.gameMap.map[x][y - 1] === "tripleright"))
-                availableFields.push([x, y - 1]);
-            if (x + 1 < game.gameMap.map.length && (game.gameMap.map[x + 1][y] === "vertical" ||
-                game.gameMap.map[x + 1][y] === "bottomright" ||
-                game.gameMap.map[x + 1][y] === "bottomleft" ||
-                game.gameMap.map[x + 1][y] === "tripleright" ||
-                game.gameMap.map[x + 1][y] === "tripleup" ||
-                game.gameMap.map[x + 1][y] === "tripleleft"))
-                availableFields.push([x + 1, y]);
+            if (col - 1 > -1 && (game.gameMap.map[row][col - 1] === "horizontal" ||
+                game.gameMap.map[row][col - 1] === "bottomleft" ||
+                game.gameMap.map[row][col - 1] === "topleft" ||
+                game.gameMap.map[row][col - 1] === "tripledown" ||
+                game.gameMap.map[row][col - 1] === "tripleup" ||
+                game.gameMap.map[row][col - 1] === "tripleright"))
+                availableFields.push([row, col - 1]);
+            if (row + 1 < game.gameMap.map.length && (game.gameMap.map[row + 1][col] === "vertical" ||
+                game.gameMap.map[row + 1][col] === "bottomright" ||
+                game.gameMap.map[row + 1][col] === "bottomleft" ||
+                game.gameMap.map[row + 1][col] === "tripleright" ||
+                game.gameMap.map[row + 1][col] === "tripleup" ||
+                game.gameMap.map[row + 1][col] === "tripleleft"))
+                availableFields.push([row + 1, col]);
             break;
         case "bottomright":
-            if (y - 1 > -1 && (game.gameMap.map[x][y - 1] === "horizontal" ||
-                game.gameMap.map[x][y - 1] === "bottomleft" ||
-                game.gameMap.map[x][y - 1] === "topleft" ||
-                game.gameMap.map[x][y - 1] === "tripledown" ||
-                game.gameMap.map[x][y - 1] === "tripleup" ||
-                game.gameMap.map[x][y - 1] === "tripleright"))
-                availableFields.push([x, y - 1]);
-            if (x - 1 > -1 && (game.gameMap.map[x - 1][y] === "vertical" ||
-                game.gameMap.map[x - 1][y] === "topleft" ||
-                game.gameMap.map[x - 1][y] === "topright" ||
-                game.gameMap.map[x - 1][y] === "tripleright" ||
-                game.gameMap.map[x - 1][y] === "tripledown" ||
-                game.gameMap.map[x - 1][y] === "tripleleft"))
-                availableFields.push([x - 1, y]);
+            if (col - 1 > -1 && (game.gameMap.map[row][col - 1] === "horizontal" ||
+                game.gameMap.map[row][col - 1] === "bottomleft" ||
+                game.gameMap.map[row][col - 1] === "topleft" ||
+                game.gameMap.map[row][col - 1] === "tripledown" ||
+                game.gameMap.map[row][col - 1] === "tripleup" ||
+                game.gameMap.map[row][col - 1] === "tripleright"))
+                availableFields.push([row, col - 1]);
+            if (row - 1 > -1 && (game.gameMap.map[row - 1][col] === "vertical" ||
+                game.gameMap.map[row - 1][col] === "topleft" ||
+                game.gameMap.map[row - 1][col] === "topright" ||
+                game.gameMap.map[row - 1][col] === "tripleright" ||
+                game.gameMap.map[row - 1][col] === "tripledown" ||
+                game.gameMap.map[row - 1][col] === "tripleleft"))
+                availableFields.push([row - 1, col]);
             break;
         case "bottomleft":
-            if (y + 1 < game.gameMap.map.length && (game.gameMap.map[x][y + 1] === "horizontal" ||
-                game.gameMap.map[x][y + 1] === "bottomright" ||
-                game.gameMap.map[x][y + 1] === "topright" ||
-                game.gameMap.map[x][y + 1] === "tripledown" ||
-                game.gameMap.map[x][y + 1] === "tripleup" ||
-                game.gameMap.map[x][y + 1] === "tripleleft"))
-                availableFields.push([x, y + 1]);
-            if (x - 1 > -1 && (game.gameMap.map[x - 1][y] === "vertical" ||
-                game.gameMap.map[x - 1][y] === "topleft" ||
-                game.gameMap.map[x - 1][y] === "topright" ||
-                game.gameMap.map[x - 1][y] === "tripleright" ||
-                game.gameMap.map[x - 1][y] === "tripledown" ||
-                game.gameMap.map[x - 1][y] === "tripleleft"))
-                availableFields.push([x - 1, y]);
+            if (col + 1 < game.gameMap.map.length && (game.gameMap.map[row][col + 1] === "horizontal" ||
+                game.gameMap.map[row][col + 1] === "bottomright" ||
+                game.gameMap.map[row][col + 1] === "topright" ||
+                game.gameMap.map[row][col + 1] === "tripledown" ||
+                game.gameMap.map[row][col + 1] === "tripleup" ||
+                game.gameMap.map[row][col + 1] === "tripleleft"))
+                availableFields.push([row, col + 1]);
+            if (row - 1 > -1 && (game.gameMap.map[row - 1][col] === "vertical" ||
+                game.gameMap.map[row - 1][col] === "topleft" ||
+                game.gameMap.map[row - 1][col] === "topright" ||
+                game.gameMap.map[row - 1][col] === "tripleright" ||
+                game.gameMap.map[row - 1][col] === "tripledown" ||
+                game.gameMap.map[row - 1][col] === "tripleleft"))
+                availableFields.push([row - 1, col]);
             break;
         // case "vertical":
-        //     if (y + 1 < game.gameMap.map.length)
-        //         availableFields.push([x, y + 1]);
-        //     if (y - 1 > 0)
-        //         availableFields.push([x, y - 1]);
+        //     if (col + 1 < game.gameMap.map.length)
+        //         availableFields.push([row, col + 1]);
+        //     if (col - 1 > 0)
+        //         availableFields.push([row, col - 1]);
         //     break;
         // case "horizontal":
-        //     if (x + 1 < game.gameMap.map.length)
-        //         availableFields.push([x + 1, y]);
-        //     if (x - 1 > 0)
-        //         availableFields.push([x - 1, y]);
+        //     if (row + 1 < game.gameMap.map.length)
+        //         availableFields.push([row + 1, col]);
+        //     if (row - 1 > 0)
+        //         availableFields.push([row - 1, col]);
         //     break;
         // case "tripleright":
-        //     if (y + 1 < game.gameMap.map.length)
-        //         availableFields.push([x, y + 1]);
-        //     if (y - 1 > 0)
-        //         availableFields.push([x, y - 1]);
-        //     if (x + 1 < game.gameMap.map.length)
-        //         availableFields.push([x + 1, y]);
+        //     if (col + 1 < game.gameMap.map.length)
+        //         availableFields.push([row, col + 1]);
+        //     if (col - 1 > 0)
+        //         availableFields.push([row, col - 1]);
+        //     if (row + 1 < game.gameMap.map.length)
+        //         availableFields.push([row + 1, col]);
         //     break;
         // case "tripledown":
-        //     if (x + 1 < game.gameMap.map.length)
-        //         availableFields.push([x + 1, y]);
-        //     if (x - 1 > 0)
-        //         availableFields.push([x - 1, y]);
-        //     if (y + 1 < game.gameMap.map.length)
-        //         availableFields.push([x, y + 1]);
+        //     if (row + 1 < game.gameMap.map.length)
+        //         availableFields.push([row + 1, col]);
+        //     if (row - 1 > 0)
+        //         availableFields.push([row - 1, col]);
+        //     if (col + 1 < game.gameMap.map.length)
+        //         availableFields.push([row, col + 1]);
         //     break;
         // case "tripleleft":
-        //     if (y + 1 < game.gameMap.map.length)
-        //         availableFields.push([x, y + 1]);
-        //     if (y - 1 > 0)
-        //         availableFields.push([x, y - 1]);
-        //     if (x - 1 > 0)
-        //         availableFields.push([x - 1, y]);
+        //     if (col + 1 < game.gameMap.map.length)
+        //         availableFields.push([row, col + 1]);
+        //     if (col - 1 > 0)
+        //         availableFields.push([row, col - 1]);
+        //     if (row - 1 > 0)
+        //         availableFields.push([row - 1, col]);
         //     break;
         // case "tripleup":
-        //     if (x + 1 < game.gameMap.map.length)
-        //         availableFields.push([x + 1, y]);
-        //     if (x - 1 > 0)
-        //         availableFields.push([x - 1, y]);
-        //     if (y - 1 > 0)
-        //         availableFields.push([x, y - 1]);
+        //     if (row + 1 < game.gameMap.map.length)
+        //         availableFields.push([row + 1, col]);
+        //     if (row - 1 > 0)
+        //         availableFields.push([row - 1, col]);
+        //     if (col - 1 > 0)
+        //         availableFields.push([row, col - 1]);
         //     break;
     }
     let tmp = availableFields;

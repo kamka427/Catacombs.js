@@ -33,7 +33,7 @@ export function drawMap(game) {
     drawTreasures(game);
     // if(game.fallenTreasure !== null)
 }
-function dImage(type, x, y) {
+function dImage(type, row, col) {
     const img = new Image(50, 50);
     switch (type) {
         case "topleft":
@@ -69,47 +69,47 @@ function dImage(type, x, y) {
         default:
             break;
     }
-    img.onload = () => ctx.drawImage(img, x, y, 50, 50);
+    img.onload = () => ctx.drawImage(img, row, col, 50, 50);
 }
-function dArrow(x, y, game) {
+function dArrow(row, col, game) {
     const img = new Image(50, 50);
-    if (x === 0)
+    if (row === 0)
         img.src = "../assets/rightarrow.png";
-    else if (x / 50 === game.gameMap.map.length + 1)
+    else if (row / 50 === game.gameMap.map.length + 1)
         img.src = "../assets/leftarrow.png";
-    else if (y === 0)
+    else if (col === 0)
         img.src = "../assets/downarrow.png";
-    else if (y / 50 === game.gameMap.map.length + 1)
+    else if (col / 50 === game.gameMap.map.length + 1)
         img.src = "../assets/uparrow.png";
-    img.onload = () => ctx.drawImage(img, x, y, 50, 50);
+    img.onload = () => ctx.drawImage(img, row, col, 50, 50);
 }
 function drawPlayers(game) {
     for (let i = 0; i < game.players.length; i++) {
-        dPlayer(game.players[i].x, game.players[i].y);
+        dPlayer(game.players[i].row, game.players[i].col);
     }
 }
-function dPlayer(x, y) {
+function dPlayer(row, col) {
     const img = new Image(50, 50);
     // if(game.players[i].number === 1)
     img.src = "../assets/player.png";
-    img.onload = () => ctx.drawImage(img, (y + 1) * 50, (x + 1) * 50, 20, 20);
+    img.onload = () => ctx.drawImage(img, (col + 1) * 50, (row + 1) * 50, 20, 20);
 }
 function drawTreasures(game) {
     for (let i = 0; i < game.treasuresAll.length; i++) {
-        dTreasure(game.treasuresAll[i].x, game.treasuresAll[i].y);
+        dTreasure(game.treasuresAll[i].row, game.treasuresAll[i].col);
     }
     if (game.fallenTreasure !== null)
         dFallenT(game.draggableField.x, game.draggableField.y);
 }
-function dFallenT(x, y) {
+function dFallenT(row, col) {
     const img = new Image(50, 50);
     img.src = "../assets/player.png";
-    img.onload = () => ctx.drawImage(img, x, y, 10, 10);
+    img.onload = () => ctx.drawImage(img, row, col, 10, 10);
 }
-function dTreasure(x, y) {
+function dTreasure(row, col) {
     const img = new Image(50, 50);
     // if(game.players[i].number === 1)
     img.src = "../assets/player.png";
-    img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 10, 10);
+    img.onload = () => ctx.drawImage(img, (row + 1) * 50, (col + 1) * 50, 10, 10);
 }
 //# sourceMappingURL=graphics.js.map

@@ -6,9 +6,9 @@ export function getMousePosition(canvas: HTMLCanvasElement, event: MouseEvent) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-  const convX = Math.floor((x * 11) / canvas.width) - 1;
-  const convY = Math.floor((y * 9) / canvas.height) - 1;
-  return { convX: convX, convY: convY, x: x, y: y };
+  const convCol = Math.floor((x * 11) / canvas.width) - 1;
+  const convRow = Math.floor((y * 9) / canvas.height) - 1;
+  return { convRow: convRow, convCol: convCol, x: x, y: y };
 }
 
 export function dragStart(game: Game) {
@@ -42,40 +42,40 @@ export function dragEnd(game: Game) {
 
 export function clickArrow(game: Game, canvas: HTMLCanvasElement, e: MouseEvent) {
   const loc = getMousePosition(canvas, e)
-  if (loc.convX === 1 && loc.convY === -1) {
+  if (loc.convCol === 1 && loc.convRow === -1) {
     push(1, game, "down")
   }
-  else if (loc.convX === 3 && loc.convY === -1) {
+  else if (loc.convCol === 3 && loc.convRow === -1) {
     push(3, game, "down")
   }
-  else if (loc.convX === 5 && loc.convY === -1) {
+  else if (loc.convCol === 5 && loc.convRow === -1) {
     push(5, game, "down")
   }
-  else if (loc.convX === -1 && loc.convY === 1) {
+  else if (loc.convCol === -1 && loc.convRow === 1) {
     push(1, game, "right")
   }
-  else if (loc.convX === -1 && loc.convY === 3) {
+  else if (loc.convCol === -1 && loc.convRow === 3) {
     push(3, game, "right")
   }
-  else if (loc.convX === -1 && loc.convY === 5) {
+  else if (loc.convCol === -1 && loc.convRow === 5) {
     push(5, game, "right")
   }
-  if (loc.convX === 7 && loc.convY === 1) {
+  if (loc.convCol === 7 && loc.convRow === 1) {
     push(1, game, "left")
   }
-  else if (loc.convX === 7 && loc.convY === 3) {
+  else if (loc.convCol === 7 && loc.convRow === 3) {
     push(3, game, "left")
   }
-  else if (loc.convX === 7 && loc.convY === 5) {
+  else if (loc.convCol === 7 && loc.convRow === 5) {
     push(5, game, "left")
   }
-  if (loc.convX === 1 && loc.convY === 7) {
+  if (loc.convCol === 1 && loc.convRow === 7) {
     push(1, game, "up")
   }
-  else if (loc.convX === 3 && loc.convY === 7) {
+  else if (loc.convCol === 3 && loc.convRow === 7) {
     push(3, game, "up")
   }
-  else if (loc.convX === 5 && loc.convY === 7) {
+  else if (loc.convCol === 5 && loc.convRow === 7) {
     push(5, game, "up")
   }
 }

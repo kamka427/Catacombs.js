@@ -28,35 +28,35 @@ export class GameMap {
 }
 
 export class Treasure {
-  x: number;
-  y: number;
+  row: number;
+  col: number;
   type: Gem;
 
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
+  constructor(row: number, col: number) {
+    this.row = row;
+    this.col = col;
     this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
   }
 }
 
 export class Player {
-  x: number;
-  y: number;
-  startX: number;
-  startY: number;
+  row: number;
+  col: number;
+  startRow: number;
+  startCol: number;
   number: number;
   treasureCards: Array<Treasure>;
 
   constructor(
-    x: number,
-    y: number,
+    row: number,
+    col: number,
     pNumber: number,
     treasures: Array<Treasure>
   ) {
-    this.x = x;
-    this.y = y;
-    this.startX = x;
-    this.startY = y;
+    this.row = row;
+    this.col = col;
+    this.startRow = row;
+    this.startCol = col;
     this.number = pNumber;
     this.treasureCards = treasures;
   }
@@ -94,7 +94,7 @@ export class Game {
       const loc: number[] = remainingLoc[randomBetween(0, remainingLoc.length)];
       remainingLoc.splice(remainingLoc.indexOf(loc), 1);
       this.players.push(
-        new Player(loc[1], loc[0], i, this.genTreasure(this.treasurePerPlayer))
+        new Player(loc[0], loc[1], i, this.genTreasure(this.treasurePerPlayer))
       );
     }
   }
@@ -108,7 +108,7 @@ export class Game {
     const treasures = [];
     for (let i = 0; i < n; i++) {
       const loc = this.genTLoc();
-      treasures.push(new Treasure(loc[1], loc[0]));
+      treasures.push(new Treasure(loc[0], loc[1]));
     }
     return treasures;
   }

@@ -11,18 +11,18 @@ export class GameMap {
     }
 }
 export class Treasure {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(row, col) {
+        this.row = row;
+        this.col = col;
         this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
     }
 }
 export class Player {
-    constructor(x, y, pNumber, treasures) {
-        this.x = x;
-        this.y = y;
-        this.startX = x;
-        this.startY = y;
+    constructor(row, col, pNumber, treasures) {
+        this.row = row;
+        this.col = col;
+        this.startRow = row;
+        this.startCol = col;
         this.number = pNumber;
         this.treasureCards = treasures;
     }
@@ -48,7 +48,7 @@ export class Game {
         for (let i = 0; i < this.playerNum; i++) {
             const loc = remainingLoc[randomBetween(0, remainingLoc.length)];
             remainingLoc.splice(remainingLoc.indexOf(loc), 1);
-            this.players.push(new Player(loc[1], loc[0], i, this.genTreasure(this.treasurePerPlayer)));
+            this.players.push(new Player(loc[0], loc[1], i, this.genTreasure(this.treasurePerPlayer)));
         }
     }
     genTLoc() {
@@ -60,7 +60,7 @@ export class Game {
         const treasures = [];
         for (let i = 0; i < n; i++) {
             const loc = this.genTLoc();
-            treasures.push(new Treasure(loc[1], loc[0]));
+            treasures.push(new Treasure(loc[0], loc[1]));
         }
         return treasures;
     }
