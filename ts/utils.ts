@@ -20,9 +20,9 @@ export function push(index: number, game: Game, direction: string) {
       game.gameMap.map[index].push(game.gameMap.randomfield);
       game.gameMap.randomfield = tmp;
       for (let i = 0; i < game.players.length; i++) {
-        if (game.players[i].row === 0 && game.players[i].col === index)
-          game.players[i].row = 6;
-        else if (game.players[i].col === index) game.players[i].row--;
+        if (game.players[i].col === 0 && game.players[i].row === index)
+          game.players[i].col = 6;
+        else if (game.players[i].row === index) game.players[i].col--;
       }
       // fell = false;
       if (!fell && game.fallenTreasure !== null) {
@@ -54,9 +54,9 @@ export function push(index: number, game: Game, direction: string) {
       game.gameMap.map[index].unshift(game.gameMap.randomfield);
       game.gameMap.randomfield = tmp;
       for (let i = 0; i < game.players.length; i++) {
-        if (game.players[i].row === 6 && game.players[i].col === index)
-          game.players[i].row = 0;
-        else if (game.players[i].col === index) game.players[i].row++;
+        if (game.players[i].col === 6 && game.players[i].row === index)
+          game.players[i].col = 0;
+        else if (game.players[i].row === index) game.players[i].col++;
       }
       // fell = false;
       if (!fell && game.fallenTreasure !== null) {
@@ -94,8 +94,8 @@ export function push(index: number, game: Game, direction: string) {
       game.gameMap.randomfield = col[6];
       for (let i = 0; i < game.players.length; i++) {
         if (game.players[i].col === index && game.players[i].row === 6)
-          game.players[i].col = 0;
-        else if (game.players[i].row === index) game.players[i].col++;
+          game.players[i].row = 0;
+        else if (game.players[i].col === index) game.players[i].row++;
       }
       // fell = false;
       if (!fell && game.fallenTreasure !== null) {
@@ -133,9 +133,9 @@ export function push(index: number, game: Game, direction: string) {
       game.gameMap.map[6][index] = game.gameMap.randomfield;
       game.gameMap.randomfield = tmp;
       for (let i = 0; i < game.players.length; i++) {
-        if (game.players[i].col === 0 && game.players[i].row === index)
-          game.players[i].col = 6;
-        else if (game.players[i].row === index) game.players[i].col--;
+        if (game.players[i].row === 0 && game.players[i].col === index)
+          game.players[i].row = 6;
+        else if (game.players[i].col === index) game.players[i].row--;
       }
       // fell = false;
       if (!fell && game.fallenTreasure !== null) {

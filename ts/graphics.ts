@@ -8,29 +8,29 @@ export function drawMap(game: Game): void {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
   ctx.fillStyle = "green";
   ctx.fillRect(0, 0, gameArea.height, gameArea.height);
-  for (let i = 0; i < game.gameMap.map.length + 2; i++) {
-    for (let j = 0; j < game.gameMap.map.length + 2; j++) {
+  for (let col = 0; col < game.gameMap.map.length + 2; col++) {
+    for (let row = 0; row < game.gameMap.map.length + 2; row++) {
       if (
-        (i === 0 && j > 0 && j < game.gameMap.map.length && j % 2 === 0) ||
-        (i === game.gameMap.map.length + 1 &&
-          j > 0 &&
-          j < game.gameMap.map.length &&
-          j % 2 === 0) ||
-        (j === 0 && i > 0 && i < game.gameMap.map.length && i % 2 === 0) ||
-        (j === game.gameMap.map.length + 1 &&
-          i > 0 &&
-          i < game.gameMap.map.length &&
-          i % 2 === 0)
+        (col === 0 && row > 0 && row < game.gameMap.map.length && row % 2 === 0) ||
+        (col === game.gameMap.map.length + 1 &&
+          row > 0 &&
+          row < game.gameMap.map.length &&
+          row % 2 === 0) ||
+        (row === 0 && col > 0 && col < game.gameMap.map.length && col % 2 === 0) ||
+        (row === game.gameMap.map.length + 1 &&
+          col > 0 &&
+          col < game.gameMap.map.length &&
+          col % 2 === 0)
       ) {
         // ctx.fillText("side", i * 50, j * 50 + 25);
-        dArrow(i * 50, j * 50, game);
+        dArrow(col * 50, row * 50, game);
       } else if (
-        !(i === 0 ||
-          j === 0 ||
-          i === game.gameMap.map.length + 1 ||
-          j === game.gameMap.map.length + 1)
+        !(col === 0 ||
+          row === 0 ||
+          col === game.gameMap.map.length + 1 ||
+          row === game.gameMap.map.length + 1)
       ) {
-        dImage(game.gameMap.map[j - 1][i - 1], i * 50, j * 50);
+        dImage(game.gameMap.map[row - 1][col - 1], col * 50, row * 50);
       }
       // ctx.strokeRect(i * 50, j * 50, 50, 50)
     }
