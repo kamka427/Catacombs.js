@@ -1,5 +1,5 @@
 import { startmap, startLocations, pieceTypes, gemTypes, genTreasureLocations, } from "./constants.js";
-import { graphNext } from "./graphexporation.js";
+import { graphExplore } from "./graphexporation.js";
 import { randomBetween } from "./utils.js";
 export class GameMap {
     constructor() {
@@ -43,7 +43,9 @@ export class Game {
         this.addTreasure();
         this.fallenTreasure = null;
         this.currentPlayer = 0;
-        graphNext(this.players[this.currentPlayer].row, this.players[this.currentPlayer].col, this);
+        // graphNext(this.players[this.currentPlayer].row,this.players[this.currentPlayer].col,this)
+        this.availableFields = [];
+        graphExplore(this);
     }
     genPlayers() {
         const remainingLoc = [...startLocations];

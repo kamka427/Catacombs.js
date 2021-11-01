@@ -1,4 +1,4 @@
-import { graphNext } from "./graphexporation.js";
+import { graphExplore } from "./graphexporation.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 export const randomBetween = (min, max) => Math.floor(Math.random() * (max - min));
@@ -202,8 +202,12 @@ export function step(canvas, game, e) {
     //   game.players[game.currentPlayer].col,
     //   game
     // );
-    graphNext(game.players[game.currentPlayer].row, game.players[game.currentPlayer].col, game);
+    // graphNext(
+    //     game.players[game.currentPlayer].row,
+    //     game.players[game.currentPlayer].col,
+    //     game)
     // console.log(locations);
+    graphExplore(game);
     console.log(game.players);
     const pos = getMousePosition(canvas, e);
     console.log(pos);
@@ -226,6 +230,10 @@ export function endTurn(game) {
         game.currentPlayer = 0;
     else
         game.currentPlayer++;
-    graphNext(game.players[game.currentPlayer].row, game.players[game.currentPlayer].col, game);
+    // graphNext(
+    //   game.players[game.currentPlayer].row,
+    //   game.players[game.currentPlayer].col,
+    //   game)
+    graphExplore(game);
 }
 //# sourceMappingURL=utils.js.map

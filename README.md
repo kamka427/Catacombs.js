@@ -47,7 +47,7 @@ Az alap feladatok (12 pont)
 
 Plusz feladatok (plusz 5 pont)
 
-[ ] Lépés: minden elérhető szoba jelölése (3 pont)
+[x] Lépés: minden elérhető szoba jelölése (3 pont)
 [ ] Mentés: játék közben egy gombra kattintva elmenthető az aktuális állapot (0,5 pont)
 [ ] Mentés: a kezdőképernyőn megjelenik, ha van mentett állapot (0,5 pont)
 [ ] Mentés: a kezdőképernyőn megjelenő mentett állapot betölthető (1 pont)

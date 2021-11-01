@@ -1,6 +1,6 @@
 import { Game } from "./classes.js";
 import { Piece } from "./constants.js";
-import { graphNext } from "./graphexporation.js";
+import { graphExplore, graphNext } from "./graphexporation.js";
 import { drawAvailable, drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 
@@ -223,11 +223,12 @@ export function step(canvas: HTMLCanvasElement, game: Game, e: MouseEvent) {
   //   game.players[game.currentPlayer].col,
   //   game
   // );
-  graphNext(
-      game.players[game.currentPlayer].row,
-      game.players[game.currentPlayer].col,
-      game)
+  // graphNext(
+  //     game.players[game.currentPlayer].row,
+  //     game.players[game.currentPlayer].col,
+  //     game)
   // console.log(locations);
+  graphExplore(game)
   console.log(game.players);
 
   const pos = getMousePosition(canvas, e);
@@ -252,8 +253,9 @@ export function step(canvas: HTMLCanvasElement, game: Game, e: MouseEvent) {
 export function endTurn(game: Game) {
   if (game.currentPlayer === game.players.length-1) game.currentPlayer = 0;
   else game.currentPlayer++;
-  graphNext(
-    game.players[game.currentPlayer].row,
-    game.players[game.currentPlayer].col,
-    game)
+  // graphNext(
+  //   game.players[game.currentPlayer].row,
+  //   game.players[game.currentPlayer].col,
+  //   game)
+  graphExplore(game)
 }
