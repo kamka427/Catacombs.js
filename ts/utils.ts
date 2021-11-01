@@ -11,7 +11,8 @@ const getCol = (arr: any[], n: number): any => arr.map((x: any[]) => x[n]);
 
 export function push(index: number, game: Game, direction: string) {
   let tmp: Piece;
-  let fell;
+  let fell = false;
+  console.log(fell)
   const col: Array<Piece> = getCol(game.gameMap.map, index);
   switch (direction) {
     case "left":
@@ -23,7 +24,7 @@ export function push(index: number, game: Game, direction: string) {
           game.players[i].x = 6;
         else if (game.players[i].y === index) game.players[i].x--;
       }
-      fell = false;
+      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.x = 7;
         game.fallenTreasure.y = index;
@@ -40,8 +41,9 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          // game.treasuresAll[i].x--
-        } if (game.treasuresAll[i].y === index) game.treasuresAll[i].x--;
+          if(i<game.treasuresAll.length)
+           game.treasuresAll[i].x--
+        } else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x--;
       }
       console.log(game.fallenTreasure);
 
@@ -56,7 +58,7 @@ export function push(index: number, game: Game, direction: string) {
           game.players[i].x = 0;
         else if (game.players[i].y === index) game.players[i].x++;
       }
-      fell = false;
+      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.x = -1;
         game.fallenTreasure.y = index;
@@ -73,8 +75,9 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          // game.treasuresAll[i].x++
-        } if (game.treasuresAll[i].y === index) game.treasuresAll[i].x++;
+          if(i<game.treasuresAll.length)
+           game.treasuresAll[i].x++
+        }else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x++; // hibás minden iránynál ha hirtelen van váltás irányok között
       }
       console.log(game.fallenTreasure);
       break;
@@ -92,15 +95,15 @@ export function push(index: number, game: Game, direction: string) {
       for (let i = 0; i < game.players.length; i++) {
         if (game.players[i].y === index && game.players[i].x === 6)
           game.players[i].y = 0;
-          else if (game.players[i].x === index) game.players[i].y++;
-        }
-        fell = false;
-        if (!fell && game.fallenTreasure !== null) {
-          game.fallenTreasure.x = index;
-          game.fallenTreasure.y = -1;
-          game.treasuresAll.push(game.fallenTreasure);
-          game.fallenTreasure = null;
-        }
+        else if (game.players[i].x === index) game.players[i].y++;
+      }
+      // fell = false;
+      if (!fell && game.fallenTreasure !== null) {
+        game.fallenTreasure.x = index;
+        game.fallenTreasure.y = -1;
+        game.treasuresAll.push(game.fallenTreasure);
+        game.fallenTreasure = null;
+      }
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (game.treasuresAll[i].x === index && game.treasuresAll[i].y === 6) {
           game.fallenTreasure = game.treasuresAll[i];
@@ -111,8 +114,10 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          // game.treasuresAll[i].y++
-        } if (game.treasuresAll[i].x === index) game.treasuresAll[i].y++;
+          if(i<game.treasuresAll.length)
+
+           game.treasuresAll[i].y++
+        } else if (game.treasuresAll[i].x === index) game.treasuresAll[i].y++;
       }
       console.log(game.fallenTreasure);
       break;
@@ -132,7 +137,7 @@ export function push(index: number, game: Game, direction: string) {
           game.players[i].y = 6;
         else if (game.players[i].x === index) game.players[i].y--;
       }
-      fell = false;
+      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.x = index;
         game.fallenTreasure.y = 7;
@@ -149,13 +154,17 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          // game.treasuresAll[i].y--
-        } if (game.treasuresAll[i].x === index) game.treasuresAll[i].y--;
+          if(i<game.treasuresAll.length)
+
+          game.treasuresAll[i].y--
+        } else if (game.treasuresAll[i].x === index) game.treasuresAll[i].y--;
       }
       console.log(game.fallenTreasure);
       break;
   }
   drawMap(game);
+  console.log(game.treasuresAll);
+  
 }
 
 export function rotate(
