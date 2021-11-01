@@ -41,8 +41,8 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          if(i<game.treasuresAll.length)
-           game.treasuresAll[i].x--
+          if (i < game.treasuresAll.length)
+            game.treasuresAll[i].x--
         } else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x--;
       }
       console.log(game.fallenTreasure);
@@ -75,9 +75,9 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          if(i<game.treasuresAll.length)
-           game.treasuresAll[i].x++
-        }else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x++; // hibás minden iránynál ha hirtelen van váltás irányok között
+          if (i < game.treasuresAll.length)
+            game.treasuresAll[i].x++
+        } else if (game.treasuresAll[i].y === index) game.treasuresAll[i].x++; // hibás minden iránynál ha hirtelen van váltás irányok között
       }
       console.log(game.fallenTreasure);
       break;
@@ -114,9 +114,9 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          if(i<game.treasuresAll.length)
+          if (i < game.treasuresAll.length)
 
-           game.treasuresAll[i].y++
+            game.treasuresAll[i].y++
         } else if (game.treasuresAll[i].x === index) game.treasuresAll[i].y++;
       }
       console.log(game.fallenTreasure);
@@ -154,9 +154,9 @@ export function push(index: number, game: Game, direction: string) {
             1
           );
           fell = true;
-          if(i<game.treasuresAll.length)
+          if (i < game.treasuresAll.length)
 
-          game.treasuresAll[i].y--
+            game.treasuresAll[i].y--
         } else if (game.treasuresAll[i].x === index) game.treasuresAll[i].y--;
       }
       console.log(game.fallenTreasure);
@@ -164,7 +164,7 @@ export function push(index: number, game: Game, direction: string) {
   }
   drawMap(game);
   console.log(game.treasuresAll);
-  
+
 }
 
 export function rotate(
@@ -224,16 +224,20 @@ export function step(canvas: HTMLCanvasElement, game: Game, e: MouseEvent) {
     game
   );
   console.log(locations);
+  console.log(game.players);
+
   const pos = getMousePosition(canvas, e);
   console.log(pos);
   let exists = false;
   for (let i = 0; i < locations.length; i++) {
-    if (locations[i][0] === pos.convX && locations[i][1] === pos.convY)
+    if (locations[i][1] === pos.convX && locations[i][0] === pos.convY)
       exists = true;
   }
+  console.log(exists);
+
   if (exists) {
-    game.players[game.currentPlayer].x = pos.convX;
-    game.players[game.currentPlayer].y = pos.convY;
+    game.players[game.currentPlayer].x = pos.convY;
+    game.players[game.currentPlayer].y = pos.convX;
     drawMap(game);
     endTurn(game);
   }

@@ -199,16 +199,18 @@ export function rotate(game, gameArea, e) {
 export function step(canvas, game, e) {
     const locations = graphNext(game.players[game.currentPlayer].x, game.players[game.currentPlayer].y, game);
     console.log(locations);
+    console.log(game.players);
     const pos = getMousePosition(canvas, e);
     console.log(pos);
     let exists = false;
     for (let i = 0; i < locations.length; i++) {
-        if (locations[i][0] === pos.convX && locations[i][1] === pos.convY)
+        if (locations[i][1] === pos.convX && locations[i][0] === pos.convY)
             exists = true;
     }
+    console.log(exists);
     if (exists) {
-        game.players[game.currentPlayer].x = pos.convX;
-        game.players[game.currentPlayer].y = pos.convY;
+        game.players[game.currentPlayer].x = pos.convY;
+        game.players[game.currentPlayer].y = pos.convX;
         drawMap(game);
         endTurn(game);
     }

@@ -94,7 +94,7 @@ export class Game {
       const loc: number[] = remainingLoc[randomBetween(0, remainingLoc.length)];
       remainingLoc.splice(remainingLoc.indexOf(loc), 1);
       this.players.push(
-        new Player(loc[0], loc[1], i, this.genTreasure(this.treasurePerPlayer))
+        new Player(loc[1], loc[0], i, this.genTreasure(this.treasurePerPlayer))
       );
     }
   }
@@ -108,7 +108,7 @@ export class Game {
     const treasures = [];
     for (let i = 0; i < n; i++) {
       const loc = this.genTLoc();
-      treasures.push(new Treasure(loc[0], loc[1]));
+      treasures.push(new Treasure(loc[1], loc[0]));
     }
     return treasures;
   }

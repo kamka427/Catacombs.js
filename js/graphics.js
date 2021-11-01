@@ -92,7 +92,7 @@ function dPlayer(x, y) {
     const img = new Image(50, 50);
     // if(game.players[i].number === 1)
     img.src = "../assets/player.png";
-    img.onload = () => ctx.drawImage(img, (x + 1) * 50, (y + 1) * 50, 20, 20);
+    img.onload = () => ctx.drawImage(img, (y + 1) * 50, (x + 1) * 50, 20, 20);
 }
 function drawTreasures(game) {
     for (let i = 0; i < game.treasuresAll.length; i++) {
