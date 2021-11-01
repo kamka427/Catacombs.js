@@ -1,7 +1,7 @@
 import { Game } from "./classes.js";
 import { Piece } from "./constants.js";
 import { graphNext } from "./graphexporation.js";
-import { drawMap } from "./graphics.js";
+import { drawAvailable, drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 
 export const randomBetween = (min: number, max: number) =>
@@ -218,32 +218,42 @@ export function rotate(
   drawMap(game);
 }
 export function step(canvas: HTMLCanvasElement, game: Game, e: MouseEvent) {
-  const locations = graphNext(
-    game.players[game.currentPlayer].row,
-    game.players[game.currentPlayer].col,
-    game
-  );
-  console.log(locations);
+  // const locations = graphNext(
+  //   game.players[game.currentPlayer].row,
+  //   game.players[game.currentPlayer].col,
+  //   game
+  // );
+  graphNext(
+      game.players[game.currentPlayer].row,
+      game.players[game.currentPlayer].col,
+      game)
+  // console.log(locations);
   console.log(game.players);
 
   const pos = getMousePosition(canvas, e);
   console.log(pos);
   let exists = false;
-  for (let i = 0; i < locations.length; i++) {
-    if (locations[i][1] === pos.convCol && locations[i][0] === pos.convRow)
+  for (let i = 0; i < game.availableFields.length; i++) {
+    if (game.availableFields[i][1] === pos.convCol && game.availableFields[i][0] === pos.convRow)
       exists = true;
   }
   console.log(exists);
-
+  
   if (exists) {
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
-    drawMap(game);
+    // drawMap(game);
     endTurn(game);
   }
+  drawMap(game);
+
 }
 
 export function endTurn(game: Game) {
-  if (game.currentPlayer === 3) game.currentPlayer = 0;
+  if (game.currentPlayer === game.players.length-1) game.currentPlayer = 0;
   else game.currentPlayer++;
+  graphNext(
+    game.players[game.currentPlayer].row,
+    game.players[game.currentPlayer].col,
+    game)
 }

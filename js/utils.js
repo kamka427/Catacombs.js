@@ -197,28 +197,35 @@ export function rotate(game, gameArea, e) {
     drawMap(game);
 }
 export function step(canvas, game, e) {
-    const locations = graphNext(game.players[game.currentPlayer].row, game.players[game.currentPlayer].col, game);
-    console.log(locations);
+    // const locations = graphNext(
+    //   game.players[game.currentPlayer].row,
+    //   game.players[game.currentPlayer].col,
+    //   game
+    // );
+    graphNext(game.players[game.currentPlayer].row, game.players[game.currentPlayer].col, game);
+    // console.log(locations);
     console.log(game.players);
     const pos = getMousePosition(canvas, e);
     console.log(pos);
     let exists = false;
-    for (let i = 0; i < locations.length; i++) {
-        if (locations[i][1] === pos.convCol && locations[i][0] === pos.convRow)
+    for (let i = 0; i < game.availableFields.length; i++) {
+        if (game.availableFields[i][1] === pos.convCol && game.availableFields[i][0] === pos.convRow)
             exists = true;
     }
     console.log(exists);
     if (exists) {
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;
-        drawMap(game);
+        // drawMap(game);
         endTurn(game);
     }
+    drawMap(game);
 }
 export function endTurn(game) {
-    if (game.currentPlayer === 3)
+    if (game.currentPlayer === game.players.length - 1)
         game.currentPlayer = 0;
     else
         game.currentPlayer++;
+    graphNext(game.players[game.currentPlayer].row, game.players[game.currentPlayer].col, game);
 }
 //# sourceMappingURL=utils.js.map

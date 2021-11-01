@@ -4,6 +4,41 @@ import { Piece } from "./constants.js";
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
 
+const bottomleft = new Image()
+
+bottomleft.src = "../assets/bottomleft.png";
+
+
+const bottomright = new Image()
+bottomright.src = "../assets/bottomright.png";
+const leftarrow = new Image()
+leftarrow.src = "../assets/leftarrow.png";
+const horizontal = new Image()
+horizontal.src = "../assets/horizontal.png";
+const downarrow = new Image()
+downarrow.src = "../assets/downarrow.png";
+const player = new Image()
+player.src = "../assets/player.png";
+const rightarrow = new Image()
+rightarrow.src = "../assets/rightarrow.png";
+const topleft = new Image()
+topleft.src = "../assets/topleft.png";
+const topright = new Image()
+topright.src = "../assets/topright.png";
+const tripledown = new Image()
+tripledown.src = "../assets/tripledown.png";
+const tripleleft = new Image()
+tripleleft.src = "../assets/tripleleft.png";
+const tripleright = new Image()
+tripleright.src = "../assets/tripleright.png";
+const tripleup = new Image()
+tripleup.src = "../assets/tripleup.png";
+const uparrow = new Image()
+uparrow.src = "../assets/uparrow.png";
+const vertical = new Image()
+vertical.src = "../assets/vertical.png";
+
+
 export function drawMap(game: Game): void {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
   ctx.fillStyle = "green";
@@ -43,58 +78,64 @@ export function drawMap(game: Game): void {
   drawPlayers(game);
   drawTreasures(game);
   // if(game.fallenTreasure !== null)
+  drawAvailable(game)
+  drawActualPlayer(game)
+
 }
 
 function dImage(type: Piece, row: number, col: number) {
-  const img = new Image(50, 50);
+
   switch (type) {
     case "topleft":
-      img.src = "../assets/topleft.png";
+      ctx.drawImage(topleft, row, col, 50, 50);
       break;
     case "topright":
-      img.src = "../assets/topright.png";
+      ctx.drawImage(topright, row, col, 50, 50);
       break;
     case "bottomleft":
-      img.src = "../assets/bottomleft.png";
+      ctx.drawImage(bottomleft, row, col, 50, 50);
       break;
     case "bottomright":
-      img.src = "../assets/bottomright.png";
+      ctx.drawImage(bottomright, row, col, 50, 50);
       break;
     case "horizontal":
-      img.src = "../assets/horizontal.png";
+      ctx.drawImage(horizontal, row, col, 50, 50);
       break;
     case "vertical":
-      img.src = "../assets/vertical.png";
+      ctx.drawImage(vertical, row, col, 50, 50);
       break;
     case "tripleup":
-      img.src = "../assets/tripleup.png";
+      ctx.drawImage(tripleup, row, col, 50, 50);
       break;
     case "tripleright":
-      img.src = "../assets/tripleright.png";
+      ctx.drawImage(tripleright, row, col, 50, 50);
       break;
     case "tripledown":
-      img.src = "../assets/tripledown.png";
+      ctx.drawImage(tripledown, row, col, 50, 50);
       break;
     case "tripleleft":
-      img.src = "../assets/tripleleft.png";
+      ctx.drawImage(tripleleft, row, col, 50, 50);
       break;
-    default:
-      break;
+
   }
-  img.onload = () => ctx.drawImage(img, row, col, 50, 50);
+
 }
 
 function dArrow(row: number, col: number, game: Game) {
-  const img = new Image(50, 50);
 
-  if (row === 0) img.src = "../assets/rightarrow.png";
+
+  if (row === 0) ctx.drawImage(rightarrow, row, col, 50, 50);
+
   else if (row / 50 === game.gameMap.map.length + 1)
-    img.src = "../assets/leftarrow.png";
-  else if (col === 0) img.src = "../assets/downarrow.png";
-  else if (col / 50 === game.gameMap.map.length + 1)
-    img.src = "../assets/uparrow.png";
+    ctx.drawImage(leftarrow, row, col, 50, 50);
 
-  img.onload = () => ctx.drawImage(img, row, col, 50, 50);
+  else if (col === 0)
+    ctx.drawImage(downarrow, row, col, 50, 50);
+
+  else if (col / 50 === game.gameMap.map.length + 1)
+    ctx.drawImage(uparrow, row, col, 50, 50);
+
+
 }
 
 function drawPlayers(game: Game) {
@@ -103,32 +144,46 @@ function drawPlayers(game: Game) {
   }
 }
 function dPlayer(row: number, col: number) {
-  const img = new Image(50, 50);
+
 
   // if(game.players[i].number === 1)
 
-  img.src = "../assets/player.png";
-  img.onload = () => ctx.drawImage(img, (col + 1) * 50, (row + 1) * 50, 20, 20);
+
+  ctx.drawImage(player, (col + 1) * 50, (row + 1) * 50, 20, 20);
 }
 
 function drawTreasures(game: Game) {
   for (let i = 0; i < game.treasuresAll.length; i++) {
     dTreasure(game.treasuresAll[i].row, game.treasuresAll[i].col);
   }
-  if(game.fallenTreasure !== null)
-  dFallenT(game.draggableField.x,game.draggableField.y)
+  if (game.fallenTreasure !== null)
+    dFallenT(game.draggableField.x, game.draggableField.y)
 }
-function dFallenT(row: number, col: number){
-  const img = new Image(50, 50);
-  img.src = "../assets/player.png";
-  img.onload = () => ctx.drawImage(img, row, col, 10, 10);
+function dFallenT(row: number, col: number) {
+
+
+  ctx.drawImage(player, row, col, 10, 10);
 }
 
 function dTreasure(row: number, col: number) {
-  const img = new Image(50, 50);
+
 
   // if(game.players[i].number === 1)
 
-  img.src = "../assets/player.png";
-  img.onload = () => ctx.drawImage(img, (row + 1) * 50, (col + 1) * 50, 10, 10);
+
+  ctx.drawImage(player, (row + 1) * 50, (col + 1) * 50, 10, 10);
+}
+
+export function drawAvailable(game: Game) {
+  ctx.fillStyle = "black"
+  for (let i = 0; i < game.availableFields.length; i++) {
+    ctx.strokeRect((game.availableFields[i][1] + 1) * 50, (game.availableFields[i][0] + 1) * 50, 50, 50)
+
+  }
+}
+
+function drawActualPlayer(game:Game)
+{
+  ctx.fillStyle = "black"
+  ctx.strokeRect((game.players[game.currentPlayer].col +1)* 50, (game.players[game.currentPlayer].row + 1) * 50, 20, 20)
 }
