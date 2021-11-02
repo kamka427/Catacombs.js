@@ -2,29 +2,50 @@ import {
   startmap,
   startLocations,
   Piece,
-  pieceTypes,
   Gem,
   gemTypes,
   genTreasureLocations,
+  remainingElements,
 } from "./constants.js";
-import { graphExplore, graphNext } from "./graphexporation.js";
+import { graphExplore } from "./graphexporation.js";
 import { randomBetween } from "./utils.js";
+
+export class Field {
+  type: Piece;
+  rotation: number;
+  constructor(type: Piece, rotation: number) {
+    this.type = type;
+    this.rotation = rotation;
+  }
+}
 export class GameMap {
-  map: Array<Array<Piece>>;
-  randomfield: Piece;
+  map: Array<Array<Field>>;
+  randomfield: Field;
+  remaining: Array<Piece>;
 
   constructor() {
+    this.remaining = [...remainingElements];
     this.map = this.generateMap();
-    this.randomfield =
-      pieceTypes[Math.floor(Math.random() * pieceTypes.length)];
+
+    this.randomfield = this.generateRandom();
+  }
+  // generateMap = () =>
+  //   startmap.map((e) =>
+  //     e.map((e) =>
+  //       e === undefined
+  //         ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
+  //         : e
+  //     )
+  //   );
+  generateRandom() {
+    const rnd = randomBetween(0, this.remaining.length);
+    const field  = this.remaining[rnd] === "straight" ? new Field(this.remaining[rnd], randomBetween(0, 1)) : new Field(this.remaining[rnd], randomBetween(0, 3));
+    this.remaining.splice(rnd, 1);
+    return field;
   }
   generateMap = () =>
     startmap.map((e) =>
-      e.map((e) =>
-        e === "r"
-          ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
-          : e
-      )
+      e.map((e) => (e === undefined ? this.generateRandom() : e))
     );
 }
 
@@ -72,9 +93,9 @@ export class Game {
   players: Array<Player>;
   treasuresAll: Array<Treasure>;
   treasureLocations: Array<Array<number>>;
-  fallenTreasure: Treasure
-  currentPlayer: number
-  availableFields: Array<Array<number>>
+  fallenTreasure: Treasure;
+  currentPlayer: number;
+  availableFields: Array<Array<number>>;
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -84,14 +105,14 @@ export class Game {
     this.players = [];
     this.treasuresAll = [];
     this.treasureLocations = genTreasureLocations();
-    console.log(this.treasureLocations)
+    console.log(this.treasureLocations);
     this.genPlayers();
     this.addTreasure();
-    this.fallenTreasure = null
-    this.currentPlayer = 0
+    this.fallenTreasure = null;
+    this.currentPlayer = 0;
     // graphNext(this.players[this.currentPlayer].row,this.players[this.currentPlayer].col,this)
-    this.availableFields = []
-    graphExplore(this)
+    this.availableFields = [];
+    graphExplore(this);
   }
   genPlayers() {
     const remainingLoc: Array<Array<number>> = [...startLocations];
@@ -121,6 +142,7 @@ export class Game {
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].treasureCards.forEach((e) => this.treasuresAll.push(e));
     }
+    
   }
 }
 
@@ -144,3 +166,4 @@ export class DraggableField {
     this.y = newY;
   }
 }
+

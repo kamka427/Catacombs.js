@@ -1,4 +1,4 @@
-import { Game } from "./classes.js";
+import { Field, Game } from "./classes.js";
 import { Piece } from "./constants.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
@@ -83,43 +83,43 @@ export function drawMap(game: Game): void {
 
 }
 
-function dImage(type: Piece, row: number, col: number) {
+function dImage(type: Field, row: number, col: number) {
 
-  switch (type) {
-    case "topleft":
-      ctx.drawImage(topleft, row, col, 50, 50);
-      break;
-    case "topright":
-      ctx.drawImage(topright, row, col, 50, 50);
-      break;
-    case "bottomleft":
-      ctx.drawImage(bottomleft, row, col, 50, 50);
-      break;
-    case "bottomright":
-      ctx.drawImage(bottomright, row, col, 50, 50);
-      break;
-    case "horizontal":
-      ctx.drawImage(horizontal, row, col, 50, 50);
-      break;
-    case "vertical":
-      ctx.drawImage(vertical, row, col, 50, 50);
-      break;
-    case "tripleup":
-      ctx.drawImage(tripleup, row, col, 50, 50);
-      break;
-    case "tripleright":
-      ctx.drawImage(tripleright, row, col, 50, 50);
-      break;
-    case "tripledown":
-      ctx.drawImage(tripledown, row, col, 50, 50);
-      break;
-    case "tripleleft":
-      ctx.drawImage(tripleleft, row, col, 50, 50);
-      break;
 
-  }
+  if (type.type == "edge" && type.rotation == 0)
+    ctx.drawImage(topleft, row, col, 50, 50);
+
+  else if (type.type == "edge" && type.rotation == 1)
+    ctx.drawImage(topright, row, col, 50, 50);
+
+  else if (type.type == "edge" && type.rotation == 3)
+    ctx.drawImage(bottomleft, row, col, 50, 50);
+
+  else if (type.type == "edge" && type.rotation == 2)
+    ctx.drawImage(bottomright, row, col, 50, 50);
+
+  else if (type.type == "straight" && type.rotation == 1)
+    ctx.drawImage(horizontal, row, col, 50, 50);
+
+  else if (type.type == "straight" && type.rotation == 0)
+    ctx.drawImage(vertical, row, col, 50, 50);
+
+  else if (type.type == "triple" && type.rotation == 3)
+    ctx.drawImage(tripleup, row, col, 50, 50);
+
+  else if (type.type == "triple" && type.rotation == 0)
+    ctx.drawImage(tripleright, row, col, 50, 50);
+
+  else if (type.type == "triple" && type.rotation == 1)
+    ctx.drawImage(tripledown, row, col, 50, 50);
+
+  else if (type.type == "triple" && type.rotation == 2)
+    ctx.drawImage(tripleleft, row, col, 50, 50);
+
 
 }
+
+
 
 function dArrow(row: number, col: number, game: Game) {
 
@@ -182,8 +182,7 @@ export function drawAvailable(game: Game) {
   }
 }
 
-function drawActualPlayer(game:Game)
-{
+function drawActualPlayer(game: Game) {
   ctx.fillStyle = "black"
-  ctx.strokeRect((game.players[game.currentPlayer].col +1)* 50, (game.players[game.currentPlayer].row + 1) * 50, 20, 20)
+  ctx.strokeRect((game.players[game.currentPlayer].col + 1) * 50, (game.players[game.currentPlayer].row + 1) * 50, 20, 20)
 }

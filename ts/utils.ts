@@ -1,7 +1,7 @@
-import { Game } from "./classes.js";
+import { Field, Game } from "./classes.js";
 import { Piece } from "./constants.js";
-import { graphExplore, graphNext } from "./graphexporation.js";
-import { drawAvailable, drawMap } from "./graphics.js";
+import { graphExplore } from "./graphexporation.js";
+import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 
 export const randomBetween = (min: number, max: number) =>
@@ -10,10 +10,10 @@ export const randomBetween = (min: number, max: number) =>
 const getCol = (arr: any[], n: number): any => arr.map((row: any[]) => row[n]);
 
 export function push(index: number, game: Game, direction: string) {
-  let tmp: Piece;
+  let tmp: Field;
   let fell = false;
   console.log(fell)
-  const col: Array<Piece> = getCol(game.gameMap.map, index);
+  const col: Array<Field> = getCol(game.gameMap.map, index);
   switch (direction) {
     case "left":
       tmp = game.gameMap.map[index].shift();
@@ -182,36 +182,47 @@ export function rotate(
     pos.y <= game.draggableField.y + game.draggableField.height
   ) {
     console.log(game.gameMap.randomfield);
-    switch (game.gameMap.randomfield) {
-      case "topleft":
-        game.gameMap.randomfield = "topright";
+    switch (game.gameMap.randomfield.type) {
+      //   case "topleft":
+      //     game.gameMap.randomfield = "topright";
+      //     break;
+      //   case "topright":
+      //     game.gameMap.randomfield = "bottomright";
+      //     break;
+      //   case "bottomright":
+      //     game.gameMap.randomfield = "bottomleft";
+      //     break;
+      //   case "bottomleft":
+      //     game.gameMap.randomfield = "topleft";
+      //     break;
+      //   case "vertical":
+      //     game.gameMap.randomfield = "horizontal";
+      //     break;
+      //   case "horizontal":
+      //     game.gameMap.randomfield = "vertical";
+      //     break;
+      //   case "tripleright":
+      //     game.gameMap.randomfield = "tripledown";
+      //     break;
+      //   case "tripledown":
+      //     game.gameMap.randomfield = "tripleleft";
+      //     break;
+      //   case "tripleleft":
+      //     game.gameMap.randomfield = "tripleup";
+      //     break;
+      //   case "tripleup":
+      //     game.gameMap.randomfield = "tripleright";
+      //     break;
+      // }
+      case "straight":
+        game.gameMap.randomfield.rotation == 0 ? 1 : 0
         break;
-      case "topright":
-        game.gameMap.randomfield = "bottomright";
+      case "edge":
+
+        game.gameMap.randomfield.rotation === 3 ? game.gameMap.randomfield.rotation = 0 : ++game.gameMap.randomfield.rotation
         break;
-      case "bottomright":
-        game.gameMap.randomfield = "bottomleft";
-        break;
-      case "bottomleft":
-        game.gameMap.randomfield = "topleft";
-        break;
-      case "vertical":
-        game.gameMap.randomfield = "horizontal";
-        break;
-      case "horizontal":
-        game.gameMap.randomfield = "vertical";
-        break;
-      case "tripleright":
-        game.gameMap.randomfield = "tripledown";
-        break;
-      case "tripledown":
-        game.gameMap.randomfield = "tripleleft";
-        break;
-      case "tripleleft":
-        game.gameMap.randomfield = "tripleup";
-        break;
-      case "tripleup":
-        game.gameMap.randomfield = "tripleright";
+      case "triple":
+        game.gameMap.randomfield.rotation === 3 ? game.gameMap.randomfield.rotation = 0 : ++game.gameMap.randomfield.rotation
         break;
     }
   }
@@ -239,7 +250,7 @@ export function step(canvas: HTMLCanvasElement, game: Game, e: MouseEvent) {
       exists = true;
   }
   console.log(exists);
-  
+
   if (exists) {
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
@@ -251,7 +262,7 @@ export function step(canvas: HTMLCanvasElement, game: Game, e: MouseEvent) {
 }
 
 export function endTurn(game: Game) {
-  if (game.currentPlayer === game.players.length-1) game.currentPlayer = 0;
+  if (game.currentPlayer === game.players.length - 1) game.currentPlayer = 0;
   else game.currentPlayer++;
   // graphNext(
   //   game.players[game.currentPlayer].row,

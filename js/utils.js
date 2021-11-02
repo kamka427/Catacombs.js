@@ -161,36 +161,46 @@ export function rotate(game, gameArea, e) {
         pos.y >= game.draggableField.y &&
         pos.y <= game.draggableField.y + game.draggableField.height) {
         console.log(game.gameMap.randomfield);
-        switch (game.gameMap.randomfield) {
-            case "topleft":
-                game.gameMap.randomfield = "topright";
+        switch (game.gameMap.randomfield.type) {
+            //   case "topleft":
+            //     game.gameMap.randomfield = "topright";
+            //     break;
+            //   case "topright":
+            //     game.gameMap.randomfield = "bottomright";
+            //     break;
+            //   case "bottomright":
+            //     game.gameMap.randomfield = "bottomleft";
+            //     break;
+            //   case "bottomleft":
+            //     game.gameMap.randomfield = "topleft";
+            //     break;
+            //   case "vertical":
+            //     game.gameMap.randomfield = "horizontal";
+            //     break;
+            //   case "horizontal":
+            //     game.gameMap.randomfield = "vertical";
+            //     break;
+            //   case "tripleright":
+            //     game.gameMap.randomfield = "tripledown";
+            //     break;
+            //   case "tripledown":
+            //     game.gameMap.randomfield = "tripleleft";
+            //     break;
+            //   case "tripleleft":
+            //     game.gameMap.randomfield = "tripleup";
+            //     break;
+            //   case "tripleup":
+            //     game.gameMap.randomfield = "tripleright";
+            //     break;
+            // }
+            case "straight":
+                game.gameMap.randomfield.rotation == 0 ? 1 : 0;
                 break;
-            case "topright":
-                game.gameMap.randomfield = "bottomright";
+            case "edge":
+                game.gameMap.randomfield.rotation === 3 ? game.gameMap.randomfield.rotation = 0 : ++game.gameMap.randomfield.rotation;
                 break;
-            case "bottomright":
-                game.gameMap.randomfield = "bottomleft";
-                break;
-            case "bottomleft":
-                game.gameMap.randomfield = "topleft";
-                break;
-            case "vertical":
-                game.gameMap.randomfield = "horizontal";
-                break;
-            case "horizontal":
-                game.gameMap.randomfield = "vertical";
-                break;
-            case "tripleright":
-                game.gameMap.randomfield = "tripledown";
-                break;
-            case "tripledown":
-                game.gameMap.randomfield = "tripleleft";
-                break;
-            case "tripleleft":
-                game.gameMap.randomfield = "tripleup";
-                break;
-            case "tripleup":
-                game.gameMap.randomfield = "tripleright";
+            case "triple":
+                game.gameMap.randomfield.rotation === 3 ? game.gameMap.randomfield.rotation = 0 : ++game.gameMap.randomfield.rotation;
                 break;
         }
     }

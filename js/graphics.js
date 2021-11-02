@@ -66,38 +66,26 @@ export function drawMap(game) {
     drawActualPlayer(game);
 }
 function dImage(type, row, col) {
-    switch (type) {
-        case "topleft":
-            ctx.drawImage(topleft, row, col, 50, 50);
-            break;
-        case "topright":
-            ctx.drawImage(topright, row, col, 50, 50);
-            break;
-        case "bottomleft":
-            ctx.drawImage(bottomleft, row, col, 50, 50);
-            break;
-        case "bottomright":
-            ctx.drawImage(bottomright, row, col, 50, 50);
-            break;
-        case "horizontal":
-            ctx.drawImage(horizontal, row, col, 50, 50);
-            break;
-        case "vertical":
-            ctx.drawImage(vertical, row, col, 50, 50);
-            break;
-        case "tripleup":
-            ctx.drawImage(tripleup, row, col, 50, 50);
-            break;
-        case "tripleright":
-            ctx.drawImage(tripleright, row, col, 50, 50);
-            break;
-        case "tripledown":
-            ctx.drawImage(tripledown, row, col, 50, 50);
-            break;
-        case "tripleleft":
-            ctx.drawImage(tripleleft, row, col, 50, 50);
-            break;
-    }
+    if (type.type == "edge" && type.rotation == 0)
+        ctx.drawImage(topleft, row, col, 50, 50);
+    else if (type.type == "edge" && type.rotation == 1)
+        ctx.drawImage(topright, row, col, 50, 50);
+    else if (type.type == "edge" && type.rotation == 3)
+        ctx.drawImage(bottomleft, row, col, 50, 50);
+    else if (type.type == "edge" && type.rotation == 2)
+        ctx.drawImage(bottomright, row, col, 50, 50);
+    else if (type.type == "straight" && type.rotation == 1)
+        ctx.drawImage(horizontal, row, col, 50, 50);
+    else if (type.type == "straight" && type.rotation == 0)
+        ctx.drawImage(vertical, row, col, 50, 50);
+    else if (type.type == "triple" && type.rotation == 3)
+        ctx.drawImage(tripleup, row, col, 50, 50);
+    else if (type.type == "triple" && type.rotation == 0)
+        ctx.drawImage(tripleright, row, col, 50, 50);
+    else if (type.type == "triple" && type.rotation == 1)
+        ctx.drawImage(tripledown, row, col, 50, 50);
+    else if (type.type == "triple" && type.rotation == 2)
+        ctx.drawImage(tripleleft, row, col, 50, 50);
 }
 function dArrow(row, col, game) {
     if (row === 0)

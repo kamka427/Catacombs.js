@@ -1,14 +1,32 @@
-import { startmap, startLocations, pieceTypes, gemTypes, genTreasureLocations, } from "./constants.js";
+import { startmap, startLocations, gemTypes, genTreasureLocations, remainingElements, } from "./constants.js";
 import { graphExplore } from "./graphexporation.js";
 import { randomBetween } from "./utils.js";
+export class Field {
+    constructor(type, rotation) {
+        this.type = type;
+        this.rotation = rotation;
+    }
+}
 export class GameMap {
     constructor() {
-        this.generateMap = () => startmap.map((e) => e.map((e) => e === "r"
-            ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
-            : e));
+        this.generateMap = () => startmap.map((e) => e.map((e) => (e === undefined ? this.generateRandom() : e)));
+        this.remaining = [...remainingElements];
         this.map = this.generateMap();
-        this.randomfield =
-            pieceTypes[Math.floor(Math.random() * pieceTypes.length)];
+        this.randomfield = this.generateRandom();
+    }
+    // generateMap = () =>
+    //   startmap.map((e) =>
+    //     e.map((e) =>
+    //       e === undefined
+    //         ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
+    //         : e
+    //     )
+    //   );
+    generateRandom() {
+        const rnd = randomBetween(0, this.remaining.length);
+        const field = this.remaining[rnd] === "straight" ? new Field(this.remaining[rnd], randomBetween(0, 1)) : new Field(this.remaining[rnd], randomBetween(0, 3));
+        this.remaining.splice(rnd, 1);
+        return field;
     }
 }
 export class Treasure {
