@@ -1,3 +1,4 @@
+import { game } from "./main.js";
 const gameArea = document.querySelector("canvas#gameArea");
 const ctx = gameArea.getContext("2d");
 const bottomleft = new Image();
@@ -30,24 +31,30 @@ const uparrow = new Image();
 uparrow.src = "../assets/uparrow.png";
 const vertical = new Image();
 vertical.src = "../assets/vertical.png";
-export function drawMap(game) {
+export function drawMap() {
     ctx.clearRect(0, 0, gameArea.width, gameArea.height);
     ctx.fillStyle = "green";
     ctx.fillRect(0, 0, gameArea.height, gameArea.height);
     for (let col = 0; col < game.gameMap.map.length + 2; col++) {
         for (let row = 0; row < game.gameMap.map.length + 2; row++) {
-            if ((col === 0 && row > 0 && row < game.gameMap.map.length && row % 2 === 0) ||
+            if ((col === 0 &&
+                row > 0 &&
+                row < game.gameMap.map.length &&
+                row % 2 === 0) ||
                 (col === game.gameMap.map.length + 1 &&
                     row > 0 &&
                     row < game.gameMap.map.length &&
                     row % 2 === 0) ||
-                (row === 0 && col > 0 && col < game.gameMap.map.length && col % 2 === 0) ||
+                (row === 0 &&
+                    col > 0 &&
+                    col < game.gameMap.map.length &&
+                    col % 2 === 0) ||
                 (row === game.gameMap.map.length + 1 &&
                     col > 0 &&
                     col < game.gameMap.map.length &&
                     col % 2 === 0)) {
                 // ctx.fillText("side", i * 50, j * 50 + 25);
-                dArrow(col * 50, row * 50, game);
+                dArrow(col * 50, row * 50);
             }
             else if (!(col === 0 ||
                 row === 0 ||
@@ -59,11 +66,11 @@ export function drawMap(game) {
         }
     }
     dImage(game.gameMap.randomfield, game.draggableField.x, game.draggableField.y);
-    drawPlayers(game);
-    drawTreasures(game);
+    drawPlayers();
+    drawTreasures();
     // if(game.fallenTreasure !== null)
-    drawAvailable(game);
-    drawActualPlayer(game);
+    drawAvailable();
+    drawActualPlayer();
 }
 function dImage(type, row, col) {
     if (type.type == "edge" && type.rotation == 0)
@@ -87,7 +94,7 @@ function dImage(type, row, col) {
     else if (type.type == "triple" && type.rotation == 2)
         ctx.drawImage(tripleleft, row, col, 50, 50);
 }
-function dArrow(row, col, game) {
+function dArrow(row, col) {
     if (row === 0)
         ctx.drawImage(rightarrow, row, col, 50, 50);
     else if (row / 50 === game.gameMap.map.length + 1)
@@ -97,7 +104,7 @@ function dArrow(row, col, game) {
     else if (col / 50 === game.gameMap.map.length + 1)
         ctx.drawImage(uparrow, row, col, 50, 50);
 }
-function drawPlayers(game) {
+function drawPlayers() {
     for (let i = 0; i < game.players.length; i++) {
         dPlayer(game.players[i].row, game.players[i].col);
     }
@@ -106,7 +113,7 @@ function dPlayer(row, col) {
     // if(game.players[i].number === 1)
     ctx.drawImage(player, (col + 1) * 50, (row + 1) * 50, 20, 20);
 }
-function drawTreasures(game) {
+function drawTreasures() {
     for (let i = 0; i < game.treasuresAll.length; i++) {
         dTreasure(game.treasuresAll[i].row, game.treasuresAll[i].col);
     }
@@ -120,13 +127,13 @@ function dTreasure(row, col) {
     // if(game.players[i].number === 1)
     ctx.drawImage(player, (row + 1) * 50, (col + 1) * 50, 10, 10);
 }
-export function drawAvailable(game) {
+export function drawAvailable() {
     ctx.fillStyle = "black";
     for (let i = 0; i < game.availableFields.length; i++) {
         ctx.strokeRect((game.availableFields[i][1] + 1) * 50, (game.availableFields[i][0] + 1) * 50, 50, 50);
     }
 }
-function drawActualPlayer(game) {
+function drawActualPlayer() {
     ctx.fillStyle = "black";
     ctx.strokeRect((game.players[game.currentPlayer].col + 1) * 50, (game.players[game.currentPlayer].row + 1) * 50, 20, 20);
 }

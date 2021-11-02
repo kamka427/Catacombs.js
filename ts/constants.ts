@@ -1,18 +1,4 @@
-// export type Piece =
-//   | "topleft"
-//   | "topright"
-//   | new Field("edge",3)
-//   | "bottomright"
-//   | "vertical"
-//   | "horizontal"
-//   | "tripleright"
-//   | "tripleleft"
-//   | "tripleup"
-//   | "tripledown"
-//   | "r";
-
-// import { Field } from "./classes.js";
-class Field {
+export class Field {
   type: Piece;
   rotation: number;
   constructor(type: Piece, rotation: number) {
@@ -21,53 +7,57 @@ class Field {
   }
 }
 
-// export const pieceTypes: Array<Piece> = [
-//   "topleft",
-//   "topright",
-//   "bottomleft",
-//   "bottomright",
-//   "vertical",
-//   "horizontal",
-//   "tripleright",
-//   "tripleleft",
-//   "tripleup",
-//   "tripledown",
-// ];
+export type Piece = "straight" | "triple" | "edge";
 
-export type Piece = "straight" | "triple" | "edge"
-
-export const pieceTypes: Array<Piece> = [
-  "straight", "triple", "edge"
-];
-
-
-// export const startmap: Array<Array<Piece>> = [
-//   ["topleft", "r", "tripledown", "r", "tripledown", "r", "topright"],
-//   ["r", "r", "r", "r", "r", "r", "r"],
-//   ["tripleright", "r", "tripleright", "r", "tripledown", "r", "vertical"],
-//   ["r", "r", "r", "r", "r", "r", "r"],
-//   ["tripleright", "r", "tripleup", "r", "tripleleft", "r", "vertical"],
-//   ["r", "r", "r", "r", "r", "r", "r"],
-//   ["bottomleft", "r", "tripleup", "r", "tripleup", "r", "bottomright"],
-// ];
-
+export const pieceTypes: Array<Piece> = ["straight", "triple", "edge"];
 
 export const startmap: Array<Array<Field>> = [
-  [new Field("edge", 0), undefined, new Field("triple", 1), undefined, new Field("triple", 1), undefined, new Field("edge", 1)],
+  [
+    new Field("edge", 0),
+    undefined,
+    new Field("triple", 1),
+    undefined,
+    new Field("triple", 1),
+    undefined,
+    new Field("edge", 1),
+  ],
   [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-  [new Field("triple", 0), undefined, new Field("triple", 0), undefined, new Field("triple", 1), undefined, new Field("triple", 2)],
+  [
+    new Field("triple", 0),
+    undefined,
+    new Field("triple", 0),
+    undefined,
+    new Field("triple", 1),
+    undefined,
+    new Field("triple", 2),
+  ],
   [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-  [new Field("triple", 0), undefined, new Field("triple", 3), undefined, new Field("triple", 2), undefined, new Field("triple", 2)],
+  [
+    new Field("triple", 0),
+    undefined,
+    new Field("triple", 3),
+    undefined,
+    new Field("triple", 2),
+    undefined,
+    new Field("triple", 2),
+  ],
   [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-  [new Field("edge", 3), undefined, new Field("triple", 3), undefined, new Field("triple", 3), undefined, new Field("edge", 2)],
+  [
+    new Field("edge", 3),
+    undefined,
+    new Field("triple", 3),
+    undefined,
+    new Field("triple", 3),
+    undefined,
+    new Field("edge", 2),
+  ],
 ];
 
 export const remainingElements: Array<Piece> = [
   ...new Array(13).fill("straight"),
   ...new Array(15).fill("edge"),
   ...new Array(6).fill("triple"),
-]
-
+];
 
 export type Gem = "ruby" | "diamond" | "gold" | "silver" | "emerald";
 export const gemTypes: Array<Gem> = [
@@ -85,21 +75,16 @@ export const startLocations: Array<Array<number>> = [
 ];
 // export const treasureLocations: Array<Array<number>> = [];
 export const genTreasureLocations = () => {
-  const treasureLocations = []
+  const treasureLocations = [];
   for (let i = 0; i < startmap.length; i++) {
     for (let j = 0; j < startmap.length; j++) {
-      if (i === 0 && j === 0)
-        continue
-      else if (i === 6 && j === 6)
-        continue
-      else if (i === 0 && j === 6)
-        continue
-      else if (i === 6 && j === 0)
-        continue
-      else
-        treasureLocations.push([i, j]);
+      if (i === 0 && j === 0) continue;
+      else if (i === 6 && j === 6) continue;
+      else if (i === 0 && j === 6) continue;
+      else if (i === 6 && j === 0) continue;
+      else treasureLocations.push([i, j]);
     }
   }
-  return treasureLocations
+  return treasureLocations;
 };
 // genTreasureLocations();

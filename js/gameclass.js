@@ -1,7 +1,7 @@
 import { startmap, startLocations, gemTypes, genTreasureLocations, remainingElements, Field, } from "./constants.js";
 import { graphExplore } from "./graphexporation.js";
 import { randomBetween } from "./utils.js";
-export class GameMap {
+class GameMap {
     constructor() {
         this.generateMap = () => startmap.map((e) => e.map((e) => (e === undefined ? this.generateRandom() : e)));
         this.remaining = [...remainingElements];
@@ -10,19 +10,21 @@ export class GameMap {
     }
     generateRandom() {
         const rnd = randomBetween(0, this.remaining.length);
-        const field = this.remaining[rnd] === "straight" ? new Field(this.remaining[rnd], randomBetween(0, 1)) : new Field(this.remaining[rnd], randomBetween(0, 3));
+        const field = this.remaining[rnd] === "straight"
+            ? new Field(this.remaining[rnd], randomBetween(0, 1))
+            : new Field(this.remaining[rnd], randomBetween(0, 3));
         this.remaining.splice(rnd, 1);
         return field;
     }
 }
-export class Treasure {
+class Treasure {
     constructor(row, col) {
         this.row = row;
         this.col = col;
         this.type = gemTypes[Math.floor(Math.random() * gemTypes.length)];
     }
 }
-export class Player {
+class Player {
     constructor(row, col, pNumber, treasures) {
         this.row = row;
         this.col = col;
@@ -49,6 +51,15 @@ export class Game {
         this.currentPlayer = 0;
         // graphNext(this.players[this.currentPlayer].row,this.players[this.currentPlayer].col,this)
         this.availableFields = [];
+        this.visited = [
+            [...new Array(7).fill(1)],
+            [...new Array(7).fill(1)],
+            [...new Array(7).fill(1)],
+            [...new Array(7).fill(1)],
+            [...new Array(7).fill(1)],
+            [...new Array(7).fill(1)],
+            [...new Array(7).fill(1)],
+        ];
         graphExplore(this);
     }
     genPlayers() {
@@ -78,7 +89,7 @@ export class Game {
         }
     }
 }
-export class DraggableField {
+class DraggableField {
     constructor() {
         this.x = 500;
         this.y = 0;
@@ -91,4 +102,4 @@ export class DraggableField {
         this.y = newY;
     }
 }
-//# sourceMappingURL=classes.js.map
+//# sourceMappingURL=gameclass.js.map

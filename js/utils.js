@@ -1,9 +1,10 @@
 import { graphExplore } from "./graphexporation.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
+import { game } from "./main.js";
 export const randomBetween = (min, max) => Math.floor(Math.random() * (max - min));
 const getCol = (arr, n) => arr.map((row) => row[n]);
-export function push(index, game, direction) {
+export function push(index, direction) {
     let tmp;
     let fell = false;
     console.log(fell);
@@ -27,7 +28,8 @@ export function push(index, game, direction) {
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === 0 && game.treasuresAll[i].col === index) {
+                if (game.treasuresAll[i].row === 0 &&
+                    game.treasuresAll[i].col === index) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
@@ -59,7 +61,8 @@ export function push(index, game, direction) {
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === 6 && game.treasuresAll[i].col === index) {
+                if (game.treasuresAll[i].row === 6 &&
+                    game.treasuresAll[i].col === index) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
@@ -97,7 +100,8 @@ export function push(index, game, direction) {
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === index && game.treasuresAll[i].col === 6) {
+                if (game.treasuresAll[i].row === index &&
+                    game.treasuresAll[i].col === 6) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
@@ -135,7 +139,8 @@ export function push(index, game, direction) {
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === index && game.treasuresAll[i].col === 0) {
+                if (game.treasuresAll[i].row === index &&
+                    game.treasuresAll[i].col === 0) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
@@ -150,11 +155,11 @@ export function push(index, game, direction) {
             console.log(game.fallenTreasure);
             break;
     }
-    drawMap(game);
+    drawMap();
     console.log(game.treasuresAll);
 }
-export function rotate(game, gameArea, e) {
-    const pos = getMousePosition(gameArea, e);
+export function rotate(e) {
+    const pos = getMousePosition(e);
     console.log(pos);
     if (pos.x >= game.draggableField.x &&
         pos.x <= game.draggableField.x + game.draggableField.width &&
@@ -162,51 +167,25 @@ export function rotate(game, gameArea, e) {
         pos.y <= game.draggableField.y + game.draggableField.height) {
         console.log(game.gameMap.randomfield);
         switch (game.gameMap.randomfield.type) {
-            //   case "topleft":
-            //     game.gameMap.randomfield = "topright";
-            //     break;
-            //   case "topright":
-            //     game.gameMap.randomfield = "bottomright";
-            //     break;
-            //   case "bottomright":
-            //     game.gameMap.randomfield = "bottomleft";
-            //     break;
-            //   case "bottomleft":
-            //     game.gameMap.randomfield = "topleft";
-            //     break;
-            //   case "vertical":
-            //     game.gameMap.randomfield = "horizontal";
-            //     break;
-            //   case "horizontal":
-            //     game.gameMap.randomfield = "vertical";
-            //     break;
-            //   case "tripleright":
-            //     game.gameMap.randomfield = "tripledown";
-            //     break;
-            //   case "tripledown":
-            //     game.gameMap.randomfield = "tripleleft";
-            //     break;
-            //   case "tripleleft":
-            //     game.gameMap.randomfield = "tripleup";
-            //     break;
-            //   case "tripleup":
-            //     game.gameMap.randomfield = "tripleright";
-            //     break;
-            // }
             case "straight":
-                game.gameMap.randomfield.rotation == 0 ? 1 : 0;
+                game.gameMap.randomfield.rotation =
+                    game.gameMap.randomfield.rotation === 0 ? 1 : 0;
                 break;
             case "edge":
-                game.gameMap.randomfield.rotation === 3 ? game.gameMap.randomfield.rotation = 0 : ++game.gameMap.randomfield.rotation;
+                game.gameMap.randomfield.rotation === 3
+                    ? (game.gameMap.randomfield.rotation = 0)
+                    : ++game.gameMap.randomfield.rotation;
                 break;
             case "triple":
-                game.gameMap.randomfield.rotation === 3 ? game.gameMap.randomfield.rotation = 0 : ++game.gameMap.randomfield.rotation;
+                game.gameMap.randomfield.rotation === 3
+                    ? (game.gameMap.randomfield.rotation = 0)
+                    : ++game.gameMap.randomfield.rotation;
                 break;
         }
     }
-    drawMap(game);
+    drawMap();
 }
-export function step(canvas, game, e) {
+export function step(e) {
     // const locations = graphNext(
     //   game.players[game.currentPlayer].row,
     //   game.players[game.currentPlayer].col,
@@ -219,11 +198,12 @@ export function step(canvas, game, e) {
     // console.log(locations);
     graphExplore(game);
     console.log(game.players);
-    const pos = getMousePosition(canvas, e);
+    const pos = getMousePosition(e);
     console.log(pos);
     let exists = false;
     for (let i = 0; i < game.availableFields.length; i++) {
-        if (game.availableFields[i][1] === pos.convCol && game.availableFields[i][0] === pos.convRow)
+        if (game.availableFields[i][1] === pos.convCol &&
+            game.availableFields[i][0] === pos.convRow)
             exists = true;
     }
     console.log(exists);
@@ -231,11 +211,11 @@ export function step(canvas, game, e) {
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;
         // drawMap(game);
-        endTurn(game);
+        endTurn();
     }
-    drawMap(game);
+    drawMap();
 }
-export function endTurn(game) {
+export function endTurn() {
     if (game.currentPlayer === game.players.length - 1)
         game.currentPlayer = 0;
     else

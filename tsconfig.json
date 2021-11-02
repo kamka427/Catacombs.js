@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
     "noImplicitAny": true,
-    "module": "ES6",
+    "module": "ES2020",
     "preserveConstEnums": true,
     "target": "ES6",
     "sourceMap": true,

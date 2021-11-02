@@ -1,42 +1,50 @@
-// export type Piece =
-//   | "topleft"
-//   | "topright"
-//   | new Field("edge",3)
-//   | "bottomright"
-//   | "vertical"
-//   | "horizontal"
-//   | "tripleright"
-//   | "tripleleft"
-//   | "tripleup"
-//   | "tripledown"
-//   | "r";
-// import { Field } from "./classes.js";
-class Field {
+export class Field {
     constructor(type, rotation) {
         this.type = type;
         this.rotation = rotation;
     }
 }
-export const pieceTypes = [
-    "straight", "triple", "edge"
-];
-// export const startmap: Array<Array<Piece>> = [
-//   ["topleft", "r", "tripledown", "r", "tripledown", "r", "topright"],
-//   ["r", "r", "r", "r", "r", "r", "r"],
-//   ["tripleright", "r", "tripleright", "r", "tripledown", "r", "vertical"],
-//   ["r", "r", "r", "r", "r", "r", "r"],
-//   ["tripleright", "r", "tripleup", "r", "tripleleft", "r", "vertical"],
-//   ["r", "r", "r", "r", "r", "r", "r"],
-//   ["bottomleft", "r", "tripleup", "r", "tripleup", "r", "bottomright"],
-// ];
+export const pieceTypes = ["straight", "triple", "edge"];
 export const startmap = [
-    [new Field("edge", 0), undefined, new Field("triple", 1), undefined, new Field("triple", 1), undefined, new Field("edge", 1)],
+    [
+        new Field("edge", 0),
+        undefined,
+        new Field("triple", 1),
+        undefined,
+        new Field("triple", 1),
+        undefined,
+        new Field("edge", 1),
+    ],
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-    [new Field("triple", 0), undefined, new Field("triple", 0), undefined, new Field("triple", 1), undefined, new Field("triple", 2)],
+    [
+        new Field("triple", 0),
+        undefined,
+        new Field("triple", 0),
+        undefined,
+        new Field("triple", 1),
+        undefined,
+        new Field("triple", 2),
+    ],
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-    [new Field("triple", 0), undefined, new Field("triple", 3), undefined, new Field("triple", 2), undefined, new Field("triple", 2)],
+    [
+        new Field("triple", 0),
+        undefined,
+        new Field("triple", 3),
+        undefined,
+        new Field("triple", 2),
+        undefined,
+        new Field("triple", 2),
+    ],
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-    [new Field("edge", 3), undefined, new Field("triple", 3), undefined, new Field("triple", 3), undefined, new Field("edge", 2)],
+    [
+        new Field("edge", 3),
+        undefined,
+        new Field("triple", 3),
+        undefined,
+        new Field("triple", 3),
+        undefined,
+        new Field("edge", 2),
+    ],
 ];
 export const remainingElements = [
     ...new Array(13).fill("straight"),

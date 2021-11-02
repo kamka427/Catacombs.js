@@ -6,19 +6,12 @@ import {
   gemTypes,
   genTreasureLocations,
   remainingElements,
+  Field,
 } from "./constants.js";
 import { graphExplore } from "./graphexporation.js";
 import { randomBetween } from "./utils.js";
 
-export class Field {
-  type: Piece;
-  rotation: number;
-  constructor(type: Piece, rotation: number) {
-    this.type = type;
-    this.rotation = rotation;
-  }
-}
-export class GameMap {
+class GameMap {
   map: Array<Array<Field>>;
   randomfield: Field;
   remaining: Array<Piece>;
@@ -29,17 +22,12 @@ export class GameMap {
 
     this.randomfield = this.generateRandom();
   }
-  // generateMap = () =>
-  //   startmap.map((e) =>
-  //     e.map((e) =>
-  //       e === undefined
-  //         ? pieceTypes[Math.floor(Math.random() * pieceTypes.length)]
-  //         : e
-  //     )
-  //   );
   generateRandom() {
     const rnd = randomBetween(0, this.remaining.length);
-    const field  = this.remaining[rnd] === "straight" ? new Field(this.remaining[rnd], randomBetween(0, 1)) : new Field(this.remaining[rnd], randomBetween(0, 3));
+    const field =
+      this.remaining[rnd] === "straight"
+        ? new Field(this.remaining[rnd], randomBetween(0, 1))
+        : new Field(this.remaining[rnd], randomBetween(0, 3));
     this.remaining.splice(rnd, 1);
     return field;
   }
@@ -49,7 +37,7 @@ export class GameMap {
     );
 }
 
-export class Treasure {
+class Treasure {
   row: number;
   col: number;
   type: Gem;
@@ -61,7 +49,7 @@ export class Treasure {
   }
 }
 
-export class Player {
+class Player {
   row: number;
   col: number;
   startRow: number;
@@ -96,6 +84,7 @@ export class Game {
   fallenTreasure: Treasure;
   currentPlayer: number;
   availableFields: Array<Array<number>>;
+  visited: Array<Array<number>>;
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -112,6 +101,15 @@ export class Game {
     this.currentPlayer = 0;
     // graphNext(this.players[this.currentPlayer].row,this.players[this.currentPlayer].col,this)
     this.availableFields = [];
+    this.visited = [
+      [...new Array(7).fill(1)],
+      [...new Array(7).fill(1)],
+      [...new Array(7).fill(1)],
+      [...new Array(7).fill(1)],
+      [...new Array(7).fill(1)],
+      [...new Array(7).fill(1)],
+      [...new Array(7).fill(1)],
+    ];
     graphExplore(this);
   }
   genPlayers() {
@@ -142,11 +140,10 @@ export class Game {
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].treasureCards.forEach((e) => this.treasuresAll.push(e));
     }
-    
   }
 }
 
-export class DraggableField {
+class DraggableField {
   x: number;
   y: number;
   width: number;
@@ -166,4 +163,3 @@ export class DraggableField {
     this.y = newY;
   }
 }
-
