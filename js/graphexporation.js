@@ -1,4 +1,7 @@
-const removeDuplicates = (array) => [...new Set(array.map((elem) => JSON.stringify(elem)))].map((elem) => JSON.parse(elem));
+// const removeDuplicates = (array: number[][]) =>
+//   [...new Set(array.map((elem: number[]) => JSON.stringify(elem)))].map(
+//     (elem) => JSON.parse(elem)
+//   );
 export function graphExplore(game) {
     game.availableFields = [];
     game.visited = [
@@ -10,7 +13,10 @@ export function graphExplore(game) {
         [...new Array(7).fill(1)],
         [...new Array(7).fill(1)],
     ];
-    game.availableFields.push([game.players[game.currentPlayer].row, game.players[game.currentPlayer].col]);
+    game.availableFields.push([
+        game.players[game.currentPlayer].row,
+        game.players[game.currentPlayer].col,
+    ]);
     graphNext(game.players[game.currentPlayer].row, game.players[game.currentPlayer].col, game);
     if (game.availableFields.length !== 0) {
         for (let i = 0; i < game.availableFields.length; i++) {

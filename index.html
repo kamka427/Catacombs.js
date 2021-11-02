@@ -4,23 +4,37 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale= .0" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <title>Varázslatos Katakombák</title>
   </head>
   <body>
-
     <h1>Varázslatos katakombák</h1>
-    <input type="number" name="playercount" id="pcount" min="1" max="4" value="2">
-    <input type="number" name="treasurecountperplayer" id="tcountpp" min="1" max="24" value="2">
+    <input
+      type="number"
+      name="playercount"
+      id="pcount"
+      min="1"
+      max="4"
+      value="2"
+    />
+    <input
+      type="number"
+      name="treasurecountperplayer"
+      id="tcountpp"
+      min="1"
+      max="24"
+      value="2"
+    />
     <button id="start">Start!</button>
     <button id="manual">Leírás megtekintése</button>
+    <button id="save">Játék mentése</button>
+    <button id="load" class="hidden">Játék betöltése</button>
+
     <p class="hidden">Játékleírás</p>
 
-    <canvas class='' id="statusArea" width="550" height="50"></canvas>
-    <canvas class='hidden' id="gameArea" width="550" height="450"></canvas>
+    <canvas class="" id="statusArea" width="550" height="50"></canvas>
+    <canvas class="hidden" id="gameArea" width="550" height="450"></canvas>
 
     <script type="module" src="js/main.js"></script>
-
-    
   </body>
 </html>

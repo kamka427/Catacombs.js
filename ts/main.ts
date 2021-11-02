@@ -11,7 +11,12 @@ export const gameArea: HTMLCanvasElement =
 
 const startBtn = document.querySelector("#start");
 const manualBtn = document.querySelector("#manual");
+const saveBtn = document.querySelector("#save");
+const loadBtn = document.querySelector("#load");
 const manual = document.querySelector("p");
+
+let state = localStorage.getItem("state");
+if (state !== null) loadBtn.classList.toggle("hidden");
 
 function startGame() {
   const pCount: number = <number>(
@@ -22,9 +27,21 @@ function startGame() {
   );
 
   game = new Game(pCount, tCount);
+
   console.log(game);
   gameArea.classList.remove("hidden");
   drawMap();
+}
+function loadGame() {
+  game = JSON.parse(state);
+
+  console.log(game);
+  gameArea.classList.remove("hidden");
+  drawMap();
+}
+
+function saveGame() {
+  localStorage.setItem("state", JSON.stringify(game));
 }
 
 function showManual() {
@@ -34,6 +51,8 @@ function showManual() {
 
 startBtn.addEventListener("click", startGame);
 manualBtn.addEventListener("click", showManual);
+saveBtn.addEventListener("click", saveGame);
+loadBtn.addEventListener("click", loadGame);
 gameArea.addEventListener("mousedown", dragStart);
 gameArea.addEventListener("mousemove", dragEvt);
 gameArea.addEventListener("mouseup", dragEnd);

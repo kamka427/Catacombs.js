@@ -17,7 +17,10 @@ export function graphExplore(game: Game) {
     [...new Array(7).fill(1)],
   ];
 
-  game.availableFields.push([game.players[game.currentPlayer].row, game.players[game.currentPlayer].col])
+  game.availableFields.push([
+    game.players[game.currentPlayer].row,
+    game.players[game.currentPlayer].col,
+  ]);
 
   graphNext(
     game.players[game.currentPlayer].row,
@@ -107,8 +110,8 @@ export function graphNext(row: number, col: number, game: Game) {
 }
 function up(row: number, game: Game, col: number) {
   return (
-      row - 1 > -1 &&
-    game.visited[row-1][col] === 1 &&
+    row - 1 > -1 &&
+    game.visited[row - 1][col] === 1 &&
     ((game.gameMap.map[row - 1][col].type === "straight" &&
       game.gameMap.map[row - 1][col].rotation === 0) ||
       (game.gameMap.map[row - 1][col].type === "edge" &&
@@ -126,8 +129,8 @@ function up(row: number, game: Game, col: number) {
 
 function left(col: number, game: Game, row: number) {
   return (
-      col - 1 > -1 &&
-    game.visited[row][col-1] === 1 &&
+    col - 1 > -1 &&
+    game.visited[row][col - 1] === 1 &&
     ((game.gameMap.map[row][col - 1].type === "straight" &&
       game.gameMap.map[row][col - 1].rotation === 1) ||
       (game.gameMap.map[row][col - 1].type === "edge" &&
@@ -145,8 +148,8 @@ function left(col: number, game: Game, row: number) {
 
 function down(row: number, game: Game, col: number) {
   return (
-      row + 1 < game.gameMap.map.length &&
-    game.visited[row+1][col] === 1 &&
+    row + 1 < game.gameMap.map.length &&
+    game.visited[row + 1][col] === 1 &&
     ((game.gameMap.map[row + 1][col].type === "straight" &&
       game.gameMap.map[row + 1][col].rotation === 0) ||
       (game.gameMap.map[row + 1][col].type === "edge" &&
@@ -164,8 +167,8 @@ function down(row: number, game: Game, col: number) {
 
 function right(col: number, game: Game, row: number) {
   return (
-      col + 1 < game.gameMap.map.length &&
-    game.visited[row][col +1] === 1 &&
+    col + 1 < game.gameMap.map.length &&
+    game.visited[row][col + 1] === 1 &&
     ((game.gameMap.map[row][col + 1].type === "straight" &&
       game.gameMap.map[row][col + 1].rotation === 1) ||
       (game.gameMap.map[row][col + 1].type === "edge" &&
