@@ -15,7 +15,7 @@ const saveBtn = document.querySelector("#save");
 const loadBtn = document.querySelector("#load");
 const manual = document.querySelector("p");
 
-let state = localStorage.getItem("state");
+const state = localStorage.getItem("state");
 if (state !== null) loadBtn.classList.toggle("hidden");
 
 function startGame() {

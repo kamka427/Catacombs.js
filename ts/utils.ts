@@ -191,33 +191,25 @@ export function rotate(e: MouseEvent): void {
     switch (game.gameMap.randomfield.type) {
       case "straight":
         game.gameMap.randomfield.rotation =
-          game.gameMap.randomfield.rotation === 0 ? 1 : 0;
+          game.gameMap.randomfield.rotation === 0 ? 90 : 0;
         break;
       case "edge":
-        game.gameMap.randomfield.rotation === 3
-          ? (game.gameMap.randomfield.rotation = 0)
-          : ++game.gameMap.randomfield.rotation;
+        game.gameMap.randomfield.rotation =
+          game.gameMap.randomfield.rotation === 270
+            ? 0
+            : (game.gameMap.randomfield.rotation += 90);
         break;
       case "triple":
-        game.gameMap.randomfield.rotation === 3
-          ? (game.gameMap.randomfield.rotation = 0)
-          : ++game.gameMap.randomfield.rotation;
+        game.gameMap.randomfield.rotation =
+          game.gameMap.randomfield.rotation === 270
+            ? 0
+            : (game.gameMap.randomfield.rotation += 90);
         break;
     }
   }
   drawMap();
 }
 export function step(e: MouseEvent) {
-  // const locations = graphNext(
-  //   game.players[game.currentPlayer].row,
-  //   game.players[game.currentPlayer].col,
-  //   game
-  // );
-  // graphNext(
-  //     game.players[game.currentPlayer].row,
-  //     game.players[game.currentPlayer].col,
-  //     game)
-  // console.log(locations);
   graphExplore(game);
   console.log(game.players);
 
@@ -233,21 +225,44 @@ export function step(e: MouseEvent) {
   }
   console.log(exists);
 
+  console.log(game.treasuresAll);
+  console.log(game.players[game.currentPlayer]);
   if (exists) {
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
-    // drawMap(game);
+    if (game.players[game.currentPlayer].treasureCards.length !== 0) {
+      for (let i = 0; i < game.treasuresAll.length; i++) {
+        if (
+          game.treasuresAll[i].row === game.players[game.currentPlayer].row &&
+          game.treasuresAll[i].col === game.players[game.currentPlayer].col &&
+          game.treasuresAll[i].type ===
+            game.players[game.currentPlayer].treasureCards[0].type
+        ) {
+          console.log(112234234);
+
+          game.treasuresAll.splice(i, 1);
+          game.players[game.currentPlayer].treasureCards.shift();
+        }
+      }
+    }
+    if (
+      game.players[game.currentPlayer].treasureCards.length === 0 &&
+      game.players[game.currentPlayer].row ===
+        game.players[game.currentPlayer].startRow &&
+      game.players[game.currentPlayer].col ===
+        game.players[game.currentPlayer].startCol
+    ) {
+      alert(game.currentPlayer + 1 + ". játékos nyerte a játékot!");
+    }
     endTurn();
   }
+
   drawMap();
 }
 
 export function endTurn() {
   if (game.currentPlayer === game.players.length - 1) game.currentPlayer = 0;
   else game.currentPlayer++;
-  // graphNext(
-  //   game.players[game.currentPlayer].row,
-  //   game.players[game.currentPlayer].col,
-  //   game)
+
   graphExplore(game);
 }

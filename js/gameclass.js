@@ -11,8 +11,8 @@ class GameMap {
     generateRandom() {
         const rnd = randomBetween(0, this.remaining.length);
         const field = this.remaining[rnd] === "straight"
-            ? new Field(this.remaining[rnd], randomBetween(0, 1))
-            : new Field(this.remaining[rnd], randomBetween(0, 3));
+            ? new Field(this.remaining[rnd], randomBetween(0, 1) * 90)
+            : new Field(this.remaining[rnd], randomBetween(0, 3) * 90);
         this.remaining.splice(rnd, 1);
         return field;
     }
@@ -49,7 +49,6 @@ export class Game {
         this.addTreasure();
         this.fallenTreasure = null;
         this.currentPlayer = 0;
-        // graphNext(this.players[this.currentPlayer].row,this.players[this.currentPlayer].col,this)
         this.availableFields = [];
         this.visited = [
             [...new Array(7).fill(1)],

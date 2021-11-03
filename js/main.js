@@ -11,7 +11,7 @@ const manualBtn = document.querySelector("#manual");
 const saveBtn = document.querySelector("#save");
 const loadBtn = document.querySelector("#load");
 const manual = document.querySelector("p");
-let state = localStorage.getItem("state");
+const state = localStorage.getItem("state");
 if (state !== null)
     loadBtn.classList.toggle("hidden");
 function startGame() {
@@ -29,7 +29,7 @@ function loadGame() {
     drawMap();
 }
 function saveGame() {
-    localStorage.setItem('state', JSON.stringify(game));
+    localStorage.setItem("state", JSON.stringify(game));
 }
 function showManual() {
     manual.classList.toggle("hidden");

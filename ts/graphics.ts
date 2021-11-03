@@ -1,48 +1,15 @@
-import { Field } from "./constants.js";
 import { game } from "./main.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
-
-const bottomleft = new Image();
-
-bottomleft.src = "../assets/bottomleft.png";
-
-const bottomright = new Image();
-bottomright.src = "../assets/bottomright.png";
-const leftarrow = new Image();
-leftarrow.src = "../assets/leftarrow.png";
-const horizontal = new Image();
-horizontal.src = "../assets/horizontal.png";
-const downarrow = new Image();
-downarrow.src = "../assets/downarrow.png";
-const player = new Image();
-player.src = "../assets/player.png";
-const rightarrow = new Image();
-rightarrow.src = "../assets/rightarrow.png";
-const topleft = new Image();
-topleft.src = "../assets/topleft.png";
-const topright = new Image();
-topright.src = "../assets/topright.png";
-const tripledown = new Image();
-tripledown.src = "../assets/tripledown.png";
-const tripleleft = new Image();
-tripleleft.src = "../assets/tripleleft.png";
-const tripleright = new Image();
-tripleright.src = "../assets/tripleright.png";
-const tripleup = new Image();
-tripleup.src = "../assets/tripleup.png";
-const uparrow = new Image();
-uparrow.src = "../assets/uparrow.png";
-const vertical = new Image();
-vertical.src = "../assets/vertical.png";
+ctx.lineJoin = "round";
 
 export function drawMap(): void {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
-  ctx.fillStyle = "green";
+  ctx.fillStyle = "brown";
   ctx.fillRect(0, 0, gameArea.height, gameArea.height);
-  for (let col = 0; col < game.gameMap.map.length + 2; col++) {
-    for (let row = 0; row < game.gameMap.map.length + 2; row++) {
+  for (let row = 0; row < game.gameMap.map.length + 2; row++) {
+    for (let col = 0; col < game.gameMap.map.length + 2; col++) {
       if (
         (col === 0 &&
           row > 0 &&
@@ -61,8 +28,7 @@ export function drawMap(): void {
           col < game.gameMap.map.length &&
           col % 2 === 0)
       ) {
-        // ctx.fillText("side", i * 50, j * 50 + 25);
-        dArrow(col * 50, row * 50);
+        drawArrows(col * 50, row * 50);
       } else if (
         !(
           col === 0 ||
@@ -71,101 +37,218 @@ export function drawMap(): void {
           row === game.gameMap.map.length + 1
         )
       ) {
-        dImage(game.gameMap.map[row - 1][col - 1], col * 50, row * 50);
+        drawField(
+          game.gameMap.map[row - 1][col - 1].type,
+          game.gameMap.map[row - 1][col - 1].rotation,
+          game.gameMap.map[row - 1][col - 1].avaliable,
+          col * 50,
+          row * 50,
+          50
+        );
       }
-      // ctx.strokeRect(i * 50, j * 50, 50, 50)
     }
   }
-  dImage(
-    game.gameMap.randomfield,
+
+  drawField(
+    game.gameMap.randomfield.type,
+    game.gameMap.randomfield.rotation,
+    false,
     game.draggableField.x,
-    game.draggableField.y
+    game.draggableField.y,
+    50
   );
+
   drawPlayers();
   drawTreasures();
-  // if(game.fallenTreasure !== null)
-  drawAvailable();
   drawActualPlayer();
+  showActualTreasure();
 }
 
-function dImage(type: Field, row: number, col: number) {
-  if (type.type == "edge" && type.rotation == 0)
-    ctx.drawImage(topleft, row, col, 50, 50);
-  else if (type.type == "edge" && type.rotation == 1)
-    ctx.drawImage(topright, row, col, 50, 50);
-  else if (type.type == "edge" && type.rotation == 3)
-    ctx.drawImage(bottomleft, row, col, 50, 50);
-  else if (type.type == "edge" && type.rotation == 2)
-    ctx.drawImage(bottomright, row, col, 50, 50);
-  else if (type.type == "straight" && type.rotation == 1)
-    ctx.drawImage(horizontal, row, col, 50, 50);
-  else if (type.type == "straight" && type.rotation == 0)
-    ctx.drawImage(vertical, row, col, 50, 50);
-  else if (type.type == "triple" && type.rotation == 3)
-    ctx.drawImage(tripleup, row, col, 50, 50);
-  else if (type.type == "triple" && type.rotation == 0)
-    ctx.drawImage(tripleright, row, col, 50, 50);
-  else if (type.type == "triple" && type.rotation == 1)
-    ctx.drawImage(tripledown, row, col, 50, 50);
-  else if (type.type == "triple" && type.rotation == 2)
-    ctx.drawImage(tripleleft, row, col, 50, 50);
-}
-
-function dArrow(row: number, col: number) {
-  if (row === 0) ctx.drawImage(rightarrow, row, col, 50, 50);
+function drawArrows(row: number, col: number) {
+  if (row === 0) drawArrow(90, row, col, 50);
+  //bal
   else if (row / 50 === game.gameMap.map.length + 1)
-    ctx.drawImage(leftarrow, row, col, 50, 50);
-  else if (col === 0) ctx.drawImage(downarrow, row, col, 50, 50);
-  else if (col / 50 === game.gameMap.map.length + 1)
-    ctx.drawImage(uparrow, row, col, 50, 50);
+    //jobb
+    drawArrow(270, row, col, 50);
+  else if (col === 0) drawArrow(180, row, col, 50);
+  //felso
+  else if (col / 50 === game.gameMap.map.length + 1) drawArrow(0, row, col, 50); //also
 }
 
 function drawPlayers() {
   for (let i = 0; i < game.players.length; i++) {
-    dPlayer(game.players[i].row, game.players[i].col);
-  }
-}
-function dPlayer(row: number, col: number) {
-  // if(game.players[i].number === 1)
-
-  ctx.drawImage(player, (col + 1) * 50, (row + 1) * 50, 20, 20);
-}
-
-function drawTreasures() {
-  for (let i = 0; i < game.treasuresAll.length; i++) {
-    dTreasure(game.treasuresAll[i].row, game.treasuresAll[i].col);
-  }
-  if (game.fallenTreasure !== null)
-    dFallenT(game.draggableField.x, game.draggableField.y);
-}
-function dFallenT(row: number, col: number) {
-  ctx.drawImage(player, row, col, 10, 10);
-}
-
-function dTreasure(row: number, col: number) {
-  // if(game.players[i].number === 1)
-
-  ctx.drawImage(player, (row + 1) * 50, (col + 1) * 50, 10, 10);
-}
-
-export function drawAvailable() {
-  ctx.fillStyle = "black";
-  for (let i = 0; i < game.availableFields.length; i++) {
-    ctx.strokeRect(
-      (game.availableFields[i][1] + 1) * 50,
-      (game.availableFields[i][0] + 1) * 50,
-      50,
-      50
+    let color;
+    switch (game.players[i].number) {
+      case 0:
+        color = "blue";
+        break;
+      case 1:
+        color = "red";
+        break;
+      case 2:
+        color = "green";
+        break;
+      case 3:
+        color = "purple";
+        break;
+    }
+    drawPlayer(
+      color,
+      (game.players[i].col + 1) * 50 + 10,
+      (game.players[i].row + 1) * 50 + 10,
+      10
     );
   }
 }
 
+function drawTreasures() {
+  for (let i = 0; i < game.treasuresAll.length; i++) {
+    const color = determineColor(game.treasuresAll[i].type);
+    drawTreasure(
+      color,
+      (game.treasuresAll[i].col + 1) * 50 + 17,
+      (game.treasuresAll[i].row + 1) * 50 + 17,
+      15
+    );
+  }
+  if (game.fallenTreasure !== null) {
+    const fallenColor = determineColor(game.fallenTreasure.type);
+    drawTreasure(
+      fallenColor,
+      game.draggableField.x + 17,
+      game.draggableField.y + 17,
+      15
+    );
+  }
+}
+function determineColor(type: string) {
+  let color;
+  switch (type) {
+    case "ruby":
+      color = "red";
+      break;
+
+    case "diamond":
+      color = "blue";
+      break;
+
+    case "gold":
+      color = "gold";
+      break;
+
+    case "silver":
+      color = "silver";
+      break;
+
+    case "emerald":
+      color = "green";
+      break;
+  }
+  return color;
+}
+
 function drawActualPlayer() {
-  ctx.fillStyle = "black";
-  ctx.strokeRect(
-    (game.players[game.currentPlayer].col + 1) * 50,
-    (game.players[game.currentPlayer].row + 1) * 50,
-    20,
-    20
+  drawPlayer(
+    "yellow",
+    (game.players[game.currentPlayer].col + 1) * 50 + 10,
+    (game.players[game.currentPlayer].row + 1) * 50 + 10,
+    5
   );
+}
+
+function showActualTreasure() {
+  // const color = determineColor(game.players[game.currentPlayer].treasureCards[0].type)
+  if(game.players[game.currentPlayer].treasureCards.length !==0)
+  drawTreasure(
+    "yellow",
+    (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 + 10 + 12,
+    (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 + 10 + 12,
+    5
+  );
+}
+
+function drawField(
+  type: string,
+  rotation: number,
+  active: boolean,
+  row: number,
+  col: number,
+  size: number
+) {
+  ctx.save();
+  ctx.translate(row + size / 2, col + size / 2);
+  ctx.rotate((rotation * Math.PI) / 180);
+  ctx.translate(-(row + size / 2), -(col + size / 2));
+  ctx.strokeStyle = "brown";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(row, col, size, size);
+  ctx.fillStyle = active === true ? "green" : "gold";
+  ctx.fillRect(row, col, size, size);
+  ctx.lineWidth = 20;
+  ctx.fillStyle = "black";
+  switch (type) {
+    case "edge":
+      ctx.beginPath();
+      ctx.moveTo(row + size / 2, col + size);
+      ctx.lineTo(row + size / 2, col + size / 2);
+      ctx.lineTo(row + size, col + size / 2);
+      ctx.stroke();
+      break;
+
+    case "straight":
+      ctx.beginPath();
+      ctx.moveTo(row + size / 2, col);
+      ctx.lineTo(row + size / 2, col + size);
+      ctx.stroke();
+      break;
+
+    case "triple":
+      ctx.beginPath();
+      ctx.moveTo(row + size / 2, col + size);
+      ctx.lineTo(row + size / 2, col);
+      ctx.moveTo(row + size / 2, col + size / 2);
+      ctx.lineTo(row + size, col + size / 2);
+      ctx.stroke();
+      break;
+  }
+  ctx.restore();
+}
+
+function drawPlayer(color: string, row: number, col: number, size: number) {
+  ctx.fillStyle = color;
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(row, col, size, 0, 360);
+  ctx.fill();
+  ctx.stroke();
+}
+
+function drawTreasure(color: string, row: number, col: number, size: number) {
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 1;
+  ctx.save();
+  ctx.translate(row + size / 2, col + size / 2);
+  ctx.rotate((45 * Math.PI) / 180);
+  ctx.translate(-(row + size / 2), -(col + size / 2));
+  ctx.fillStyle = color;
+  ctx.fillRect(row, col, size, size);
+  ctx.strokeRect(row, col, size, size);
+  ctx.restore();
+}
+
+function drawArrow(rotation: number, row: number, col: number, size: number) {
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "gold";
+  ctx.save();
+  ctx.translate(row + size / 2, col + size / 2);
+  ctx.rotate((rotation * Math.PI) / 180);
+  ctx.translate(-(row + size / 2), -(col + size / 2));
+  ctx.beginPath();
+  ctx.moveTo(row, col + size);
+  ctx.lineTo(row + size / 2, col);
+  ctx.lineTo(row + size, col + size);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
 }

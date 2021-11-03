@@ -1,9 +1,11 @@
 export class Field {
   type: Piece;
   rotation: number;
+  avaliable: boolean
   constructor(type: Piece, rotation: number) {
     this.type = type;
     this.rotation = rotation;
+    this.avaliable = false
   }
 }
 
@@ -15,11 +17,11 @@ export const startmap: Array<Array<Field>> = [
   [
     new Field("edge", 0),
     undefined,
-    new Field("triple", 1),
+    new Field("triple", 90),
     undefined,
-    new Field("triple", 1),
+    new Field("triple", 90),
     undefined,
-    new Field("edge", 1),
+    new Field("edge", 90),
   ],
   [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
   [
@@ -27,29 +29,29 @@ export const startmap: Array<Array<Field>> = [
     undefined,
     new Field("triple", 0),
     undefined,
-    new Field("triple", 1),
+    new Field("triple", 90),
     undefined,
-    new Field("triple", 2),
+    new Field("triple", 180),
   ],
   [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
   [
     new Field("triple", 0),
     undefined,
-    new Field("triple", 3),
+    new Field("triple", 270),
     undefined,
-    new Field("triple", 2),
+    new Field("triple", 180),
     undefined,
-    new Field("triple", 2),
+    new Field("triple", 270),
   ],
   [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
   [
-    new Field("edge", 3),
+    new Field("edge", 270),
     undefined,
-    new Field("triple", 3),
+    new Field("triple", 270),
     undefined,
-    new Field("triple", 3),
+    new Field("triple", 270),
     undefined,
-    new Field("edge", 2),
+    new Field("edge", 180),
   ],
 ];
 
