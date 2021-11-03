@@ -96,9 +96,5 @@ class DraggableField {
         this.height = 50;
         this.isDragged = false;
     }
-    updatePos(newX, newY) {
-        this.x = newX;
-        this.y = newY;
-    }
 }
 //# sourceMappingURL=gameclass.js.map

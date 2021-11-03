@@ -25,10 +25,9 @@ export function dragEvt(e: MouseEvent) {
     pos.y >= game.draggableField.y &&
     pos.y <= game.draggableField.y + game.draggableField.height
   ) {
-    game.draggableField.updatePos(
-      pos.x - game.draggableField.width / 2,
-      pos.y - game.draggableField.height / 2
-    );
+    game.draggableField.x = pos.x - game.draggableField.width / 2;
+    game.draggableField.y = pos.y - game.draggableField.height / 2;
+
     drawMap();
   }
 }

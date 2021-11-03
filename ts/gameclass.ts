@@ -157,8 +157,8 @@ class DraggableField {
     this.isDragged = false;
   }
 
-  updatePos(newX: number, newY: number) {
-    this.x = newX;
-    this.y = newY;
-  }
+  // updatePos(newX: number, newY: number) {
+  //   this.x = newX;
+  //   this.y = newY;
+  // }
 }
