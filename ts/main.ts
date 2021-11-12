@@ -1,5 +1,5 @@
 import { Game } from "./gameclass.js";
-import { drawMap } from "./graphics.js";
+import { drawMap, drawStatus } from "./graphics.js";
 import { rotate, step } from "./utils.js";
 import { clickArrow, dragStart } from "./mouse.js";
 import { dragEnd } from "./mouse.js";

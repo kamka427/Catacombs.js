@@ -2,9 +2,70 @@ import { game } from "./main.js";
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
+const statusArea: HTMLCanvasElement =
+  document.querySelector("canvas#statusArea");
+const ctxs: CanvasRenderingContext2D = statusArea.getContext("2d");
+
 ctx.lineJoin = "round";
 
+export function drawStatus(): void {
+  ctxs.clearRect(0, 0, statusArea.width, statusArea.height);
+  let x = 0;
+  game.players.forEach((e) => {
+    let color;
+    switch (e.number) {
+      case 0:
+        color = "blue";
+        break;
+      case 1:
+        color = "red";
+        break;
+      case 2:
+        color = "green";
+        break;
+      case 3:
+        color = "purple";
+        break;
+    }
+
+    ctxs.fillStyle = color;
+    ctxs.fillRect(x, 0, 112.5, 50);
+    ctxs.strokeStyle = "black"
+    ctxs.lineWidth = 3
+    if(e.number === game.currentPlayer)
+    {
+      ctxs.strokeRect(x+1, 0+2, 110, 47);
+    }
+    ctxs.fillStyle = "white"
+    ctxs.fillRect(x+35, 0+5, 72, 40);
+    ctxs.fillStyle = "black";
+    ctxs.fillText(e.number.toString(), x + 15, statusArea.height / 2, 50);
+    ctxs.fillText("Sor: " + e.treasureCards[0].row.toString(), x + 40, 14, 200);
+    ctxs.fillText(
+      "Oszlop: " + e.treasureCards[0].col.toString(),
+      x + 40,
+      24,
+      200
+    );
+    ctxs.fillText(
+      "Típus: " + e.treasureCards[0].type.toString(),
+      x + 40,
+      34,
+      200
+    );
+    ctxs.fillText(
+      "Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer,
+      x + 40,
+      44,
+      200
+    );
+    x += 112.5;
+  });
+}
+
 export function drawMap(): void {
+  drawStatus();
+
   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
   ctx.fillStyle = "brown";
   ctx.fillRect(0, 0, gameArea.height, gameArea.height);
@@ -99,18 +160,19 @@ function drawPlayers() {
         counter++;
     });
     console.log(counter);
-    
+
     if (counter < 3) {
       drawPlayer(
         color,
         (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
-        (game.players[i].row + 1) * 50 +  10,
+        (game.players[i].row + 1) * 50 + 10,
         10
       );
-      if(game.currentPlayer === game.players[i].number){
+      if (game.currentPlayer === game.players[i].number) {
         drawPlayer(
           "yellow",
-          (game.players[game.currentPlayer].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
+          (game.players[game.currentPlayer].col + 1) * 50 +
+            (counter === 0 ? 1 : 4) * 10,
           (game.players[game.currentPlayer].row + 1) * 50 + 10,
           5
         );
@@ -122,14 +184,16 @@ function drawPlayers() {
         (game.players[i].row + 1) * 50 + (counter === 2 ? 1 : 4) * 10,
         10
       );
-      if(game.currentPlayer === game.players[i].number){
+      if (game.currentPlayer === game.players[i].number) {
         drawPlayer(
           "yellow",
-          (game.players[game.currentPlayer].col + 1) * 50 +  10,
-          (game.players[game.currentPlayer].row + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
+          (game.players[game.currentPlayer].col + 1) * 50 + 10,
+          (game.players[game.currentPlayer].row + 1) * 50 +
+            (counter === 0 ? 1 : 4) * 10,
           5
         );
-    }}
+      }
+    }
 
     usedPos.push({ row: game.players[i].row, col: game.players[i].col });
   }
