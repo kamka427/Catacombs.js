@@ -1,8 +1,7 @@
+import { push } from "./utils.js";
+
+import { game, gameArea } from "./main.js";
 import { drawMap } from "./graphics.js";
-import { push, step } from "./utils.js";
-import { game } from "./main.js";
-import { gameArea } from "./main.js";
-import { graphExplore } from "./graphexporation.js";
 
 export function getMousePosition(event: MouseEvent) {
   const rect = gameArea.getBoundingClientRect();
@@ -13,29 +12,77 @@ export function getMousePosition(event: MouseEvent) {
   return { convRow: convRow, convCol: convCol, x: x, y: y };
 }
 
-export function dragStart() {
-  game.draggableField.isDragged = true;
-}
-
-export function dragEvt(e: MouseEvent) {
-  const pos = getMousePosition(e);
-  if (
-    game.draggableField.isDragged &&
-    pos.x >= game.draggableField.x &&
-    pos.x <= game.draggableField.x + game.draggableField.width &&
-    pos.y >= game.draggableField.y &&
-    pos.y <= game.draggableField.y + game.draggableField.height
-  ) {
-    game.draggableField.x = pos.x - game.draggableField.width / 2;
-    game.draggableField.y = pos.y - game.draggableField.height / 2;
-
-    drawMap();
+export function dField(e: MouseEvent) {
+  if(game.phase === "insert"){
+  const loc = getMousePosition(e);
+  if (loc.convCol === 1 && loc.convRow === -1) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 3 && loc.convRow === -1) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 5 && loc.convRow === -1) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === -1 && loc.convRow === 1) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === -1 && loc.convRow === 3) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === -1 && loc.convRow === 5) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 7 && loc.convRow === 1) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 7 && loc.convRow === 3) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 7 && loc.convRow === 5) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 1 && loc.convRow === 7) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 3 && loc.convRow === 7) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else if (loc.convCol === 5 && loc.convRow === 7) {
+    game.draggableField.x = (loc.convCol + 1) * 50;
+    game.draggableField.y = (loc.convRow + 1) * 50;
+  } else {
+    game.draggableField.x = 500;
+    game.draggableField.y = 0;
   }
+  drawMap();
+}
+ 
 }
 
-export function dragEnd() {
-  game.draggableField.isDragged = false;
-}
+// export function dragStart() {
+//   game.draggableField.isDragged = true;
+// }
+
+// export function dragEvt(e: MouseEvent) {
+//   const pos = getMousePosition(e);
+//   if (
+//     game.draggableField.isDragged &&
+//     pos.x >= game.draggableField.x &&
+//     pos.x <= game.draggableField.x + game.draggableField.width &&
+//     pos.y >= game.draggableField.y &&
+//     pos.y <= game.draggableField.y + game.draggableField.height
+//   ) {
+//     game.draggableField.x = pos.x - game.draggableField.width / 2;
+//     game.draggableField.y = pos.y - game.draggableField.height / 2;
+
+//     drawMap();
+//   }
+// }
+
+// export function dragEnd() {
+//   game.draggableField.isDragged = false;
+// }
 
 export function clickArrow(e: MouseEvent) {
   const loc = getMousePosition(e);
@@ -78,5 +125,3 @@ export function clickArrow(e: MouseEvent) {
   }
   return false;
 }
-
-

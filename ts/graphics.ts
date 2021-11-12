@@ -176,7 +176,7 @@ function drawPlayers() {
       if (e.row === game.players[i].row && e.col === game.players[i].col)
         counter++;
     });
-    console.log(counter);
+
 
     if (counter < 3) {
       drawPlayer(

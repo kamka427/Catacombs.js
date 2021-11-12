@@ -1,9 +1,7 @@
 import { Game } from "./gameclass.js";
 import { drawMap } from "./graphics.js";
-import { endTurn, rotate, step } from "./utils.js";
-import { clickArrow, dragStart } from "./mouse.js";
-import { dragEnd } from "./mouse.js";
-import { dragEvt } from "./mouse.js";
+import { rotate, step } from "./utils.js";
+import { clickArrow, dField } from "./mouse.js";
 import { graphExplore } from "./graphexporation.js";
 
 export let game: Game;
@@ -43,7 +41,7 @@ function loadGame() {
   const state = localStorage.getItem("state");
   game = JSON.parse(state);
 
-  console.log(game);
+
   gameArea.classList.remove("hidden");
   drawMap();
 }
@@ -62,6 +60,8 @@ function gameLoop(e: MouseEvent) {
     if (game.phase === "insert") {
       if (clickArrow(e) !== false) {
         game.phase = "step";
+        game.draggableField.x = 500;
+        game.draggableField.y = 0;
         graphExplore(game);
         drawMap();
         return;
@@ -87,14 +87,15 @@ function restart(){
   start.classList.remove("hidden")
 }
 
-
+gameArea.addEventListener("contextmenu", e => e.preventDefault());
 startBtn.addEventListener("click", startGame);
 manualBtn.addEventListener("click", showManual);
 saveBtn.addEventListener("click", saveGame);
 loadBtn.addEventListener("click", loadGame);
 restartBtn.addEventListener("click", restart);
-gameArea.addEventListener("mousedown", dragStart);
-gameArea.addEventListener("mousemove", dragEvt);
-gameArea.addEventListener("mouseup", dragEnd);
-gameArea.addEventListener("click", rotate);
+// gameArea.addEventListener("mousedown", dragStart);
+// gameArea.addEventListener("mousemove", dragEvt);
+// gameArea.addEventListener("mouseup", dragEnd);
+gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
+gameArea.addEventListener("mousemove",dField)

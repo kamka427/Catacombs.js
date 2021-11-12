@@ -69,7 +69,6 @@ export function push(index, direction) {
                 else if (game.treasuresAll[i].row === index)
                     game.treasuresAll[i].col++; // hibás minden iránynál ha hirtelen van váltás irányok között
             }
-            console.log(game.fallenTreasure);
             break;
         case "down":
             tmp = game.gameMap.map[index][0];
@@ -144,44 +143,42 @@ export function push(index, direction) {
                 else if (game.treasuresAll[i].col === index)
                     game.treasuresAll[i].row--;
             }
-            console.log(game.fallenTreasure);
             break;
     }
     game.availableFields = [];
     drawMap();
 }
 export function rotate(e) {
-    const pos = getMousePosition(e);
-    console.log(pos);
-    if (pos.x >= game.draggableField.x &&
-        pos.x <= game.draggableField.x + game.draggableField.width &&
-        pos.y >= game.draggableField.y &&
-        pos.y <= game.draggableField.y + game.draggableField.height) {
-        console.log(game.gameMap.randomfield);
-        switch (game.gameMap.randomfield.type) {
-            case "straight":
-                game.gameMap.randomfield.rotation =
-                    game.gameMap.randomfield.rotation === 0 ? 90 : 0;
-                break;
-            case "edge":
-                game.gameMap.randomfield.rotation =
-                    game.gameMap.randomfield.rotation === 270
-                        ? 0
-                        : (game.gameMap.randomfield.rotation += 90);
-                break;
-            case "triple":
-                game.gameMap.randomfield.rotation =
-                    game.gameMap.randomfield.rotation === 270
-                        ? 0
-                        : (game.gameMap.randomfield.rotation += 90);
-                break;
+    if (e.button === 2 && game.phase === "insert") {
+        const pos = getMousePosition(e);
+        if (pos.x >= game.draggableField.x &&
+            pos.x <= game.draggableField.x + game.draggableField.width &&
+            pos.y >= game.draggableField.y &&
+            pos.y <= game.draggableField.y + game.draggableField.height) {
+            switch (game.gameMap.randomfield.type) {
+                case "straight":
+                    game.gameMap.randomfield.rotation =
+                        game.gameMap.randomfield.rotation === 0 ? 90 : 0;
+                    break;
+                case "edge":
+                    game.gameMap.randomfield.rotation =
+                        game.gameMap.randomfield.rotation === 270
+                            ? 0
+                            : (game.gameMap.randomfield.rotation += 90);
+                    break;
+                case "triple":
+                    game.gameMap.randomfield.rotation =
+                        game.gameMap.randomfield.rotation === 270
+                            ? 0
+                            : (game.gameMap.randomfield.rotation += 90);
+                    break;
+            }
         }
+        drawMap();
     }
-    drawMap();
 }
 export function step(e) {
     const pos = getMousePosition(e);
-    console.log(pos);
     let exists = false;
     for (let i = 0; i < game.availableFields.length; i++) {
         if (game.availableFields[i][1] === pos.convCol &&

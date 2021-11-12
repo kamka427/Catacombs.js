@@ -8,7 +8,7 @@ import {
   remainingElements,
   Field,
 } from "./constants.js";
-import { graphExplore } from "./graphexporation.js";
+
 import { randomBetween } from "./utils.js";
 
 class GameMap {
@@ -96,7 +96,7 @@ export class Game {
     this.players = [];
     this.treasuresAll = [];
     this.treasureLocations = genTreasureLocations();
-    console.log(this.treasureLocations);
+
     this.genPlayers();
     this.addTreasure();
     this.fallenTreasure = null;

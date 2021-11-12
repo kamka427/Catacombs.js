@@ -81,7 +81,7 @@ export function push(index: number, direction: string) {
         } else if (game.treasuresAll[i].row === index)
           game.treasuresAll[i].col++; // hibás minden iránynál ha hirtelen van váltás irányok között
       }
-      console.log(game.fallenTreasure);
+
       break;
 
     case "down":
@@ -162,7 +162,7 @@ export function push(index: number, direction: string) {
         } else if (game.treasuresAll[i].col === index)
           game.treasuresAll[i].row--;
       }
-      console.log(game.fallenTreasure);
+
       break;
   }
   game.availableFields = [];
@@ -170,8 +170,8 @@ export function push(index: number, direction: string) {
 }
 
 export function rotate(e: MouseEvent): void {
+  if(e.button === 2 && game.phase === "insert"){
   const pos = getMousePosition(e);
-  console.log(pos);
 
   if (
     pos.x >= game.draggableField.x &&
@@ -179,7 +179,7 @@ export function rotate(e: MouseEvent): void {
     pos.y >= game.draggableField.y &&
     pos.y <= game.draggableField.y + game.draggableField.height
   ) {
-    console.log(game.gameMap.randomfield);
+
     switch (game.gameMap.randomfield.type) {
       case "straight":
         game.gameMap.randomfield.rotation =
@@ -200,10 +200,12 @@ export function rotate(e: MouseEvent): void {
     }
   }
   drawMap();
+
+}
+
 }
 export function step(e: MouseEvent) {
   const pos = getMousePosition(e);
-  console.log(pos);
   let exists = false;
   for (let i = 0; i < game.availableFields.length; i++) {
     if (
@@ -251,6 +253,7 @@ export function step(e: MouseEvent) {
     return true;
   }
   return false;
+
 }
 
 export function endTurn() {

@@ -43,7 +43,6 @@ export class Game {
         this.players = [];
         this.treasuresAll = [];
         this.treasureLocations = genTreasureLocations();
-        console.log(this.treasureLocations);
         this.genPlayers();
         this.addTreasure();
         this.fallenTreasure = null;

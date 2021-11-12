@@ -123,7 +123,6 @@ function drawPlayers() {
             if (e.row === game.players[i].row && e.col === game.players[i].col)
                 counter++;
         });
-        console.log(counter);
         if (counter < 3) {
             drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 10, 10);
             if (game.currentPlayer === game.players[i].number) {
