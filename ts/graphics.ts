@@ -12,64 +12,72 @@ export function drawStatus(): void {
   ctxs.clearRect(0, 0, statusArea.width, statusArea.height);
   let x = 0;
   game.players.forEach((e) => {
-    if(e.treasureCards.length>0){
-    let color;
-    switch (e.number) {
-      case 0:
-        color = "blue";
-        break;
-      case 1:
-        color = "red";
-        break;
-      case 2:
-        color = "green";
-        break;
-      case 3:
-        color = "purple";
-        break;
-    }
+    if (e.treasureCards.length > 0) {
+      let color;
+      switch (e.number) {
+        case 0:
+          color = "blue";
+          break;
+        case 1:
+          color = "red";
+          break;
+        case 2:
+          color = "green";
+          break;
+        case 3:
+          color = "purple";
+          break;
+      }
 
-    ctxs.fillStyle = color;
-    ctxs.fillRect(x, 0, 112.5, 50);
-    ctxs.strokeStyle = "black";
-    ctxs.lineWidth = 3;
-    if (e.number === game.currentPlayer) {
-      ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
+      ctxs.fillStyle = color;
+      ctxs.fillRect(x, 0, 112.5, 50);
+      ctxs.strokeStyle = "black";
+      ctxs.lineWidth = 3;
+      if (e.number === game.currentPlayer) {
+        ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
+      }
+      ctxs.fillStyle = "white";
+      ctxs.fillRect(x + 35, 0 + 5, 72, 40);
+      ctxs.fillStyle = "black";
+      ctxs.fillText(
+        (e.number + 1).toString(),
+        x + 15,
+        statusArea.height / 2,
+        50
+      );
+      ctxs.fillText(
+        "Sor: " +
+          (e.treasureCards[0].row !== null
+            ? e.treasureCards[0].row
+            : "leesett"),
+        x + 40,
+        14,
+        200
+      );
+      ctxs.fillText(
+        "Oszlop: " +
+          (e.treasureCards[0].col !== null
+            ? e.treasureCards[0].col
+            : "leesett"
+          ).toString(),
+        x + 40,
+        24,
+        200
+      );
+      ctxs.fillText(
+        "Típus: " + e.treasureCards[0].type.toString(),
+        x + 40,
+        34,
+        200
+      );
+      ctxs.fillText(
+        "Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer,
+        x + 40,
+        44,
+        200
+      );
+      x += 112.5;
     }
-    ctxs.fillStyle = "white";
-    ctxs.fillRect(x + 35, 0 + 5, 72, 40);
-    ctxs.fillStyle = "black";
-    ctxs.fillText((e.number+1).toString(), x + 15, statusArea.height / 2, 50);
-    ctxs.fillText(
-      "Sor: " +
-        (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"),
-      x + 40,
-      14,
-      200
-    );
-    ctxs.fillText(
-      "Oszlop: " +
-        (e.treasureCards[0].col !== null
-          ? e.treasureCards[0].col
-          : "leesett"
-        ).toString(),
-      x + 40,
-      24,
-      200
-    );
-    ctxs.fillText(
-      "Típus: " + e.treasureCards[0].type.toString(),
-      x + 40,
-      34,
-      200
-    );
-    ctxs.fillText(
-      "Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer,
-      x + 40,
-      44,
-      200
-    );
-    x += 112.5;}
   });
 }
 
@@ -252,22 +260,12 @@ function determineColor(type: string) {
   return color;
 }
 
-// function drawActualPlayer() {
-//   drawPlayer(
-//     "yellow",
-//     (game.players[game.currentPlayer].col + 1) * 50 + 10,
-//     (game.players[game.currentPlayer].row + 1) * 50 + 10,
-//     5
-//   );
-// }
-
 function showActualTreasure() {
   if (game.players[game.currentPlayer].treasureCards.length !== 0) {
     if (
       game.players[game.currentPlayer].treasureCards[0].row !== null &&
       game.players[game.currentPlayer].treasureCards[0].col !== null
-    )
-    {
+    ) {
       drawTreasure(
         "yellow",
         (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
@@ -278,18 +276,27 @@ function showActualTreasure() {
           12,
         5
       );
+    } else {
+      drawTreasure(
+        "yellow",
+        game.draggableField.x + 22,
+        game.draggableField.y + 22,
+        5
+      );
     }
-  else {
-
-
+  }
+  else{
     drawTreasure(
       "yellow",
-      game.draggableField.x + 22,
-      game.draggableField.y + 22,
+      (game.players[game.currentPlayer].startRow + 1) * 50 +
+        10 +
+        12,
+      (game.players[game.currentPlayer].startCol+ 1) * 50 +
+        10 +
+        12,
       5
     );
   }
-}
 }
 
 function drawField(
@@ -377,3 +384,12 @@ function drawArrow(rotation: number, row: number, col: number, size: number) {
   ctx.stroke();
   ctx.restore();
 }
+
+// export function drawEnd(){
+//   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+//   ctx.fillStyle = "black"
+//   ctx.fillRect(gameArea.width/2-100,gameArea.height/2-100,100,100)
+//   ctx.fillStyle = "red"
+//   ctx.fillText(game.currentPlayer + 1 + ". játékos nyerte a játékot!",gameArea.width/2-100,gameArea.height/2-100);
+
+// }

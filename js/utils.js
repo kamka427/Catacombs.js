@@ -207,7 +207,8 @@ export function step(e) {
                 game.players[game.currentPlayer].startRow &&
             game.players[game.currentPlayer].col ===
                 game.players[game.currentPlayer].startCol) {
-            alert(game.currentPlayer + 1 + ". játékos nyerte a játékot!");
+            game.ended = true;
+            return true;
         }
         game.availableFields = [];
         for (let i = 0; i < game.gameMap.map.length; i++) {

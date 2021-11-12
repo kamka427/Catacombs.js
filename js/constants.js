@@ -65,7 +65,6 @@ export const startLocations = [
     [0, 6],
     [6, 0],
 ];
-// export const treasureLocations: Array<Array<number>> = [];
 export const genTreasureLocations = () => {
     const treasureLocations = [];
     for (let i = 0; i < startmap.length; i++) {
@@ -84,5 +83,4 @@ export const genTreasureLocations = () => {
     }
     return treasureLocations;
 };
-// genTreasureLocations();
 //# sourceMappingURL=constants.js.map

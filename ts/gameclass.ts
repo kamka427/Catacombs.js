@@ -85,7 +85,8 @@ export class Game {
   currentPlayer: number;
   availableFields: Array<Array<number>>;
   visited: Array<Array<number>>;
-  phase: string
+  phase: string;
+  ended:boolean
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -111,6 +112,7 @@ export class Game {
       [...new Array(7).fill(1)],
     ];
     this.phase = "insert";
+    this.ended = false
     // graphExplore(this);
   }
   genPlayers() {
@@ -158,9 +160,4 @@ class DraggableField {
     this.height = 50;
     this.isDragged = false;
   }
-
-  // updatePos(newX: number, newY: number) {
-  //   this.x = newX;
-  //   this.y = newY;
-  // }
 }

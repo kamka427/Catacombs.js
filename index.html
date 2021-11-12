@@ -9,6 +9,8 @@
   </head>
   <body>
     <h1>Varázslatos katakombák</h1>
+    <div id="startscreen">
+
     <input
       type="number"
       name="playercount"
@@ -26,6 +28,7 @@
       value="2"
     />
     <button id="start">Start!</button>
+  </div>
     <button id="manual">Leírás megtekintése</button>
     <button id="save">Játék mentése</button>
     <button id="load" class="hidden">Játék betöltése</button>
@@ -35,6 +38,10 @@
     <canvas class="" id="statusArea" width="550" height="50"></canvas>
     <canvas class="hidden" id="gameArea" width="550" height="450"></canvas>
 
+    <div class="hidden" id="end">
+      <h1 id="endtext"></h1>
+      <button id="restart">Új játék indítása</button>
+    </div>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

@@ -1,11 +1,11 @@
 export class Field {
   type: Piece;
   rotation: number;
-  avaliable: boolean
+  avaliable: boolean;
   constructor(type: Piece, rotation: number) {
     this.type = type;
     this.rotation = rotation;
-    this.avaliable = false
+    this.avaliable = false;
   }
 }
 
@@ -75,7 +75,6 @@ export const startLocations: Array<Array<number>> = [
   [0, 6],
   [6, 0],
 ];
-// export const treasureLocations: Array<Array<number>> = [];
 export const genTreasureLocations = () => {
   const treasureLocations = [];
   for (let i = 0; i < startmap.length; i++) {
@@ -89,4 +88,3 @@ export const genTreasureLocations = () => {
   }
   return treasureLocations;
 };
-// genTreasureLocations();

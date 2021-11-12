@@ -59,6 +59,7 @@ export class Game {
             [...new Array(7).fill(1)],
         ];
         this.phase = "insert";
+        this.ended = false;
         // graphExplore(this);
     }
     genPlayers() {

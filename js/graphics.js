@@ -36,7 +36,9 @@ export function drawStatus() {
             ctxs.fillStyle = "black";
             ctxs.fillText((e.number + 1).toString(), x + 15, statusArea.height / 2, 50);
             ctxs.fillText("Sor: " +
-                (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"), x + 40, 14, 200);
+                (e.treasureCards[0].row !== null
+                    ? e.treasureCards[0].row
+                    : "leesett"), x + 40, 14, 200);
             ctxs.fillText("Oszlop: " +
                 (e.treasureCards[0].col !== null
                     ? e.treasureCards[0].col
@@ -170,14 +172,6 @@ function determineColor(type) {
     }
     return color;
 }
-// function drawActualPlayer() {
-//   drawPlayer(
-//     "yellow",
-//     (game.players[game.currentPlayer].col + 1) * 50 + 10,
-//     (game.players[game.currentPlayer].row + 1) * 50 + 10,
-//     5
-//   );
-// }
 function showActualTreasure() {
     if (game.players[game.currentPlayer].treasureCards.length !== 0) {
         if (game.players[game.currentPlayer].treasureCards[0].row !== null &&
@@ -191,6 +185,13 @@ function showActualTreasure() {
         else {
             drawTreasure("yellow", game.draggableField.x + 22, game.draggableField.y + 22, 5);
         }
+    }
+    else {
+        drawTreasure("yellow", (game.players[game.currentPlayer].startRow + 1) * 50 +
+            10 +
+            12, (game.players[game.currentPlayer].startCol + 1) * 50 +
+            10 +
+            12, 5);
     }
 }
 function drawField(type, rotation, active, row, col, size) {
@@ -266,4 +267,11 @@ function drawArrow(rotation, row, col, size) {
     ctx.stroke();
     ctx.restore();
 }
+// export function drawEnd(){
+//   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+//   ctx.fillStyle = "black"
+//   ctx.fillRect(gameArea.width/2-100,gameArea.height/2-100,100,100)
+//   ctx.fillStyle = "red"
+//   ctx.fillText(game.currentPlayer + 1 + ". játékos nyerte a játékot!",gameArea.width/2-100,gameArea.height/2-100);
+// }
 //# sourceMappingURL=graphics.js.map

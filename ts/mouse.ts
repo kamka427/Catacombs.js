@@ -38,7 +38,6 @@ export function dragEnd() {
 }
 
 export function clickArrow(e: MouseEvent) {
- 
   const loc = getMousePosition(e);
   if (loc.convCol === 1 && loc.convRow === -1) {
     push(1, "down");
@@ -58,8 +57,7 @@ export function clickArrow(e: MouseEvent) {
   } else if (loc.convCol === -1 && loc.convRow === 5) {
     push(5, "right");
     return true;
-  }
-  if (loc.convCol === 7 && loc.convRow === 1) {
+  } else if (loc.convCol === 7 && loc.convRow === 1) {
     push(1, "left");
     return true;
   } else if (loc.convCol === 7 && loc.convRow === 3) {
@@ -68,8 +66,7 @@ export function clickArrow(e: MouseEvent) {
   } else if (loc.convCol === 7 && loc.convRow === 5) {
     push(5, "left");
     return true;
-  }
-  if (loc.convCol === 1 && loc.convRow === 7) {
+  } else if (loc.convCol === 1 && loc.convRow === 7) {
     push(1, "up");
     return true;
   } else if (loc.convCol === 3 && loc.convRow === 7) {
@@ -82,19 +79,4 @@ export function clickArrow(e: MouseEvent) {
   return false;
 }
 
-export function gameLoop(e: MouseEvent) {
-  if (game.phase === "insert") {
-    if (clickArrow(e) !== false) {
-      game.phase = "step";
-      graphExplore(game)
-      drawMap()
-      return
-    }
-  }
-  if (game.phase === "step") {
-    if (step(e) !== false) {
-      game.phase = "insert";
-      return
-    }
-  }
-}
+
