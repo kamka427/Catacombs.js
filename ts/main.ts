@@ -59,4 +59,3 @@ gameArea.addEventListener("mouseup", dragEnd);
 gameArea.addEventListener("click", rotate);
 gameArea.addEventListener("click", clickArrow);
 gameArea.addEventListener("click", step);
-// gameArea.addEventListener("click",()=>push(1,game,"up"))

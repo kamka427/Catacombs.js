@@ -22,24 +22,24 @@ export function push(index, direction) {
             }
             // fell = false;
             if (!fell && game.fallenTreasure !== null) {
-                game.fallenTreasure.row = 7;
-                game.fallenTreasure.col = index;
+                game.fallenTreasure.row = index;
+                game.fallenTreasure.col = 7;
                 game.treasuresAll.push(game.fallenTreasure);
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === 0 &&
-                    game.treasuresAll[i].col === index) {
+                if (game.treasuresAll[i].row === index &&
+                    game.treasuresAll[i].col === 0) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
                     fell = true;
                     if (i < game.treasuresAll.length)
-                        game.treasuresAll[i].row--;
+                        game.treasuresAll[i].col--;
                 }
-                else if (game.treasuresAll[i].col === index)
-                    game.treasuresAll[i].row--;
+                else if (game.treasuresAll[i].row === index)
+                    game.treasuresAll[i].col--;
             }
             console.log(game.fallenTreasure);
             break;
@@ -55,24 +55,24 @@ export function push(index, direction) {
             }
             // fell = false;
             if (!fell && game.fallenTreasure !== null) {
-                game.fallenTreasure.row = -1;
-                game.fallenTreasure.col = index;
+                game.fallenTreasure.row = index;
+                game.fallenTreasure.col = -1;
                 game.treasuresAll.push(game.fallenTreasure);
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === 6 &&
-                    game.treasuresAll[i].col === index) {
+                if (game.treasuresAll[i].row === index &&
+                    game.treasuresAll[i].col === 6) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
                     fell = true;
                     if (i < game.treasuresAll.length)
-                        game.treasuresAll[i].row++;
+                        game.treasuresAll[i].col++;
                 }
-                else if (game.treasuresAll[i].col === index)
-                    game.treasuresAll[i].row++; // hibás minden iránynál ha hirtelen van váltás irányok között
+                else if (game.treasuresAll[i].row === index)
+                    game.treasuresAll[i].col++; // hibás minden iránynál ha hirtelen van váltás irányok között
             }
             console.log(game.fallenTreasure);
             break;
@@ -94,24 +94,24 @@ export function push(index, direction) {
             }
             // fell = false;
             if (!fell && game.fallenTreasure !== null) {
-                game.fallenTreasure.row = index;
-                game.fallenTreasure.col = -1;
+                game.fallenTreasure.row = -1;
+                game.fallenTreasure.col = index;
                 game.treasuresAll.push(game.fallenTreasure);
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === index &&
-                    game.treasuresAll[i].col === 6) {
+                if (game.treasuresAll[i].row === 6 &&
+                    game.treasuresAll[i].col === index) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
                     fell = true;
                     if (i < game.treasuresAll.length)
-                        game.treasuresAll[i].col++;
+                        game.treasuresAll[i].row++;
                 }
-                else if (game.treasuresAll[i].row === index)
-                    game.treasuresAll[i].col++;
+                else if (game.treasuresAll[i].col === index)
+                    game.treasuresAll[i].row++;
             }
             console.log(game.fallenTreasure);
             break;
@@ -133,24 +133,24 @@ export function push(index, direction) {
             }
             // fell = false;
             if (!fell && game.fallenTreasure !== null) {
-                game.fallenTreasure.row = index;
-                game.fallenTreasure.col = 7;
+                game.fallenTreasure.row = 7;
+                game.fallenTreasure.col = index;
                 game.treasuresAll.push(game.fallenTreasure);
                 game.fallenTreasure = null;
             }
             for (let i = 0; i < game.treasuresAll.length; i++) {
-                if (game.treasuresAll[i].row === index &&
-                    game.treasuresAll[i].col === 0) {
+                if (game.treasuresAll[i].row === 0 &&
+                    game.treasuresAll[i].col === index) {
                     game.fallenTreasure = game.treasuresAll[i];
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
                     fell = true;
                     if (i < game.treasuresAll.length)
-                        game.treasuresAll[i].col--;
+                        game.treasuresAll[i].row--;
                 }
-                else if (game.treasuresAll[i].row === index)
-                    game.treasuresAll[i].col--;
+                else if (game.treasuresAll[i].col === index)
+                    game.treasuresAll[i].row--;
             }
             console.log(game.fallenTreasure);
             break;

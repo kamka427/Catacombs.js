@@ -60,7 +60,7 @@ export function drawMap(): void {
 
   drawPlayers();
   drawTreasures();
-  drawActualPlayer();
+  // drawActualPlayer();
   showActualTreasure();
 }
 
@@ -76,6 +76,7 @@ function drawArrows(row: number, col: number) {
 }
 
 function drawPlayers() {
+  const usedPos = [];
   for (let i = 0; i < game.players.length; i++) {
     let color;
     switch (game.players[i].number) {
@@ -92,15 +93,47 @@ function drawPlayers() {
         color = "purple";
         break;
     }
-    drawPlayer(
-      color,
-      (game.players[i].col + 1) * 50 + 10,
-      (game.players[i].row + 1) * 50 + 10,
-      10
-    );
+    let counter = 0;
+    usedPos.forEach((e) => {
+      if (e.row === game.players[i].row && e.col === game.players[i].col)
+        counter++;
+    });
+    console.log(counter);
+    
+    if (counter < 3) {
+      drawPlayer(
+        color,
+        (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
+        (game.players[i].row + 1) * 50 +  10,
+        10
+      );
+      if(game.currentPlayer === game.players[i].number){
+        drawPlayer(
+          "yellow",
+          (game.players[game.currentPlayer].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
+          (game.players[game.currentPlayer].row + 1) * 50 + 10,
+          5
+        );
+      }
+    } else {
+      drawPlayer(
+        color,
+        (game.players[i].col + 1) * 50 + 10,
+        (game.players[i].row + 1) * 50 + (counter === 2 ? 1 : 4) * 10,
+        10
+      );
+      if(game.currentPlayer === game.players[i].number){
+        drawPlayer(
+          "yellow",
+          (game.players[game.currentPlayer].col + 1) * 50 +  10,
+          (game.players[game.currentPlayer].row + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
+          5
+        );
+    }}
+
+    usedPos.push({ row: game.players[i].row, col: game.players[i].col });
   }
 }
-
 function drawTreasures() {
   for (let i = 0; i < game.treasuresAll.length; i++) {
     const color = determineColor(game.treasuresAll[i].type);
@@ -147,24 +180,28 @@ function determineColor(type: string) {
   return color;
 }
 
-function drawActualPlayer() {
-  drawPlayer(
-    "yellow",
-    (game.players[game.currentPlayer].col + 1) * 50 + 10,
-    (game.players[game.currentPlayer].row + 1) * 50 + 10,
-    5
-  );
-}
+// function drawActualPlayer() {
+//   drawPlayer(
+//     "yellow",
+//     (game.players[game.currentPlayer].col + 1) * 50 + 10,
+//     (game.players[game.currentPlayer].row + 1) * 50 + 10,
+//     5
+//   );
+// }
 
 function showActualTreasure() {
   // const color = determineColor(game.players[game.currentPlayer].treasureCards[0].type)
-  if(game.players[game.currentPlayer].treasureCards.length !==0)
-  drawTreasure(
-    "yellow",
-    (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 + 10 + 12,
-    (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 + 10 + 12,
-    5
-  );
+  if (game.players[game.currentPlayer].treasureCards.length !== 0)
+    drawTreasure(
+      "yellow",
+      (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
+        10 +
+        12,
+      (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 +
+        10 +
+        12,
+      5
+    );
 }
 
 function drawField(

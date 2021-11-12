@@ -14,7 +14,7 @@ export function graphExplore(game: Game) {
 
   for (let i = 0; i < game.gameMap.map.length; i++) {
     for (let j = 0; j < game.gameMap.map.length; j++) {
-      game.gameMap.map[i][j].avaliable = false
+      game.gameMap.map[i][j].avaliable = false;
     }
   }
 
@@ -34,7 +34,6 @@ export function graphExplore(game: Game) {
       graphNext(game.availableFields[i][0], game.availableFields[i][1], game);
     }
   }
-
 }
 
 export function graphNext(row: number, col: number, game: Game) {
