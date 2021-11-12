@@ -1,7 +1,7 @@
 import { Game } from "./gameclass.js";
-import { drawMap, drawStatus } from "./graphics.js";
+import { drawMap } from "./graphics.js";
 import { rotate, step } from "./utils.js";
-import { clickArrow, dragStart } from "./mouse.js";
+import { clickArrow, dragStart, gameLoop } from "./mouse.js";
 import { dragEnd } from "./mouse.js";
 import { dragEvt } from "./mouse.js";
 
@@ -57,5 +57,4 @@ gameArea.addEventListener("mousedown", dragStart);
 gameArea.addEventListener("mousemove", dragEvt);
 gameArea.addEventListener("mouseup", dragEnd);
 gameArea.addEventListener("click", rotate);
-gameArea.addEventListener("click", clickArrow);
-gameArea.addEventListener("click", step);
+gameArea.addEventListener("click", gameLoop);

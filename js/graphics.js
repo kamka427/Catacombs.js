@@ -8,41 +8,43 @@ export function drawStatus() {
     ctxs.clearRect(0, 0, statusArea.width, statusArea.height);
     let x = 0;
     game.players.forEach((e) => {
-        let color;
-        switch (e.number) {
-            case 0:
-                color = "blue";
-                break;
-            case 1:
-                color = "red";
-                break;
-            case 2:
-                color = "green";
-                break;
-            case 3:
-                color = "purple";
-                break;
+        if (e.treasureCards.length > 0) {
+            let color;
+            switch (e.number) {
+                case 0:
+                    color = "blue";
+                    break;
+                case 1:
+                    color = "red";
+                    break;
+                case 2:
+                    color = "green";
+                    break;
+                case 3:
+                    color = "purple";
+                    break;
+            }
+            ctxs.fillStyle = color;
+            ctxs.fillRect(x, 0, 112.5, 50);
+            ctxs.strokeStyle = "black";
+            ctxs.lineWidth = 3;
+            if (e.number === game.currentPlayer) {
+                ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
+            }
+            ctxs.fillStyle = "white";
+            ctxs.fillRect(x + 35, 0 + 5, 72, 40);
+            ctxs.fillStyle = "black";
+            ctxs.fillText((e.number + 1).toString(), x + 15, statusArea.height / 2, 50);
+            ctxs.fillText("Sor: " +
+                (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"), x + 40, 14, 200);
+            ctxs.fillText("Oszlop: " +
+                (e.treasureCards[0].col !== null
+                    ? e.treasureCards[0].col
+                    : "leesett").toString(), x + 40, 24, 200);
+            ctxs.fillText("Típus: " + e.treasureCards[0].type.toString(), x + 40, 34, 200);
+            ctxs.fillText("Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer, x + 40, 44, 200);
+            x += 112.5;
         }
-        ctxs.fillStyle = color;
-        ctxs.fillRect(x, 0, 112.5, 50);
-        ctxs.strokeStyle = "black";
-        ctxs.lineWidth = 3;
-        if (e.number === game.currentPlayer) {
-            ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
-        }
-        ctxs.fillStyle = "white";
-        ctxs.fillRect(x + 35, 0 + 5, 72, 40);
-        ctxs.fillStyle = "black";
-        ctxs.fillText(e.number.toString(), x + 15, statusArea.height / 2, 50);
-        ctxs.fillText("Sor: " +
-            (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"), x + 40, 14, 200);
-        ctxs.fillText("Oszlop: " +
-            (e.treasureCards[0].col !== null
-                ? e.treasureCards[0].col
-                : "leesett").toString(), x + 40, 24, 200);
-        ctxs.fillText("Típus: " + e.treasureCards[0].type.toString(), x + 40, 34, 200);
-        ctxs.fillText("Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer, x + 40, 44, 200);
-        x += 112.5;
     });
 }
 export function drawMap() {

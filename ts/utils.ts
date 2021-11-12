@@ -1,7 +1,7 @@
 import { Field } from "./constants.js";
 import { graphExplore } from "./graphexporation.js";
 import { drawMap } from "./graphics.js";
-import { getMousePosition } from "./mouse.js";
+import { gameLoop, getMousePosition } from "./mouse.js";
 import { game } from "./main.js";
 
 export const randomBetween = (min: number, max: number) =>
@@ -13,7 +13,6 @@ const getCol = (arr: Field[][], n: number): Array<Field> =>
 export function push(index: number, direction: string) {
   let tmp: Field;
   let fell = false;
-  console.log(fell);
   const col: Array<Field> = getCol(game.gameMap.map, index);
   switch (direction) {
     case "left":
@@ -48,7 +47,6 @@ export function push(index: number, direction: string) {
         } else if (game.treasuresAll[i].row === index)
           game.treasuresAll[i].col--;
       }
-      console.log(game.fallenTreasure);
 
       break;
 
@@ -110,7 +108,7 @@ export function push(index: number, direction: string) {
       }
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (
-          game.treasuresAll[i].row ===  6 &&
+          game.treasuresAll[i].row === 6 &&
           game.treasuresAll[i].col === index
         ) {
           game.fallenTreasure = game.treasuresAll[i];
@@ -125,7 +123,6 @@ export function push(index: number, direction: string) {
         } else if (game.treasuresAll[i].col === index)
           game.treasuresAll[i].row++;
       }
-      console.log(game.fallenTreasure);
       break;
 
     case "up":
@@ -169,8 +166,8 @@ export function push(index: number, direction: string) {
       console.log(game.fallenTreasure);
       break;
   }
+  game.availableFields = [];
   drawMap();
-  console.log(game.treasuresAll);
 }
 
 export function rotate(e: MouseEvent): void {
@@ -206,9 +203,6 @@ export function rotate(e: MouseEvent): void {
   drawMap();
 }
 export function step(e: MouseEvent) {
-  graphExplore(game);
-  console.log(game.players);
-
   const pos = getMousePosition(e);
   console.log(pos);
   let exists = false;
@@ -219,13 +213,10 @@ export function step(e: MouseEvent) {
     )
       exists = true;
   }
-  console.log(exists);
-
-  console.log(game.treasuresAll);
-  console.log(game.players[game.currentPlayer]);
   if (exists) {
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
+
     if (game.players[game.currentPlayer].treasureCards.length !== 0) {
       for (let i = 0; i < game.treasuresAll.length; i++) {
         if (
@@ -234,8 +225,6 @@ export function step(e: MouseEvent) {
           game.treasuresAll[i].type ===
             game.players[game.currentPlayer].treasureCards[0].type
         ) {
-          console.log(112234234);
-
           game.treasuresAll.splice(i, 1);
           game.players[game.currentPlayer].treasureCards.shift();
         }
@@ -250,15 +239,21 @@ export function step(e: MouseEvent) {
     ) {
       alert(game.currentPlayer + 1 + ". játékos nyerte a játékot!");
     }
+    game.availableFields = [];
+    for (let i = 0; i < game.gameMap.map.length; i++) {
+      for (let j = 0; j < game.gameMap.map.length; j++) {
+        game.gameMap.map[i][j].avaliable = false;
+      }
+    }
     endTurn();
-  }
+    drawMap();
 
-  drawMap();
+    return true;
+  }
+  return false;
 }
 
 export function endTurn() {
   if (game.currentPlayer === game.players.length - 1) game.currentPlayer = 0;
   else game.currentPlayer++;
-
-  graphExplore(game);
 }

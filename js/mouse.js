@@ -1,7 +1,8 @@
 import { drawMap } from "./graphics.js";
-import { push } from "./utils.js";
+import { push, step } from "./utils.js";
 import { game } from "./main.js";
 import { gameArea } from "./main.js";
+import { graphExplore } from "./graphexporation.js";
 export function getMousePosition(event) {
     const rect = gameArea.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -32,39 +33,68 @@ export function clickArrow(e) {
     const loc = getMousePosition(e);
     if (loc.convCol === 1 && loc.convRow === -1) {
         push(1, "down");
+        return true;
     }
     else if (loc.convCol === 3 && loc.convRow === -1) {
         push(3, "down");
+        return true;
     }
     else if (loc.convCol === 5 && loc.convRow === -1) {
         push(5, "down");
+        return true;
     }
     else if (loc.convCol === -1 && loc.convRow === 1) {
         push(1, "right");
+        return true;
     }
     else if (loc.convCol === -1 && loc.convRow === 3) {
         push(3, "right");
+        return true;
     }
     else if (loc.convCol === -1 && loc.convRow === 5) {
         push(5, "right");
+        return true;
     }
     if (loc.convCol === 7 && loc.convRow === 1) {
         push(1, "left");
+        return true;
     }
     else if (loc.convCol === 7 && loc.convRow === 3) {
         push(3, "left");
+        return true;
     }
     else if (loc.convCol === 7 && loc.convRow === 5) {
         push(5, "left");
+        return true;
     }
     if (loc.convCol === 1 && loc.convRow === 7) {
         push(1, "up");
+        return true;
     }
     else if (loc.convCol === 3 && loc.convRow === 7) {
         push(3, "up");
+        return true;
     }
     else if (loc.convCol === 5 && loc.convRow === 7) {
         push(5, "up");
+        return true;
+    }
+    return false;
+}
+export function gameLoop(e) {
+    if (game.phase === "insert") {
+        if (clickArrow(e) !== false) {
+            game.phase = "step";
+            graphExplore(game);
+            drawMap();
+            return;
+        }
+    }
+    if (game.phase === "step") {
+        if (step(e) !== false) {
+            game.phase = "insert";
+            return;
+        }
     }
 }
 //# sourceMappingURL=mouse.js.map

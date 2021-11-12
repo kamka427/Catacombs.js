@@ -12,6 +12,7 @@ export function drawStatus(): void {
   ctxs.clearRect(0, 0, statusArea.width, statusArea.height);
   let x = 0;
   game.players.forEach((e) => {
+    if(e.treasureCards.length>0){
     let color;
     switch (e.number) {
       case 0:
@@ -38,7 +39,7 @@ export function drawStatus(): void {
     ctxs.fillStyle = "white";
     ctxs.fillRect(x + 35, 0 + 5, 72, 40);
     ctxs.fillStyle = "black";
-    ctxs.fillText(e.number.toString(), x + 15, statusArea.height / 2, 50);
+    ctxs.fillText((e.number+1).toString(), x + 15, statusArea.height / 2, 50);
     ctxs.fillText(
       "Sor: " +
         (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"),
@@ -68,7 +69,7 @@ export function drawStatus(): void {
       44,
       200
     );
-    x += 112.5;
+    x += 112.5;}
   });
 }
 

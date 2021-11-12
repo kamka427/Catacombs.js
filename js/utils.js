@@ -1,4 +1,3 @@
-import { graphExplore } from "./graphexporation.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 import { game } from "./main.js";
@@ -7,7 +6,6 @@ const getCol = (arr, n) => arr.map((row) => row[n]);
 export function push(index, direction) {
     let tmp;
     let fell = false;
-    console.log(fell);
     const col = getCol(game.gameMap.map, index);
     switch (direction) {
         case "left":
@@ -40,7 +38,6 @@ export function push(index, direction) {
                 else if (game.treasuresAll[i].row === index)
                     game.treasuresAll[i].col--;
             }
-            console.log(game.fallenTreasure);
             break;
         case "right":
             tmp = game.gameMap.map[index].pop();
@@ -110,7 +107,6 @@ export function push(index, direction) {
                 else if (game.treasuresAll[i].col === index)
                     game.treasuresAll[i].row++;
             }
-            console.log(game.fallenTreasure);
             break;
         case "up":
             tmp = game.gameMap.map[0][index];
@@ -151,8 +147,8 @@ export function push(index, direction) {
             console.log(game.fallenTreasure);
             break;
     }
+    game.availableFields = [];
     drawMap();
-    console.log(game.treasuresAll);
 }
 export function rotate(e) {
     const pos = getMousePosition(e);
@@ -184,8 +180,6 @@ export function rotate(e) {
     drawMap();
 }
 export function step(e) {
-    graphExplore(game);
-    console.log(game.players);
     const pos = getMousePosition(e);
     console.log(pos);
     let exists = false;
@@ -194,9 +188,6 @@ export function step(e) {
             game.availableFields[i][0] === pos.convRow)
             exists = true;
     }
-    console.log(exists);
-    console.log(game.treasuresAll);
-    console.log(game.players[game.currentPlayer]);
     if (exists) {
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;
@@ -206,7 +197,6 @@ export function step(e) {
                     game.treasuresAll[i].col === game.players[game.currentPlayer].col &&
                     game.treasuresAll[i].type ===
                         game.players[game.currentPlayer].treasureCards[0].type) {
-                    console.log(112234234);
                     game.treasuresAll.splice(i, 1);
                     game.players[game.currentPlayer].treasureCards.shift();
                 }
@@ -219,15 +209,22 @@ export function step(e) {
                 game.players[game.currentPlayer].startCol) {
             alert(game.currentPlayer + 1 + ". játékos nyerte a játékot!");
         }
+        game.availableFields = [];
+        for (let i = 0; i < game.gameMap.map.length; i++) {
+            for (let j = 0; j < game.gameMap.map.length; j++) {
+                game.gameMap.map[i][j].avaliable = false;
+            }
+        }
         endTurn();
+        drawMap();
+        return true;
     }
-    drawMap();
+    return false;
 }
 export function endTurn() {
     if (game.currentPlayer === game.players.length - 1)
         game.currentPlayer = 0;
     else
         game.currentPlayer++;
-    graphExplore(game);
 }
 //# sourceMappingURL=utils.js.map

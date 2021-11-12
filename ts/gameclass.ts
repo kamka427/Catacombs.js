@@ -85,6 +85,7 @@ export class Game {
   currentPlayer: number;
   availableFields: Array<Array<number>>;
   visited: Array<Array<number>>;
+  phase: string
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -109,7 +110,8 @@ export class Game {
       [...new Array(7).fill(1)],
       [...new Array(7).fill(1)],
     ];
-    graphExplore(this);
+    this.phase = "insert";
+    // graphExplore(this);
   }
   genPlayers() {
     const remainingLoc: Array<Array<number>> = [...startLocations];

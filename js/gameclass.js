@@ -1,5 +1,4 @@
 import { startmap, startLocations, gemTypes, genTreasureLocations, remainingElements, Field, } from "./constants.js";
-import { graphExplore } from "./graphexporation.js";
 import { randomBetween } from "./utils.js";
 class GameMap {
     constructor() {
@@ -59,7 +58,8 @@ export class Game {
             [...new Array(7).fill(1)],
             [...new Array(7).fill(1)],
         ];
-        graphExplore(this);
+        this.phase = "insert";
+        // graphExplore(this);
     }
     genPlayers() {
         const remainingLoc = [...startLocations];

@@ -1,7 +1,7 @@
 import { Game } from "./gameclass.js";
 import { drawMap } from "./graphics.js";
-import { rotate, step } from "./utils.js";
-import { clickArrow, dragStart } from "./mouse.js";
+import { rotate } from "./utils.js";
+import { dragStart, gameLoop } from "./mouse.js";
 import { dragEnd } from "./mouse.js";
 import { dragEvt } from "./mouse.js";
 export let game;
@@ -43,6 +43,5 @@ gameArea.addEventListener("mousedown", dragStart);
 gameArea.addEventListener("mousemove", dragEvt);
 gameArea.addEventListener("mouseup", dragEnd);
 gameArea.addEventListener("click", rotate);
-gameArea.addEventListener("click", clickArrow);
-gameArea.addEventListener("click", step);
+gameArea.addEventListener("click", gameLoop);
 //# sourceMappingURL=main.js.map
