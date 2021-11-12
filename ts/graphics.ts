@@ -30,19 +30,28 @@ export function drawStatus(): void {
 
     ctxs.fillStyle = color;
     ctxs.fillRect(x, 0, 112.5, 50);
-    ctxs.strokeStyle = "black"
-    ctxs.lineWidth = 3
-    if(e.number === game.currentPlayer)
-    {
-      ctxs.strokeRect(x+1, 0+2, 110, 47);
+    ctxs.strokeStyle = "black";
+    ctxs.lineWidth = 3;
+    if (e.number === game.currentPlayer) {
+      ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
     }
-    ctxs.fillStyle = "white"
-    ctxs.fillRect(x+35, 0+5, 72, 40);
+    ctxs.fillStyle = "white";
+    ctxs.fillRect(x + 35, 0 + 5, 72, 40);
     ctxs.fillStyle = "black";
     ctxs.fillText(e.number.toString(), x + 15, statusArea.height / 2, 50);
-    ctxs.fillText("Sor: " + e.treasureCards[0].row.toString(), x + 40, 14, 200);
     ctxs.fillText(
-      "Oszlop: " + e.treasureCards[0].col.toString(),
+      "Sor: " +
+        (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"),
+      x + 40,
+      14,
+      200
+    );
+    ctxs.fillText(
+      "Oszlop: " +
+        (e.treasureCards[0].col !== null
+          ? e.treasureCards[0].col
+          : "leesett"
+        ).toString(),
       x + 40,
       24,
       200
@@ -121,7 +130,6 @@ export function drawMap(): void {
 
   drawPlayers();
   drawTreasures();
-  // drawActualPlayer();
   showActualTreasure();
 }
 
@@ -194,7 +202,6 @@ function drawPlayers() {
         );
       }
     }
-
     usedPos.push({ row: game.players[i].row, col: game.players[i].col });
   }
 }
@@ -254,18 +261,34 @@ function determineColor(type: string) {
 // }
 
 function showActualTreasure() {
-  // const color = determineColor(game.players[game.currentPlayer].treasureCards[0].type)
-  if (game.players[game.currentPlayer].treasureCards.length !== 0)
+  if (game.players[game.currentPlayer].treasureCards.length !== 0) {
+    if (
+      game.players[game.currentPlayer].treasureCards[0].row !== null &&
+      game.players[game.currentPlayer].treasureCards[0].col !== null
+    )
+    {
+      drawTreasure(
+        "yellow",
+        (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
+          10 +
+          12,
+        (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 +
+          10 +
+          12,
+        5
+      );
+    }
+  else {
+
+
     drawTreasure(
       "yellow",
-      (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
-        10 +
-        12,
-      (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 +
-        10 +
-        12,
+      game.draggableField.x + 22,
+      game.draggableField.y + 22,
       5
     );
+  }
+}
 }
 
 function drawField(

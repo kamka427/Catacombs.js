@@ -34,8 +34,12 @@ export function drawStatus() {
         ctxs.fillRect(x + 35, 0 + 5, 72, 40);
         ctxs.fillStyle = "black";
         ctxs.fillText(e.number.toString(), x + 15, statusArea.height / 2, 50);
-        ctxs.fillText("Sor: " + e.treasureCards[0].row.toString(), x + 40, 14, 200);
-        ctxs.fillText("Oszlop: " + e.treasureCards[0].col.toString(), x + 40, 24, 200);
+        ctxs.fillText("Sor: " +
+            (e.treasureCards[0].row !== null ? e.treasureCards[0].row : "leesett"), x + 40, 14, 200);
+        ctxs.fillText("Oszlop: " +
+            (e.treasureCards[0].col !== null
+                ? e.treasureCards[0].col
+                : "leesett").toString(), x + 40, 24, 200);
         ctxs.fillText("Típus: " + e.treasureCards[0].type.toString(), x + 40, 34, 200);
         ctxs.fillText("Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer, x + 40, 44, 200);
         x += 112.5;
@@ -77,7 +81,6 @@ export function drawMap() {
     drawField(game.gameMap.randomfield.type, game.gameMap.randomfield.rotation, false, game.draggableField.x, game.draggableField.y, 50);
     drawPlayers();
     drawTreasures();
-    // drawActualPlayer();
     showActualTreasure();
 }
 function drawArrows(row, col) {
@@ -174,13 +177,19 @@ function determineColor(type) {
 //   );
 // }
 function showActualTreasure() {
-    // const color = determineColor(game.players[game.currentPlayer].treasureCards[0].type)
-    if (game.players[game.currentPlayer].treasureCards.length !== 0)
-        drawTreasure("yellow", (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
-            10 +
-            12, (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 +
-            10 +
-            12, 5);
+    if (game.players[game.currentPlayer].treasureCards.length !== 0) {
+        if (game.players[game.currentPlayer].treasureCards[0].row !== null &&
+            game.players[game.currentPlayer].treasureCards[0].col !== null) {
+            drawTreasure("yellow", (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
+                10 +
+                12, (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 +
+                10 +
+                12, 5);
+        }
+        else {
+            drawTreasure("yellow", game.draggableField.x + 22, game.draggableField.y + 22, 5);
+        }
+    }
 }
 function drawField(type, rotation, active, row, col, size) {
     ctx.save();

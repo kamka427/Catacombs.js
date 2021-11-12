@@ -25,7 +25,6 @@ export function push(index: number, direction: string) {
           game.players[i].col = 6;
         else if (game.players[i].row === index) game.players[i].col--;
       }
-      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.row = index;
         game.fallenTreasure.col = 7;
@@ -62,7 +61,6 @@ export function push(index: number, direction: string) {
           game.players[i].col = 0;
         else if (game.players[i].row === index) game.players[i].col++;
       }
-      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.row = index;
         game.fallenTreasure.col = -1;
@@ -104,7 +102,6 @@ export function push(index: number, direction: string) {
           game.players[i].row = 0;
         else if (game.players[i].col === index) game.players[i].row++;
       }
-      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.row = -1;
         game.fallenTreasure.col = index;
@@ -146,7 +143,6 @@ export function push(index: number, direction: string) {
           game.players[i].row = 6;
         else if (game.players[i].col === index) game.players[i].row--;
       }
-      // fell = false;
       if (!fell && game.fallenTreasure !== null) {
         game.fallenTreasure.row = 7;
         game.fallenTreasure.col = index;
