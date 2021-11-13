@@ -18,57 +18,44 @@ export function dField(e: MouseEvent) {
     if (loc.convCol === 1 && loc.convRow === -1) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 3 && loc.convRow === -1) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 5 && loc.convRow === -1) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === -1 && loc.convRow === 1) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === -1 && loc.convRow === 3) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === -1 && loc.convRow === 5) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 7 && loc.convRow === 1) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 7 && loc.convRow === 3) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 7 && loc.convRow === 5) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 1 && loc.convRow === 7) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 3 && loc.convRow === 7) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else if (loc.convCol === 5 && loc.convRow === 7) {
       game.draggableField.x = (loc.convCol + 1) * 50;
       game.draggableField.y = (loc.convRow + 1) * 50;
-
     } else {
       game.draggableField.x = 500;
       game.draggableField.y = 0;
-
     }
-    drawMap()
+    drawMap();
   }
 }
 
@@ -101,37 +88,48 @@ export function clickArrow(e: MouseEvent) {
   if (loc.convCol === 1 && loc.convRow === -1) {
     push(1, "down");
     return true;
-  } else if (loc.convCol === 3 && loc.convRow === -1) {
+  }
+  if (loc.convCol === 3 && loc.convRow === -1) {
     push(3, "down");
     return true;
-  } else if (loc.convCol === 5 && loc.convRow === -1) {
+  }
+  if (loc.convCol === 5 && loc.convRow === -1) {
     push(5, "down");
     return true;
-  } else if (loc.convCol === -1 && loc.convRow === 1) {
+  }
+  if (loc.convCol === -1 && loc.convRow === 1) {
     push(1, "right");
     return true;
-  } else if (loc.convCol === -1 && loc.convRow === 3) {
+  }
+  if (loc.convCol === -1 && loc.convRow === 3) {
     push(3, "right");
     return true;
-  } else if (loc.convCol === -1 && loc.convRow === 5) {
+  }
+  if (loc.convCol === -1 && loc.convRow === 5) {
     push(5, "right");
     return true;
-  } else if (loc.convCol === 7 && loc.convRow === 1) {
+  }
+  if (loc.convCol === 7 && loc.convRow === 1) {
     push(1, "left");
     return true;
-  } else if (loc.convCol === 7 && loc.convRow === 3) {
+  }
+  if (loc.convCol === 7 && loc.convRow === 3) {
     push(3, "left");
     return true;
-  } else if (loc.convCol === 7 && loc.convRow === 5) {
+  }
+  if (loc.convCol === 7 && loc.convRow === 5) {
     push(5, "left");
     return true;
-  } else if (loc.convCol === 1 && loc.convRow === 7) {
+  }
+  if (loc.convCol === 1 && loc.convRow === 7) {
     push(1, "up");
     return true;
-  } else if (loc.convCol === 3 && loc.convRow === 7) {
+  }
+  if (loc.convCol === 3 && loc.convRow === 7) {
     push(3, "up");
     return true;
-  } else if (loc.convCol === 5 && loc.convRow === 7) {
+  }
+  if (loc.convCol === 5 && loc.convRow === 7) {
     push(5, "up");
     return true;
   }

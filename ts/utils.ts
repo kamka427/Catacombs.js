@@ -1,7 +1,8 @@
 import { Field } from "./constants.js";
-import { drawMap, slideAnimation } from "./graphics.js";
+import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
-import { game } from "./main.js";
+import { game, gameArea } from "./main.js";
+import { moveAnim, slideAnimation } from "./anims.js";
 
 export const randomBetween = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min));
@@ -14,7 +15,6 @@ let offset = 0;
 
 export function push(index: number, direction: string) {
   let tmp: Field;
-  let fell = false;
   const col: Array<Field> = getCol(game.gameMap.map, index);
   switch (direction) {
     case "left":
@@ -26,7 +26,7 @@ export function push(index: number, direction: string) {
           game.players[i].col = 6;
         else if (game.players[i].row === index) game.players[i].col--;
       }
-      if (!fell && game.fallenTreasure !== null) {
+      if (game.fallenTreasure !== null) {
         game.fallenTreasure.row = index;
         game.fallenTreasure.col = 7;
         game.treasuresAll.push(game.fallenTreasure);
@@ -44,9 +44,12 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-          fell = true;
-          if (i < game.treasuresAll.length) game.treasuresAll[i].col--;
-        } else if (game.treasuresAll[i].row === index)
+          // if (i < game.treasuresAll.length) game.treasuresAll[i].col--;
+        }
+        if (
+          game.treasuresAll[i] !== undefined &&
+          game.treasuresAll[i].row === index
+        )
           game.treasuresAll[i].col--;
       }
       break;
@@ -60,7 +63,7 @@ export function push(index: number, direction: string) {
           game.players[i].col = 0;
         else if (game.players[i].row === index) game.players[i].col++;
       }
-      if (!fell && game.fallenTreasure !== null) {
+      if (game.fallenTreasure !== null) {
         game.fallenTreasure.row = index;
         game.fallenTreasure.col = -1;
         game.treasuresAll.push(game.fallenTreasure);
@@ -78,9 +81,13 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-          fell = true;
-          if (i < game.treasuresAll.length) game.treasuresAll[i].col++;
-        } else if (game.treasuresAll[i].row === index)
+
+          // if (i < game.treasuresAll.length) game.treasuresAll[i].col++;
+        }
+        if (
+          game.treasuresAll[i] !== undefined &&
+          game.treasuresAll[i].row === index
+        )
           game.treasuresAll[i].col++;
       }
       break;
@@ -100,7 +107,7 @@ export function push(index: number, direction: string) {
           game.players[i].row = 0;
         else if (game.players[i].col === index) game.players[i].row++;
       }
-      if (!fell && game.fallenTreasure !== null) {
+      if (game.fallenTreasure !== null) {
         game.fallenTreasure.row = -1;
         game.fallenTreasure.col = index;
         game.treasuresAll.push(game.fallenTreasure);
@@ -118,9 +125,13 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-          fell = true;
-          if (i < game.treasuresAll.length) game.treasuresAll[i].row++;
-        } else if (game.treasuresAll[i].col === index)
+
+          // if (i < game.treasuresAll.length) game.treasuresAll[i].row++;
+        }
+        if (
+          game.treasuresAll[i] !== undefined &&
+          game.treasuresAll[i].col === index
+        )
           game.treasuresAll[i].row++;
       }
       break;
@@ -140,7 +151,7 @@ export function push(index: number, direction: string) {
           game.players[i].row = 6;
         else if (game.players[i].col === index) game.players[i].row--;
       }
-      if (!fell && game.fallenTreasure !== null) {
+      if (game.fallenTreasure !== null) {
         game.fallenTreasure.row = 7;
         game.fallenTreasure.col = index;
         game.treasuresAll.push(game.fallenTreasure);
@@ -158,9 +169,13 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-          fell = true;
-          if (i < game.treasuresAll.length) game.treasuresAll[i].row--;
-        } else if (game.treasuresAll[i].col === index)
+
+          // if (i < game.treasuresAll.length) game.treasuresAll[i].row--;
+        }
+        if (
+          game.treasuresAll[i] !== undefined &&
+          game.treasuresAll[i].col === index
+        )
           game.treasuresAll[i].row--;
       }
       break;
@@ -204,6 +219,7 @@ export function rotate(e: MouseEvent): void {
     drawMap();
   }
 }
+let animpos: { startX: number; startY: number; endX: number; endY: number };
 export function step(e: MouseEvent) {
   const pos = getMousePosition(e);
   let exists = false;
@@ -215,21 +231,27 @@ export function step(e: MouseEvent) {
       exists = true;
   }
   if (exists) {
+    // animpos = {
+    //   startX: game.players[game.currentPlayer].row,
+    //   startY: game.players[game.currentPlayer].col,
+    //   endX: pos.convRow,
+    //   endY: pos.convCol,
+    // };
+    // requestAnimationFrame(animLoopStep);
+    // if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
-
     if (game.players[game.currentPlayer].treasureCards.length !== 0) {
-      for (let i = 0; i < game.treasuresAll.length; i++) {
+      // for (let i = 0; i < game.treasuresAll.length; i++) {
         if (
-          game.treasuresAll[i].row === game.players[game.currentPlayer].row &&
-          game.treasuresAll[i].col === game.players[game.currentPlayer].col &&
-          game.treasuresAll[i].type ===
-            game.players[game.currentPlayer].treasureCards[0].type
+          game.players[game.currentPlayer].treasureCards[0].row === game.players[game.currentPlayer].row &&
+          game.players[game.currentPlayer].treasureCards[0].col === game.players[game.currentPlayer].col 
+
         ) {
-          game.treasuresAll.splice(i, 1);
+          game.treasuresAll.splice(game.treasuresAll.indexOf(game.players[game.currentPlayer].treasureCards[0]), 1);
           game.players[game.currentPlayer].treasureCards.shift();
         }
-      }
+      // }
     }
     if (
       game.players[game.currentPlayer].treasureCards.length === 0 &&
@@ -247,9 +269,9 @@ export function step(e: MouseEvent) {
         game.gameMap.map[i][j].avaliable = false;
       }
     }
-    endTurn();
-    drawMap();
 
+    // animLoopStep();
+    endTurn();
     return true;
   }
   return false;
@@ -258,6 +280,7 @@ export function step(e: MouseEvent) {
 export function endTurn() {
   if (game.currentPlayer === game.players.length - 1) game.currentPlayer = 0;
   else game.currentPlayer++;
+  drawMap();
 }
 
 function animLoop() {
@@ -265,4 +288,11 @@ function animLoop() {
   slideAnimation(pushedrow.direction, pushedrow.index + 1, offset);
   const runningAnimation = requestAnimationFrame(animLoop);
   if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
+}
+function animLoopStep() {
+  offset += 0.1;
+
+  moveAnim(animpos.startX, animpos.startY, animpos.endX, animpos.endY, offset);
+  const runningAnimation = requestAnimationFrame(animLoopStep);
+  if (offset >= 3) cancelAnimationFrame(runningAnimation);
 }

@@ -60,10 +60,10 @@ export const gemTypes = [
     "emerald",
 ];
 export const startLocations = [
-    [1, 1],
-    [1, 1],
-    [1, 1],
-    [1, 1],
+    [0, 0],
+    [6, 6],
+    [0, 6],
+    [6, 0],
 ];
 export const genTreasureLocations = () => {
     const treasureLocations = [];

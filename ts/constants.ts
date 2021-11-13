@@ -70,10 +70,10 @@ export const gemTypes: Array<Gem> = [
   "emerald",
 ];
 export const startLocations: Array<Array<number>> = [
-  [1, 1],
-  [1, 1],
-  [1, 1],
-  [1, 1],
+  [0, 0],
+  [6, 6],
+  [0, 6],
+  [6, 0],
 ];
 export const genTreasureLocations = () => {
   const treasureLocations = [];

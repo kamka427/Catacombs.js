@@ -8,7 +8,7 @@ export let game: Game;
 export const gameArea: HTMLCanvasElement =
   document.querySelector("canvas#gameArea");
 
-const start = document.querySelector("#startscreen")
+const start = document.querySelector("#startscreen");
 const startBtn = document.querySelector("#start");
 const manualBtn = document.querySelector("#manual");
 const saveBtn = document.querySelector("#save");
@@ -16,7 +16,7 @@ const loadBtn = document.querySelector("#load");
 const manual = document.querySelector("p");
 const end = document.querySelector("#end");
 const restartBtn = document.querySelector("#restart");
-const endText = document.querySelector("#endtext")
+const endText = document.querySelector("#endtext");
 
 const state = localStorage.getItem("state");
 if (state !== null) loadBtn.classList.toggle("hidden");
@@ -29,18 +29,17 @@ function startGame() {
     (<unknown>(<HTMLInputElement>document.querySelector("#tcountpp")).value)
   );
 
-  start.classList.add("hidden")
+  start.classList.add("hidden");
   game = new Game(pCount, tCount);
 
   gameArea.classList.remove("hidden");
   drawMap();
 }
 function loadGame() {
-  start.classList.add("hidden")
+  start.classList.add("hidden");
 
   const state = localStorage.getItem("state");
   game = JSON.parse(state);
-
 
   gameArea.classList.remove("hidden");
   drawMap();
@@ -56,6 +55,8 @@ function showManual() {
 }
 
 function gameLoop(e: MouseEvent) {
+  console.log(game);
+  
   if (game.ended === false) {
     if (game.phase === "insert") {
       if (clickArrow(e) !== false) {
@@ -63,7 +64,7 @@ function gameLoop(e: MouseEvent) {
         game.draggableField.x = 500;
         game.draggableField.y = 0;
         graphExplore(game);
-        // drawMap();
+        drawMap();
         return;
       }
     }
@@ -73,21 +74,21 @@ function gameLoop(e: MouseEvent) {
         return;
       }
     }
-  } else if(game.ended === true) {
-    end.classList.remove("hidden")
-    gameArea.classList.add("hidden")
-    endText.innerHTML = "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!"
-
+  } else if (game.ended === true) {
+    end.classList.remove("hidden");
+    gameArea.classList.add("hidden");
+    endText.innerHTML =
+      "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!";
   }
 }
-function restart(){
-  gameArea.classList.add("hidden")
-  game = null
-  end.classList.add("hidden")
-  start.classList.remove("hidden")
+function restart() {
+  gameArea.classList.add("hidden");
+  game = null;
+  end.classList.add("hidden");
+  start.classList.remove("hidden");
 }
 
-gameArea.addEventListener("contextmenu", e => e.preventDefault());
+gameArea.addEventListener("contextmenu", (e) => e.preventDefault());
 startBtn.addEventListener("click", startGame);
 manualBtn.addEventListener("click", showManual);
 saveBtn.addEventListener("click", saveGame);
@@ -95,4 +96,4 @@ loadBtn.addEventListener("click", loadGame);
 restartBtn.addEventListener("click", restart);
 gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
-gameArea.addEventListener("mousemove",dField)
+gameArea.addEventListener("mousemove", dField);

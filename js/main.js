@@ -40,6 +40,7 @@ function showManual() {
     gameArea.classList.toggle("hidden");
 }
 function gameLoop(e) {
+    console.log(game);
     if (game.ended === false) {
         if (game.phase === "insert") {
             if (clickArrow(e) !== false) {
@@ -47,7 +48,7 @@ function gameLoop(e) {
                 game.draggableField.x = 500;
                 game.draggableField.y = 0;
                 graphExplore(game);
-                // drawMap();
+                drawMap();
                 return;
             }
         }
@@ -61,7 +62,8 @@ function gameLoop(e) {
     else if (game.ended === true) {
         end.classList.remove("hidden");
         gameArea.classList.add("hidden");
-        endText.innerHTML = "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!";
+        endText.innerHTML =
+            "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!";
     }
 }
 function restart() {
@@ -70,7 +72,7 @@ function restart() {
     end.classList.add("hidden");
     start.classList.remove("hidden");
 }
-gameArea.addEventListener("contextmenu", e => e.preventDefault());
+gameArea.addEventListener("contextmenu", (e) => e.preventDefault());
 startBtn.addEventListener("click", startGame);
 manualBtn.addEventListener("click", showManual);
 saveBtn.addEventListener("click", saveGame);
