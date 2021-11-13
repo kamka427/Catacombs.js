@@ -59,6 +59,7 @@ export class Game {
         ];
         this.phase = "insert";
         this.ended = false;
+        this.lastPushed = "none";
         // graphExplore(this);
     }
     genPlayers() {

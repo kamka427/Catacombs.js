@@ -1,7 +1,7 @@
 import { Field } from "./constants.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
-import { game, gameArea } from "./main.js";
+import { game } from "./main.js";
 import { moveAnim, slideAnimation } from "./anims.js";
 
 export const randomBetween = (min: number, max: number) =>
@@ -44,7 +44,7 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-          // if (i < game.treasuresAll.length) game.treasuresAll[i].col--;
+
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -82,7 +82,7 @@ export function push(index: number, direction: string) {
             1
           );
 
-          // if (i < game.treasuresAll.length) game.treasuresAll[i].col++;
+
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -126,7 +126,7 @@ export function push(index: number, direction: string) {
             1
           );
 
-          // if (i < game.treasuresAll.length) game.treasuresAll[i].row++;
+
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -170,7 +170,7 @@ export function push(index: number, direction: string) {
             1
           );
 
-          // if (i < game.treasuresAll.length) game.treasuresAll[i].row--;
+
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -242,7 +242,7 @@ export function step(e: MouseEvent) {
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
     if (game.players[game.currentPlayer].treasureCards.length !== 0) {
-      // for (let i = 0; i < game.treasuresAll.length; i++) {
+
         if (
           game.players[game.currentPlayer].treasureCards[0].row === game.players[game.currentPlayer].row &&
           game.players[game.currentPlayer].treasureCards[0].col === game.players[game.currentPlayer].col 
@@ -251,7 +251,7 @@ export function step(e: MouseEvent) {
           game.treasuresAll.splice(game.treasuresAll.indexOf(game.players[game.currentPlayer].treasureCards[0]), 1);
           game.players[game.currentPlayer].treasureCards.shift();
         }
-      // }
+
     }
     if (
       game.players[game.currentPlayer].treasureCards.length === 0 &&

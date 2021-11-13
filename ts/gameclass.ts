@@ -86,7 +86,8 @@ export class Game {
   availableFields: Array<Array<number>>;
   visited: Array<Array<number>>;
   phase: string;
-  ended:boolean
+  ended: boolean;
+  lastPushed: string
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -96,7 +97,6 @@ export class Game {
     this.players = [];
     this.treasuresAll = [];
     this.treasureLocations = genTreasureLocations();
-
     this.genPlayers();
     this.addTreasure();
     this.fallenTreasure = null;
@@ -112,7 +112,8 @@ export class Game {
       [...new Array(7).fill(1)],
     ];
     this.phase = "insert";
-    this.ended = false
+    this.ended = false;
+    this.lastPushed = "none"
     // graphExplore(this);
   }
   genPlayers() {

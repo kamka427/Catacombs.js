@@ -56,7 +56,7 @@ function showManual() {
 
 function gameLoop(e: MouseEvent) {
   console.log(game);
-  
+
   if (game.ended === false) {
     if (game.phase === "insert") {
       if (clickArrow(e) !== false) {
@@ -71,10 +71,11 @@ function gameLoop(e: MouseEvent) {
     if (game.phase === "step") {
       if (step(e) !== false) {
         game.phase = "insert";
-        return;
+        drawMap();
       }
     }
-  } else if (game.ended === true) {
+  }
+  if (game.ended === true) {
     end.classList.remove("hidden");
     gameArea.classList.add("hidden");
     endText.innerHTML =

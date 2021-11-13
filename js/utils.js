@@ -33,7 +33,6 @@ export function push(index, direction) {
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
-                    // if (i < game.treasuresAll.length) game.treasuresAll[i].col--;
                 }
                 if (game.treasuresAll[i] !== undefined &&
                     game.treasuresAll[i].row === index)
@@ -63,7 +62,6 @@ export function push(index, direction) {
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
-                    // if (i < game.treasuresAll.length) game.treasuresAll[i].col++;
                 }
                 if (game.treasuresAll[i] !== undefined &&
                     game.treasuresAll[i].row === index)
@@ -99,7 +97,6 @@ export function push(index, direction) {
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
-                    // if (i < game.treasuresAll.length) game.treasuresAll[i].row++;
                 }
                 if (game.treasuresAll[i] !== undefined &&
                     game.treasuresAll[i].col === index)
@@ -135,7 +132,6 @@ export function push(index, direction) {
                     game.fallenTreasure.row = null;
                     game.fallenTreasure.col = null;
                     game.treasuresAll.splice(game.treasuresAll.indexOf(game.treasuresAll[i]), 1);
-                    // if (i < game.treasuresAll.length) game.treasuresAll[i].row--;
                 }
                 if (game.treasuresAll[i] !== undefined &&
                     game.treasuresAll[i].col === index)
@@ -200,13 +196,11 @@ export function step(e) {
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;
         if (game.players[game.currentPlayer].treasureCards.length !== 0) {
-            // for (let i = 0; i < game.treasuresAll.length; i++) {
             if (game.players[game.currentPlayer].treasureCards[0].row === game.players[game.currentPlayer].row &&
                 game.players[game.currentPlayer].treasureCards[0].col === game.players[game.currentPlayer].col) {
                 game.treasuresAll.splice(game.treasuresAll.indexOf(game.players[game.currentPlayer].treasureCards[0]), 1);
                 game.players[game.currentPlayer].treasureCards.shift();
             }
-            // }
         }
         if (game.players[game.currentPlayer].treasureCards.length === 0 &&
             game.players[game.currentPlayer].row ===

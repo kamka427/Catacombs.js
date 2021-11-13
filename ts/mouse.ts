@@ -59,79 +59,92 @@ export function dField(e: MouseEvent) {
   }
 }
 
-// export function dragStart() {
-//   game.draggableField.isDragged = true;
-// }
-
-// export function dragEvt(e: MouseEvent) {
-//   const pos = getMousePosition(e);
-//   if (
-//     game.draggableField.isDragged &&
-//     pos.x >= game.draggableField.x &&
-//     pos.x <= game.draggableField.x + game.draggableField.width &&
-//     pos.y >= game.draggableField.y &&
-//     pos.y <= game.draggableField.y + game.draggableField.height
-//   ) {
-//     game.draggableField.x = pos.x - game.draggableField.width / 2;
-//     game.draggableField.y = pos.y - game.draggableField.height / 2;
-
-//     drawMap();
-//   }
-// }
-
-// export function dragEnd() {
-//   game.draggableField.isDragged = false;
-// }
-
 export function clickArrow(e: MouseEvent) {
   const loc = getMousePosition(e);
   if (loc.convCol === 1 && loc.convRow === -1) {
-    push(1, "down");
-    return true;
+    if (game.lastPushed !== "down1") {
+      push(1, "down");
+      game.lastPushed = "up1";
+      return true;
+    }
   }
   if (loc.convCol === 3 && loc.convRow === -1) {
-    push(3, "down");
-    return true;
+    if (game.lastPushed !== "down3") {
+      push(3, "down");
+      game.lastPushed = "up3";
+      return true;
+    }
   }
   if (loc.convCol === 5 && loc.convRow === -1) {
-    push(5, "down");
-    return true;
+    if (game.lastPushed !== "down5") {
+      push(5, "down");
+      game.lastPushed = "up5";
+      return true;
+    }
   }
   if (loc.convCol === -1 && loc.convRow === 1) {
-    push(1, "right");
-    return true;
+    if (game.lastPushed !== "right1") {
+      push(1, "right");
+      game.lastPushed = "left1";
+      return true;
+    }
   }
   if (loc.convCol === -1 && loc.convRow === 3) {
-    push(3, "right");
-    return true;
+    if (game.lastPushed !== "right3") {
+      push(3, "right");
+      game.lastPushed = "left3";
+
+      return true;
+    }
   }
   if (loc.convCol === -1 && loc.convRow === 5) {
-    push(5, "right");
-    return true;
+    if (game.lastPushed !== "right5") {
+      push(5, "right");
+      game.lastPushed = "left5";
+      return true;
+    }
   }
   if (loc.convCol === 7 && loc.convRow === 1) {
-    push(1, "left");
-    return true;
+    if (game.lastPushed !== "left1") {
+      push(1, "left");
+      game.lastPushed = "right1";
+      return true;
+    }
   }
   if (loc.convCol === 7 && loc.convRow === 3) {
-    push(3, "left");
-    return true;
+    if (game.lastPushed !== "left3") {
+      push(3, "left");
+      game.lastPushed = "right3";
+      return true;
+    }
   }
   if (loc.convCol === 7 && loc.convRow === 5) {
-    push(5, "left");
-    return true;
+    if (game.lastPushed !== "left5") {
+      push(5, "left");
+      game.lastPushed = "right5";
+      return true;
+    }
   }
   if (loc.convCol === 1 && loc.convRow === 7) {
-    push(1, "up");
-    return true;
+    if (game.lastPushed !== "up1") {
+      push(1, "up");
+      game.lastPushed = "down1";
+      return true;
+    }
   }
   if (loc.convCol === 3 && loc.convRow === 7) {
-    push(3, "up");
-    return true;
+    if (game.lastPushed !== "up3") {
+      push(3, "up");
+      game.lastPushed = "down3";
+      return true;
+    }
   }
   if (loc.convCol === 5 && loc.convRow === 7) {
-    push(5, "up");
-    return true;
+    if (game.lastPushed !== "up5") {
+      push(5, "up");
+      game.lastPushed = "down5";
+      return true;
+    }
   }
   return false;
 }

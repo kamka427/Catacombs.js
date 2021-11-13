@@ -55,11 +55,11 @@ function gameLoop(e) {
         if (game.phase === "step") {
             if (step(e) !== false) {
                 game.phase = "insert";
-                return;
+                drawMap();
             }
         }
     }
-    else if (game.ended === true) {
+    if (game.ended === true) {
         end.classList.remove("hidden");
         gameArea.classList.add("hidden");
         endText.innerHTML =
