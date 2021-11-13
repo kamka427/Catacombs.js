@@ -86,7 +86,14 @@ export function drawMap() {
     drawPlayers();
     drawTreasures();
     showActualTreasure();
+    // offset += 0.001
+    // requestAnimationFrame(anim)
 }
+// let offset = 0;
+// function anim() {
+//   offset += 0.01;
+//   slideAnimation("left", 2, offset);
+// }
 function drawArrows(row, col) {
     if (row === 0)
         drawArrow(90, row, col, 50);
@@ -123,7 +130,8 @@ function drawPlayers() {
             if (e.row === game.players[i].row && e.col === game.players[i].col)
                 counter++;
         });
-        if (counter < 3) {
+        console.log(counter);
+        if (counter < 2) {
             drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 10, 10);
             if (game.currentPlayer === game.players[i].number) {
                 drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 +
@@ -131,10 +139,10 @@ function drawPlayers() {
             }
         }
         else {
-            drawPlayer(color, (game.players[i].col + 1) * 50 + 10, (game.players[i].row + 1) * 50 + (counter === 2 ? 1 : 4) * 10, 10);
+            drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 2 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 4 * 10, 10);
             if (game.currentPlayer === game.players[i].number) {
-                drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 + 10, (game.players[game.currentPlayer].row + 1) * 50 +
-                    (counter === 0 ? 1 : 4) * 10, 5);
+                drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 +
+                    (counter === 2 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 4 * 10, 5);
             }
         }
         usedPos.push({ row: game.players[i].row, col: game.players[i].col });
@@ -186,14 +194,10 @@ function showActualTreasure() {
         }
     }
     else {
-        drawTreasure("yellow", (game.players[game.currentPlayer].startRow + 1) * 50 +
-            10 +
-            12, (game.players[game.currentPlayer].startCol + 1) * 50 +
-            10 +
-            12, 5);
+        drawTreasure("yellow", (game.players[game.currentPlayer].startRow + 1) * 50 + 10 + 12, (game.players[game.currentPlayer].startCol + 1) * 50 + 10 + 12, 5);
     }
 }
-function drawField(type, rotation, active, row, col, size) {
+export function drawField(type, rotation, active, row, col, size) {
     ctx.save();
     ctx.translate(row + size / 2, col + size / 2);
     ctx.rotate((rotation * Math.PI) / 180);
@@ -273,4 +277,152 @@ function drawArrow(rotation, row, col, size) {
 //   ctx.fillStyle = "red"
 //   ctx.fillText(game.currentPlayer + 1 + ". játékos nyerte a játékot!",gameArea.width/2-100,gameArea.height/2-100);
 // }
+export function slideAnimation(direction, index, offset) {
+    ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+    drawMap();
+    if (direction === "right" || direction === "left") {
+        for (let i = 0; i < game.gameMap.map.length; i++) {
+            drawField(game.gameMap.map[index - 1][i].type, game.gameMap.map[index - 1][i].rotation, game.gameMap.map[index - 1][i].avaliable, (direction === "left" ? i + 2 - offset : i + offset) * 50, index * 50, 50);
+        }
+        for (let i = 0; i < game.treasuresAll.length; i++) {
+            if (game.treasuresAll[i].row + 1 === index) {
+                const color = determineColor(game.treasuresAll[i].type);
+                drawTreasure(color, (game.treasuresAll[i].col +
+                    (direction === "left" ? 2 - offset : offset)) *
+                    50 +
+                    17, (game.treasuresAll[i].row + 1) * 50 + 17, 15);
+                drawTreasure("yellow", (game.players[game.currentPlayer].treasureCards[0].col +
+                    (direction === "left" ? 2 - offset : offset)) *
+                    50 +
+                    10 +
+                    12, (game.players[game.currentPlayer].treasureCards[0].row + 1) * 50 +
+                    10 +
+                    12, 5);
+            }
+        }
+        const usedPos = [];
+        for (let i = 0; i < game.players.length; i++) {
+            if (game.players[i].row + 1 === index) {
+                let color;
+                switch (game.players[i].number) {
+                    case 0:
+                        color = "blue";
+                        break;
+                    case 1:
+                        color = "red";
+                        break;
+                    case 2:
+                        color = "green";
+                        break;
+                    case 3:
+                        color = "purple";
+                        break;
+                }
+                let counter = 0;
+                usedPos.forEach((e) => {
+                    if (e.row === game.players[i].row && e.col === game.players[i].col)
+                        counter++;
+                });
+                console.log(counter);
+                if (counter < 2) {
+                    drawPlayer(color, (game.players[i].col +
+                        (direction === "left" ? 2 - offset : offset)) *
+                        50 +
+                        (counter === 0 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 10, 10);
+                    if (game.currentPlayer === game.players[i].number) {
+                        drawPlayer("yellow", (game.players[game.currentPlayer].col +
+                            (direction === "left" ? 2 - offset : offset)) *
+                            50 +
+                            (counter === 0 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 10, 5);
+                    }
+                }
+                else {
+                    drawPlayer(color, (game.players[i].col +
+                        (direction === "left" ? 2 - offset : offset)) *
+                        50 +
+                        (counter === 2 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 4 * 10, 10);
+                    if (game.currentPlayer === game.players[i].number) {
+                        drawPlayer("yellow", (game.players[game.currentPlayer].col +
+                            (direction === "left" ? 2 - offset : offset)) *
+                            50 +
+                            (counter === 2 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 4 * 10, 5);
+                    }
+                }
+                usedPos.push({ row: game.players[i].row, col: game.players[i].col });
+            }
+        }
+    }
+    else {
+        for (let i = 0; i < game.gameMap.map.length; i++) {
+            drawField(game.gameMap.map[i][index - 1].type, game.gameMap.map[i][index - 1].rotation, game.gameMap.map[i][index - 1].avaliable, index * 50, (direction === "up" ? i + 2 - offset : i + offset) * 50, 50);
+        }
+        for (let i = 0; i < game.treasuresAll.length; i++) {
+            if (game.treasuresAll[i].col + 1 === index) {
+                const color = determineColor(game.treasuresAll[i].type);
+                drawTreasure(color, (game.treasuresAll[i].col + 1) * 50 + 17, (game.treasuresAll[i].row +
+                    (direction === "up" ? 2 - offset : offset)) *
+                    50 +
+                    17, 15);
+                drawTreasure("yellow", (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
+                    10 +
+                    12, (game.players[game.currentPlayer].treasureCards[0].row +
+                    (direction === "up" ? 2 - offset : offset)) *
+                    50 +
+                    10 +
+                    12, 5);
+            }
+        }
+        const usedPos = [];
+        for (let i = 0; i < game.players.length; i++) {
+            if (game.players[i].col + 1 === index) {
+                let color;
+                switch (game.players[i].number) {
+                    case 0:
+                        color = "blue";
+                        break;
+                    case 1:
+                        color = "red";
+                        break;
+                    case 2:
+                        color = "green";
+                        break;
+                    case 3:
+                        color = "purple";
+                        break;
+                }
+                let counter = 0;
+                usedPos.forEach((e) => {
+                    if (e.row === game.players[i].row && e.col === game.players[i].col)
+                        counter++;
+                });
+                console.log(counter);
+                if (counter < 2) {
+                    drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10, (game.players[i].row + (direction === "up" ? 2 - offset : offset)) *
+                        50 +
+                        10, 10);
+                    if (game.currentPlayer === game.players[i].number) {
+                        drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 +
+                            (counter === 0 ? 1 : 4) * 10, (game.players[game.currentPlayer].row +
+                            (direction === "up" ? 2 - offset : offset)) *
+                            50 +
+                            10, 5);
+                    }
+                }
+                else {
+                    drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 2 ? 1 : 4) * 10, (game.players[i].row + (direction === "up" ? 2 - offset : offset)) *
+                        50 +
+                        4 * 10, 10);
+                    if (game.currentPlayer === game.players[i].number) {
+                        drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 +
+                            (counter === 2 ? 1 : 4) * 10, (game.players[game.currentPlayer].row +
+                            (direction === "up" ? 2 - offset : offset)) *
+                            50 +
+                            4 * 10, 5);
+                    }
+                }
+                usedPos.push({ row: game.players[i].row, col: game.players[i].col });
+            }
+        }
+    }
+}
 //# sourceMappingURL=graphics.js.map

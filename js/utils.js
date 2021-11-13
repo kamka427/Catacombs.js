@@ -1,8 +1,10 @@
-import { drawMap } from "./graphics.js";
+import { drawMap, slideAnimation } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 import { game } from "./main.js";
 export const randomBetween = (min, max) => Math.floor(Math.random() * (max - min));
 const getCol = (arr, n) => arr.map((row) => row[n]);
+let pushedrow;
+let offset = 0;
 export function push(index, direction) {
     let tmp;
     let fell = false;
@@ -67,7 +69,7 @@ export function push(index, direction) {
                         game.treasuresAll[i].col++;
                 }
                 else if (game.treasuresAll[i].row === index)
-                    game.treasuresAll[i].col++; // hibás minden iránynál ha hirtelen van váltás irányok között
+                    game.treasuresAll[i].col++;
             }
             break;
         case "down":
@@ -146,7 +148,11 @@ export function push(index, direction) {
             break;
     }
     game.availableFields = [];
-    drawMap();
+    pushedrow = { direction: direction, index: index };
+    offset = 0;
+    const runningAnimation = requestAnimationFrame(animLoop);
+    if (offset >= 0.9)
+        cancelAnimationFrame(runningAnimation);
 }
 export function rotate(e) {
     if (e.button === 2 && game.phase === "insert") {
@@ -224,5 +230,12 @@ export function endTurn() {
         game.currentPlayer = 0;
     else
         game.currentPlayer++;
+}
+function animLoop() {
+    offset += 0.1;
+    slideAnimation(pushedrow.direction, pushedrow.index + 1, offset);
+    const runningAnimation = requestAnimationFrame(animLoop);
+    if (offset >= 0.9)
+        cancelAnimationFrame(runningAnimation);
 }
 //# sourceMappingURL=utils.js.map

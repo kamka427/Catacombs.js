@@ -13,51 +13,63 @@ export function getMousePosition(event: MouseEvent) {
 }
 
 export function dField(e: MouseEvent) {
-  if(game.phase === "insert"){
-  const loc = getMousePosition(e);
-  if (loc.convCol === 1 && loc.convRow === -1) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 3 && loc.convRow === -1) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 5 && loc.convRow === -1) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === -1 && loc.convRow === 1) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === -1 && loc.convRow === 3) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === -1 && loc.convRow === 5) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 7 && loc.convRow === 1) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 7 && loc.convRow === 3) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 7 && loc.convRow === 5) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 1 && loc.convRow === 7) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 3 && loc.convRow === 7) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else if (loc.convCol === 5 && loc.convRow === 7) {
-    game.draggableField.x = (loc.convCol + 1) * 50;
-    game.draggableField.y = (loc.convRow + 1) * 50;
-  } else {
-    game.draggableField.x = 500;
-    game.draggableField.y = 0;
+  if (game.phase === "insert") {
+    const loc = getMousePosition(e);
+    if (loc.convCol === 1 && loc.convRow === -1) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 3 && loc.convRow === -1) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 5 && loc.convRow === -1) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === -1 && loc.convRow === 1) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === -1 && loc.convRow === 3) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === -1 && loc.convRow === 5) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 7 && loc.convRow === 1) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 7 && loc.convRow === 3) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 7 && loc.convRow === 5) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 1 && loc.convRow === 7) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 3 && loc.convRow === 7) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else if (loc.convCol === 5 && loc.convRow === 7) {
+      game.draggableField.x = (loc.convCol + 1) * 50;
+      game.draggableField.y = (loc.convRow + 1) * 50;
+
+    } else {
+      game.draggableField.x = 500;
+      game.draggableField.y = 0;
+
+    }
+    drawMap()
   }
-  drawMap();
-}
- 
 }
 
 // export function dragStart() {

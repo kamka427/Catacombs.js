@@ -1,5 +1,5 @@
 import { Field } from "./constants.js";
-import { drawMap } from "./graphics.js";
+import { drawMap, slideAnimation } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
 import { game } from "./main.js";
 
@@ -8,6 +8,9 @@ export const randomBetween = (min: number, max: number) =>
 
 const getCol = (arr: Field[][], n: number): Array<Field> =>
   arr.map((row: Field[]) => row[n]);
+
+let pushedrow: { index: number; direction: string };
+let offset = 0;
 
 export function push(index: number, direction: string) {
   let tmp: Field;
@@ -46,7 +49,6 @@ export function push(index: number, direction: string) {
         } else if (game.treasuresAll[i].row === index)
           game.treasuresAll[i].col--;
       }
-
       break;
 
     case "right":
@@ -79,9 +81,8 @@ export function push(index: number, direction: string) {
           fell = true;
           if (i < game.treasuresAll.length) game.treasuresAll[i].col++;
         } else if (game.treasuresAll[i].row === index)
-          game.treasuresAll[i].col++; // hibás minden iránynál ha hirtelen van váltás irányok között
+          game.treasuresAll[i].col++;
       }
-
       break;
 
     case "down":
@@ -162,47 +163,46 @@ export function push(index: number, direction: string) {
         } else if (game.treasuresAll[i].col === index)
           game.treasuresAll[i].row--;
       }
-
       break;
   }
   game.availableFields = [];
-  drawMap();
+  pushedrow = { direction: direction, index: index };
+  offset = 0;
+  const runningAnimation = requestAnimationFrame(animLoop);
+  if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
 }
 
 export function rotate(e: MouseEvent): void {
-  if(e.button === 2 && game.phase === "insert"){
-  const pos = getMousePosition(e);
+  if (e.button === 2 && game.phase === "insert") {
+    const pos = getMousePosition(e);
 
-  if (
-    pos.x >= game.draggableField.x &&
-    pos.x <= game.draggableField.x + game.draggableField.width &&
-    pos.y >= game.draggableField.y &&
-    pos.y <= game.draggableField.y + game.draggableField.height
-  ) {
-
-    switch (game.gameMap.randomfield.type) {
-      case "straight":
-        game.gameMap.randomfield.rotation =
-          game.gameMap.randomfield.rotation === 0 ? 90 : 0;
-        break;
-      case "edge":
-        game.gameMap.randomfield.rotation =
-          game.gameMap.randomfield.rotation === 270
-            ? 0
-            : (game.gameMap.randomfield.rotation += 90);
-        break;
-      case "triple":
-        game.gameMap.randomfield.rotation =
-          game.gameMap.randomfield.rotation === 270
-            ? 0
-            : (game.gameMap.randomfield.rotation += 90);
-        break;
+    if (
+      pos.x >= game.draggableField.x &&
+      pos.x <= game.draggableField.x + game.draggableField.width &&
+      pos.y >= game.draggableField.y &&
+      pos.y <= game.draggableField.y + game.draggableField.height
+    ) {
+      switch (game.gameMap.randomfield.type) {
+        case "straight":
+          game.gameMap.randomfield.rotation =
+            game.gameMap.randomfield.rotation === 0 ? 90 : 0;
+          break;
+        case "edge":
+          game.gameMap.randomfield.rotation =
+            game.gameMap.randomfield.rotation === 270
+              ? 0
+              : (game.gameMap.randomfield.rotation += 90);
+          break;
+        case "triple":
+          game.gameMap.randomfield.rotation =
+            game.gameMap.randomfield.rotation === 270
+              ? 0
+              : (game.gameMap.randomfield.rotation += 90);
+          break;
+      }
     }
+    drawMap();
   }
-  drawMap();
-
-}
-
 }
 export function step(e: MouseEvent) {
   const pos = getMousePosition(e);
@@ -253,10 +253,16 @@ export function step(e: MouseEvent) {
     return true;
   }
   return false;
-
 }
 
 export function endTurn() {
   if (game.currentPlayer === game.players.length - 1) game.currentPlayer = 0;
   else game.currentPlayer++;
+}
+
+function animLoop() {
+  offset += 0.1;
+  slideAnimation(pushedrow.direction, pushedrow.index + 1, offset);
+  const runningAnimation = requestAnimationFrame(animLoop);
+  if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
 }

@@ -47,7 +47,7 @@ function gameLoop(e) {
                 game.draggableField.x = 500;
                 game.draggableField.y = 0;
                 graphExplore(game);
-                drawMap();
+                // drawMap();
                 return;
             }
         }
@@ -76,9 +76,6 @@ manualBtn.addEventListener("click", showManual);
 saveBtn.addEventListener("click", saveGame);
 loadBtn.addEventListener("click", loadGame);
 restartBtn.addEventListener("click", restart);
-// gameArea.addEventListener("mousedown", dragStart);
-// gameArea.addEventListener("mousemove", dragEvt);
-// gameArea.addEventListener("mouseup", dragEnd);
 gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
 gameArea.addEventListener("mousemove", dField);
