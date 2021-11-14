@@ -185,13 +185,13 @@ export function step(e) {
             exists = true;
     }
     if (exists) {
-        // animpos = {
-        //   startX: game.players[game.currentPlayer].row,
-        //   startY: game.players[game.currentPlayer].col,
-        //   endX: pos.convRow,
-        //   endY: pos.convCol,
-        // };
-        // requestAnimationFrame(animLoopStep);
+        animpos = {
+            startX: game.players[game.currentPlayer].row,
+            startY: game.players[game.currentPlayer].col,
+            endX: pos.convRow,
+            endY: pos.convCol,
+        };
+        requestAnimationFrame(animLoopStep);
         // if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;

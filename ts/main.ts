@@ -17,18 +17,30 @@ const manual = document.querySelector("p");
 const end = document.querySelector("#end");
 const restartBtn = document.querySelector("#restart");
 const endText = document.querySelector("#endtext");
+let pCount: number = <number>(
+  (<unknown>(<HTMLInputElement>document.querySelector("#pcount")).value)
+);
+let tCount: number = <number>(
+  (<unknown>(<HTMLInputElement>document.querySelector("#tcountpp")).value)
+);
+const treasureInput = document.querySelector("#tcountpp");
 
+function inputUpdate() {
+  pCount = <number>(
+    (<unknown>(<HTMLInputElement>document.querySelector("#pcount")).value)
+  );
+  treasureInput.setAttribute("max", (24 / pCount).toString());
+  tCount = <number>(
+    (<unknown>(<HTMLInputElement>document.querySelector("#tcountpp")).value)
+  );
+  if (tCount > 24 / pCount) {
+    tCount = 24 / pCount;
+  }
+}
 const state = localStorage.getItem("state");
 if (state !== null) loadBtn.classList.toggle("hidden");
 
 function startGame() {
-  const pCount: number = <number>(
-    (<unknown>(<HTMLInputElement>document.querySelector("#pcount")).value)
-  );
-  const tCount: number = <number>(
-    (<unknown>(<HTMLInputElement>document.querySelector("#tcountpp")).value)
-  );
-
   start.classList.add("hidden");
   game = new Game(pCount, tCount);
 
@@ -98,3 +110,4 @@ restartBtn.addEventListener("click", restart);
 gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
 gameArea.addEventListener("mousemove", dField);
+document.addEventListener("input", inputUpdate);
