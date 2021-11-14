@@ -1,7 +1,7 @@
 import { Field } from "./constants.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
-import { game } from "./main.js";
+import { game, gameArea } from "./main.js";
 import { moveAnim, slideAnimation } from "./anims.js";
 
 export const randomBetween = (min: number, max: number) =>
@@ -11,6 +11,8 @@ const getCol = (arr: Field[][], n: number): Array<Field> =>
   arr.map((row: Field[]) => row[n]);
 
 let pushedrow: { index: number; direction: string };
+let offsetX = 0;
+let offsetY = 0;
 let offset = 0;
 
 export function push(index: number, direction: string) {
@@ -44,7 +46,6 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -81,8 +82,6 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-
-
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -125,8 +124,6 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-
-
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -169,8 +166,6 @@ export function push(index: number, direction: string) {
             game.treasuresAll.indexOf(game.treasuresAll[i]),
             1
           );
-
-
         }
         if (
           game.treasuresAll[i] !== undefined &&
@@ -219,7 +214,13 @@ export function rotate(e: MouseEvent): void {
     drawMap();
   }
 }
-let animpos: { startX: number; startY: number; endX: number; endY: number };
+let animpos: {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  player: number;
+};
 export function step(e: MouseEvent) {
   const pos = getMousePosition(e);
   let exists = false;
@@ -236,22 +237,30 @@ export function step(e: MouseEvent) {
       startY: game.players[game.currentPlayer].col,
       endX: pos.convRow,
       endY: pos.convCol,
+      player: game.currentPlayer,
     };
-    requestAnimationFrame(animLoopStep);
-    // if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
+    offset = 0;
+    offsetY = 0;
+    offsetX = 0;
+    const runningAnimation = requestAnimationFrame(animLoopStep);
+    if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
     if (game.players[game.currentPlayer].treasureCards.length !== 0) {
-
-        if (
-          game.players[game.currentPlayer].treasureCards[0].row === game.players[game.currentPlayer].row &&
-          game.players[game.currentPlayer].treasureCards[0].col === game.players[game.currentPlayer].col 
-
-        ) {
-          game.treasuresAll.splice(game.treasuresAll.indexOf(game.players[game.currentPlayer].treasureCards[0]), 1);
-          game.players[game.currentPlayer].treasureCards.shift();
-        }
-
+      if (
+        game.players[game.currentPlayer].treasureCards[0].row ===
+          game.players[game.currentPlayer].row &&
+        game.players[game.currentPlayer].treasureCards[0].col ===
+          game.players[game.currentPlayer].col
+      ) {
+        game.treasuresAll.splice(
+          game.treasuresAll.indexOf(
+            game.players[game.currentPlayer].treasureCards[0]
+          ),
+          1
+        );
+        game.players[game.currentPlayer].treasureCards.shift();
+      }
     }
     if (
       game.players[game.currentPlayer].treasureCards.length === 0 &&
@@ -290,9 +299,38 @@ function animLoop() {
   if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
 }
 function animLoopStep() {
-  offset += 0.1;
+  offsetX +=
+    Math.abs(
+      (animpos.startX > animpos.endX
+        ? animpos.endX - animpos.startX
+        : animpos.startX - animpos.endX) / 10
+    ) /
+    (2 + offset);
+  offsetY +=
+    Math.abs(
+      (animpos.startY > animpos.endY
+        ? animpos.endY - animpos.startY
+        : animpos.startY - animpos.endY) / 10
+    ) /
+    (2 + offset);
+  console.log(offsetX);
+  console.log(offsetY);
 
-  moveAnim(animpos.startX, animpos.startY, animpos.endX, animpos.endY, offset);
+  offset += 0.1;
+  game.players[animpos.player].isAnimated = true
+  moveAnim(
+    animpos.startX,
+    animpos.startY,
+    animpos.endX,
+    animpos.endY,
+    animpos.player,
+    offsetX,
+    offsetY
+  );
   const runningAnimation = requestAnimationFrame(animLoopStep);
-  if (offset >= 3) cancelAnimationFrame(runningAnimation);
+  if (offset >= 4) {
+    cancelAnimationFrame(runningAnimation);
+  game.players[animpos.player].isAnimated = false
+    drawMap();
+  }
 }

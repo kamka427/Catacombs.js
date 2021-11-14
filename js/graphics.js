@@ -86,14 +86,7 @@ export function drawMap() {
     drawPlayers();
     drawTreasures();
     showActualTreasure();
-    // offset += 0.001
-    // requestAnimationFrame(anim)
 }
-// let offset = 0;
-// function anim() {
-//   offset += 0.01;
-//   slideAnimation("left", 2, offset);
-// }
 export function drawArrows(row, col) {
     if (row === 0)
         drawArrow(90, row, col, 50);
@@ -131,17 +124,17 @@ function drawPlayers() {
                 counter++;
         });
         if (counter < 2) {
-            drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 10, 10);
+            drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 10, 10, game.players[i].isAnimated);
             if (game.currentPlayer === game.players[i].number) {
                 drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 +
-                    (counter === 0 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 10, 5);
+                    (counter === 0 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 10, 5, false);
             }
         }
         else {
-            drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 2 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 4 * 10, 10);
+            drawPlayer(color, (game.players[i].col + 1) * 50 + (counter === 2 ? 1 : 4) * 10, (game.players[i].row + 1) * 50 + 4 * 10, 10, game.players[i].isAnimated);
             if (game.currentPlayer === game.players[i].number) {
                 drawPlayer("yellow", (game.players[game.currentPlayer].col + 1) * 50 +
-                    (counter === 2 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 4 * 10, 5);
+                    (counter === 2 ? 1 : 4) * 10, (game.players[game.currentPlayer].row + 1) * 50 + 4 * 10, 5, false);
             }
         }
         usedPos.push({ row: game.players[i].row, col: game.players[i].col });
@@ -233,14 +226,16 @@ export function drawField(type, rotation, active, row, col, size) {
     }
     ctx.restore();
 }
-export function drawPlayer(color, row, col, size) {
-    ctx.fillStyle = color;
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(row, col, size, 0, 360);
-    ctx.fill();
-    ctx.stroke();
+export function drawPlayer(color, row, col, size, animated) {
+    if (!animated) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(row, col, size, 0, 360);
+        ctx.fill();
+        ctx.stroke();
+    }
 }
 export function drawTreasure(color, row, col, size) {
     ctx.strokeStyle = "black";

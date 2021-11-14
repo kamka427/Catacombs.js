@@ -63,7 +63,10 @@ export function slideAnimation(
         );
       }
     }
-    if (game.players[game.currentPlayer].treasureCards.length > 0 && game.players[game.currentPlayer].treasureCards[0].row + 1 === index) {
+    if (
+      game.players[game.currentPlayer].treasureCards.length > 0 &&
+      game.players[game.currentPlayer].treasureCards[0].row + 1 === index
+    ) {
       drawTreasure(
         "yellow",
         (game.players[game.currentPlayer].treasureCards[0].col +
@@ -101,7 +104,6 @@ export function slideAnimation(
             counter++;
         });
 
-
         if (counter < 2) {
           drawPlayer(
             color,
@@ -110,7 +112,8 @@ export function slideAnimation(
               50 +
               (counter === 0 ? 1 : 4) * 10,
             (game.players[i].row + 1) * 50 + 10,
-            10
+            10,
+            game.players[i].isAnimated
           );
           if (game.currentPlayer === game.players[i].number) {
             drawPlayer(
@@ -120,7 +123,8 @@ export function slideAnimation(
                 50 +
                 (counter === 0 ? 1 : 4) * 10,
               (game.players[game.currentPlayer].row + 1) * 50 + 10,
-              5
+              5,
+              false
             );
           }
         } else {
@@ -131,7 +135,8 @@ export function slideAnimation(
               50 +
               (counter === 2 ? 1 : 4) * 10,
             (game.players[i].row + 1) * 50 + 4 * 10,
-            10
+            10,
+            game.players[i].isAnimated
           );
           if (game.currentPlayer === game.players[i].number) {
             drawPlayer(
@@ -141,7 +146,8 @@ export function slideAnimation(
                 50 +
                 (counter === 2 ? 1 : 4) * 10,
               (game.players[game.currentPlayer].row + 1) * 50 + 4 * 10,
-              5
+              5,
+              false
             );
           }
         }
@@ -192,7 +198,10 @@ export function slideAnimation(
         );
       }
     }
-    if (game.players[game.currentPlayer].treasureCards.length > 0 && game.players[game.currentPlayer].treasureCards[0].col + 1 === index) {
+    if (
+      game.players[game.currentPlayer].treasureCards.length > 0 &&
+      game.players[game.currentPlayer].treasureCards[0].col + 1 === index
+    ) {
       drawTreasure(
         "yellow",
         (game.players[game.currentPlayer].treasureCards[0].col + 1) * 50 +
@@ -230,7 +239,6 @@ export function slideAnimation(
             counter++;
         });
 
-
         if (counter < 2) {
           drawPlayer(
             color,
@@ -238,7 +246,8 @@ export function slideAnimation(
             (game.players[i].row + (direction === "up" ? 2 - offset : offset)) *
               50 +
               10,
-            10
+            10,
+            game.players[i].isAnimated
           );
           if (game.currentPlayer === game.players[i].number) {
             drawPlayer(
@@ -249,7 +258,8 @@ export function slideAnimation(
                 (direction === "up" ? 2 - offset : offset)) *
                 50 +
                 10,
-              5
+              5,
+              false
             );
           }
         } else {
@@ -259,7 +269,8 @@ export function slideAnimation(
             (game.players[i].row + (direction === "up" ? 2 - offset : offset)) *
               50 +
               4 * 10,
-            10
+            10,
+            game.players[i].isAnimated
           );
           if (game.currentPlayer === game.players[i].number) {
             drawPlayer(
@@ -270,7 +281,8 @@ export function slideAnimation(
                 (direction === "up" ? 2 - offset : offset)) *
                 50 +
                 4 * 10,
-              5
+              5,
+              false
             );
           }
         }
@@ -311,28 +323,13 @@ export function moveAnim(
   startY: number,
   endX: number,
   endY: number,
-  offset: number
+  player: number,
+  offsetX: number,
+  offsetY: number
 ) {
   drawMap();
-  let xOffset;
-  let yOffset;
-  if (startX === 0 && startY === 0) {
-    xOffset = 0;
-    yOffset = 0;
-  } else if (startX === endX) {
-    xOffset = 0;
-    yOffset = Math.sqrt(startY ** 2 + endY ** 2);
-  } else if (startY === endY) {
-    yOffset = 0;
-    xOffset = Math.sqrt(startX ** 2 + endX ** 2);
-  } else {
-    xOffset = Math.sqrt(startX ** 2 + endX ** 2);
-    yOffset = Math.sqrt(startY ** 2 + endY ** 2);
-  }
-
-
   let color;
-  switch (game.players[game.currentPlayer].number) {
+  switch (game.players[player].number) {
     case 0:
       color = "blue";
       break;
@@ -346,27 +343,36 @@ export function moveAnim(
       color = "purple";
       break;
   }
-  if (yOffset === 0 && xOffset !== 0)
-    drawPlayer(
-      color,
-      (game.players[game.currentPlayer].col + 1) * 50 + 10,
-      (game.players[game.currentPlayer].row + (startX > endX ? -offset : offset)) * 50 + 10,
-      10
-    );
-  else if (xOffset === 0 && yOffset !== 0)
-    drawPlayer(
-      color,
-      (game.players[game.currentPlayer].col +(startY > endY ? -offset : offset))  * 50 + 10,
-      (game.players[game.currentPlayer].row + 1) * 50 + 10,
-      10
-    );
-  else if (xOffset === 0 && yOffset === 0) {
+
+  if (startX === endX && startY === endY) {
     drawMap();
-  } else
+  } else if (startX !== endX && startY === endY) {
     drawPlayer(
       color,
-      (game.players[game.currentPlayer].col + (startY > endY ? -offset : offset)) * 50 + 10,
-      (game.players[game.currentPlayer].row + (startX > endX ? -offset : offset)) * 50 + 10,
-      10
+      (startY + 1) * 50 + 25,
+      (startX + (startX > endX ? -offsetX + 2 : offsetX)) * 50 +
+        (startX > endX ? 0 : 50),
+      10,
+      false
     );
+  } else if (startX === endX && startY !== endY) {
+    drawPlayer(
+      color,
+      (startY + (startY > endY ? -offsetY + 2 : offsetY)) * 50 +
+        (startY > endY ? 0 : 50),
+      (startX + 1) * 50 + 25,
+      10,
+      false
+    );
+  } else if (startX !== endX && startY !== endY) {
+    drawPlayer(
+      color,
+      (startY + (startY > endY ? -offsetY + 2 : offsetY)) * 50 +
+        (startY > endY ? 0 : 50),
+      (startX + (startX > endX ? -offsetX + 2 : offsetX)) * 50 +
+        (startX > endX ? 0 : 50),
+      10,
+      false
+    );
+  }
 }

@@ -140,14 +140,9 @@ export function drawMap(): void {
   drawPlayers();
   drawTreasures();
   showActualTreasure();
-  // offset += 0.001
-  // requestAnimationFrame(anim)
+
 }
-// let offset = 0;
-// function anim() {
-//   offset += 0.01;
-//   slideAnimation("left", 2, offset);
-// }
+
 export function drawArrows(row: number, col: number) {
   if (row === 0) drawArrow(90, row, col, 50);
   //bal
@@ -189,7 +184,8 @@ function drawPlayers() {
         color,
         (game.players[i].col + 1) * 50 + (counter === 0 ? 1 : 4) * 10,
         (game.players[i].row + 1) * 50 + 10,
-        10
+        10,
+        game.players[i].isAnimated
       );
       if (game.currentPlayer === game.players[i].number) {
         drawPlayer(
@@ -197,7 +193,8 @@ function drawPlayers() {
           (game.players[game.currentPlayer].col + 1) * 50 +
             (counter === 0 ? 1 : 4) * 10,
           (game.players[game.currentPlayer].row + 1) * 50 + 10,
-          5
+          5,
+          false
         );
       }
     } else {
@@ -205,7 +202,8 @@ function drawPlayers() {
         color,
         (game.players[i].col + 1) * 50 + (counter === 2 ? 1 : 4) * 10,
         (game.players[i].row + 1) * 50 + 4 * 10,
-        10
+        10,
+        game.players[i].isAnimated
       );
       if (game.currentPlayer === game.players[i].number) {
         drawPlayer(
@@ -213,7 +211,8 @@ function drawPlayers() {
           (game.players[game.currentPlayer].col + 1) * 50 +
             (counter === 2 ? 1 : 4) * 10,
           (game.players[game.currentPlayer].row + 1) * 50 + 4 * 10,
-          5
+          5,
+          false
         );
       }
     }
@@ -347,7 +346,8 @@ export function drawField(
   ctx.restore();
 }
 
-export function drawPlayer(color: string, row: number, col: number, size: number) {
+export function drawPlayer(color: string, row: number, col: number, size: number, animated: boolean) {
+  if(!animated){
   ctx.fillStyle = color;
   ctx.strokeStyle = "black";
   ctx.lineWidth = 1;
@@ -355,6 +355,7 @@ export function drawPlayer(color: string, row: number, col: number, size: number
   ctx.arc(row, col, size, 0, 360);
   ctx.fill();
   ctx.stroke();
+  }
 }
 
 export function drawTreasure(color: string, row: number, col: number, size: number) {

@@ -5,6 +5,8 @@ import { moveAnim, slideAnimation } from "./anims.js";
 export const randomBetween = (min, max) => Math.floor(Math.random() * (max - min));
 const getCol = (arr, n) => arr.map((row) => row[n]);
 let pushedrow;
+let offsetX = 0;
+let offsetY = 0;
 let offset = 0;
 export function push(index, direction) {
     let tmp;
@@ -190,14 +192,21 @@ export function step(e) {
             startY: game.players[game.currentPlayer].col,
             endX: pos.convRow,
             endY: pos.convCol,
+            player: game.currentPlayer,
         };
-        requestAnimationFrame(animLoopStep);
-        // if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
+        offset = 0;
+        offsetY = 0;
+        offsetX = 0;
+        const runningAnimation = requestAnimationFrame(animLoopStep);
+        if (offset >= 0.9)
+            cancelAnimationFrame(runningAnimation);
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;
         if (game.players[game.currentPlayer].treasureCards.length !== 0) {
-            if (game.players[game.currentPlayer].treasureCards[0].row === game.players[game.currentPlayer].row &&
-                game.players[game.currentPlayer].treasureCards[0].col === game.players[game.currentPlayer].col) {
+            if (game.players[game.currentPlayer].treasureCards[0].row ===
+                game.players[game.currentPlayer].row &&
+                game.players[game.currentPlayer].treasureCards[0].col ===
+                    game.players[game.currentPlayer].col) {
                 game.treasuresAll.splice(game.treasuresAll.indexOf(game.players[game.currentPlayer].treasureCards[0]), 1);
                 game.players[game.currentPlayer].treasureCards.shift();
             }
@@ -237,10 +246,26 @@ function animLoop() {
         cancelAnimationFrame(runningAnimation);
 }
 function animLoopStep() {
+    offsetX +=
+        Math.abs((animpos.startX > animpos.endX
+            ? animpos.endX - animpos.startX
+            : animpos.startX - animpos.endX) / 10) /
+            (2 + offset);
+    offsetY +=
+        Math.abs((animpos.startY > animpos.endY
+            ? animpos.endY - animpos.startY
+            : animpos.startY - animpos.endY) / 10) /
+            (2 + offset);
+    console.log(offsetX);
+    console.log(offsetY);
     offset += 0.1;
-    moveAnim(animpos.startX, animpos.startY, animpos.endX, animpos.endY, offset);
+    game.players[animpos.player].isAnimated = true;
+    moveAnim(animpos.startX, animpos.startY, animpos.endX, animpos.endY, animpos.player, offsetX, offsetY);
     const runningAnimation = requestAnimationFrame(animLoopStep);
-    if (offset >= 3)
+    if (offset >= 4) {
         cancelAnimationFrame(runningAnimation);
+        game.players[animpos.player].isAnimated = false;
+        drawMap();
+    }
 }
 //# sourceMappingURL=utils.js.map

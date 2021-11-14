@@ -56,6 +56,7 @@ class Player {
   startCol: number;
   number: number;
   treasureCards: Array<Treasure>;
+  isAnimated: boolean
 
   constructor(
     row: number,
@@ -69,6 +70,7 @@ class Player {
     this.startCol = col;
     this.number = pNumber;
     this.treasureCards = treasures;
+    this.isAnimated = false
   }
 }
 

@@ -31,6 +31,7 @@ class Player {
         this.startCol = col;
         this.number = pNumber;
         this.treasureCards = treasures;
+        this.isAnimated = false;
     }
 }
 export class Game {
