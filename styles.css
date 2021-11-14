@@ -1,3 +1,19 @@
+body{
+  background-color: #242526;
+}
+h1{
+  color: white;
+  text-align: center;
+}
+
+#startscreen, #end{
+  background-color: brown;
+  border-radius: 5px;
+}
+input{
+  border-radius: 5px;
+}
+
 canvas {
   padding-left: 0;
   padding-right: 0;
@@ -7,4 +23,8 @@ canvas {
 }
 .hidden {
   display: none;
+}
+
+button{
+  border-radius: 5px;
 }

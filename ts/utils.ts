@@ -1,7 +1,7 @@
 import { Field } from "./constants.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
-import { game, gameArea } from "./main.js";
+import { game } from "./main.js";
 import { moveAnim, slideAnimation } from "./anims.js";
 
 export const randomBetween = (min: number, max: number) =>

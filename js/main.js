@@ -31,6 +31,7 @@ if (state !== null)
 function startGame() {
     start.classList.add("hidden");
     game = new Game(pCount, tCount);
+    saveBtn.classList.remove("hidden");
     gameArea.classList.remove("hidden");
     drawMap();
 }
@@ -38,6 +39,7 @@ function loadGame() {
     start.classList.add("hidden");
     const state = localStorage.getItem("state");
     game = JSON.parse(state);
+    saveBtn.classList.remove("hidden");
     gameArea.classList.remove("hidden");
     drawMap();
 }
@@ -80,6 +82,7 @@ function restart() {
     game = null;
     end.classList.add("hidden");
     start.classList.remove("hidden");
+    saveBtn.classList.add("hidden");
 }
 gameArea.addEventListener("contextmenu", (e) => e.preventDefault());
 startBtn.addEventListener("click", startGame);

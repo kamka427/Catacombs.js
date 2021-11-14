@@ -31,20 +31,21 @@ export function drawStatus(): void {
 
       ctxs.fillStyle = color;
       ctxs.fillRect(x, 0, 112.5, 50);
-      ctxs.strokeStyle = "black";
+      ctxs.strokeStyle = "yellow";
       ctxs.lineWidth = 3;
       if (e.number === game.currentPlayer) {
         ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
       }
       ctxs.fillStyle = "white";
       ctxs.fillRect(x + 35, 0 + 5, 72, 40);
-      ctxs.fillStyle = "black";
+      ctxs.fillStyle = "white";
       ctxs.fillText(
-        (e.number + 1).toString(),
+        (e.number + 1 + ".").toString(),
         x + 15,
         statusArea.height / 2,
         50
       );
+      ctxs.fillStyle = "black";
       ctxs.fillText(
         "Sor: " +
           (e.treasureCards[0].row !== null
@@ -140,7 +141,6 @@ export function drawMap(): void {
   drawPlayers();
   drawTreasures();
   showActualTreasure();
-
 }
 
 export function drawArrows(row: number, col: number) {
@@ -177,7 +177,6 @@ function drawPlayers() {
       if (e.row === game.players[i].row && e.col === game.players[i].col)
         counter++;
     });
-
 
     if (counter < 2) {
       drawPlayer(
@@ -346,19 +345,30 @@ export function drawField(
   ctx.restore();
 }
 
-export function drawPlayer(color: string, row: number, col: number, size: number, animated: boolean) {
-  if(!animated){
-  ctx.fillStyle = color;
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.arc(row, col, size, 0, 360);
-  ctx.fill();
-  ctx.stroke();
+export function drawPlayer(
+  color: string,
+  row: number,
+  col: number,
+  size: number,
+  animated: boolean
+) {
+  if (!animated) {
+    ctx.fillStyle = color;
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(row, col, size, 0, 360);
+    ctx.fill();
+    ctx.stroke();
   }
 }
 
-export function drawTreasure(color: string, row: number, col: number, size: number) {
+export function drawTreasure(
+  color: string,
+  row: number,
+  col: number,
+  size: number
+) {
   ctx.strokeStyle = "black";
   ctx.lineWidth = 1;
   ctx.save();
@@ -395,5 +405,3 @@ function drawArrow(rotation: number, row: number, col: number, size: number) {
 //   ctx.fillText(game.currentPlayer + 1 + ". játékos nyerte a játékot!",gameArea.width/2-100,gameArea.height/2-100);
 
 // }
-
-

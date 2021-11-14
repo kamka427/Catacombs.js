@@ -26,15 +26,16 @@ export function drawStatus() {
             }
             ctxs.fillStyle = color;
             ctxs.fillRect(x, 0, 112.5, 50);
-            ctxs.strokeStyle = "black";
+            ctxs.strokeStyle = "yellow";
             ctxs.lineWidth = 3;
             if (e.number === game.currentPlayer) {
                 ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
             }
             ctxs.fillStyle = "white";
             ctxs.fillRect(x + 35, 0 + 5, 72, 40);
+            ctxs.fillStyle = "white";
+            ctxs.fillText((e.number + 1 + ".").toString(), x + 15, statusArea.height / 2, 50);
             ctxs.fillStyle = "black";
-            ctxs.fillText((e.number + 1).toString(), x + 15, statusArea.height / 2, 50);
             ctxs.fillText("Sor: " +
                 (e.treasureCards[0].row !== null
                     ? e.treasureCards[0].row
