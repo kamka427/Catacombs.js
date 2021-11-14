@@ -16,8 +16,9 @@
     <title>Varázslatos Katakombák</title>
   </head>
   <body>
-    <div id="startscreen" class="container max-auto text-center p-2">
+    <div id="startscreen" class="container mx-auto text-center p-2">
       <h1 class="h1">Varázslatos katakombák</h1>
+      <label for="pcount">Játékosok száma:</label>
       <input
         type="number"
         name="playercount"
@@ -26,6 +27,8 @@
         max="4"
         value="2"
       />
+      <label for="tcountpp">Kincsek száma játékosonként</label>
+
       <input
         type="number"
         name="treasurecountperplayer"
@@ -39,9 +42,97 @@
       <button id="load" class="hidden btn-success">Játék betöltése</button>
     </div>
     <div class="container mx-auto text-end">
-    <button id="save" class="hidden btn-success">Játék mentése</button>
+      <button id="save" class="hidden btn-success">Játék mentése</button>
     </div>
-    <p class="hidden">Játékleírás</p>
+    <div id="manualArea" class="hidden container mx-auto p-2">
+      <h1>Játékleírás</h1>
+      <h2>Lore</h2>
+      <p>
+        Nekeresdországban Nevenincs királynak egyik szeme sír, a másik nevet.
+        Nevet, mert tündérszép lányának kérője akadt, és sír, mert a kiváló
+        kérőből nem egy, hanem több is van. Hát most hogyan döntse el, melyiknek
+        adja lánya kezét és fele királyságát? Gondolja kikéri udvari tanácsosa,
+        Furfang véleményét. Az udvari tanácsos nevéhez illő ötlettel áll elő:
+        állítsák próba elé a kérőket, s aki a legrátermettebbnek bizonyul, az
+        nyerje el a szépséges királylány kezét. Van a várnak egy elvarázsolt
+        katakombája, ahol a szobák helye folyamatosan változtatható. Ebben
+        rejtenek el kincseket, s az a kérő nyeri el a királylány kezét, aki a
+        leghamarabb szedi össze a rábízott kincseket.
+      </p>
+      <h2>A játék leírása</h2>
+      <p>
+        A katakomba szobáit egy 7x7-es négyzetrács cellái jelképezik. Minden
+        szoba esetén adott, hogy mely falain van ajtó. Ha két szomszédos szoba
+        érintkező falán egy-egy ajtó van, akkor át lehet menni egyik szobából a
+        másikba. A négyzetrács páros sorait és oszlopait el lehet tolni, a többi
+        szoba végig rögzített a játék során. Az eltolásokkal az ajtókon
+        keresztül utak nyílnak a szobák között, így lehet eljutni a kincsekhez.
+        Mindegyik kérő arra törekszik, hogy a katakomba szobáinak ötletes
+        eltolásával eljusson a kincsekhez. Aki elsőként találja meg mindahányat
+        és kiindulópontjára sikeresen visszaérkezik az a nyertes.
+      </p>
+      <p>
+        A játék elején a szobákat véletlen sorrendben és véletlen irányban
+        kirakjuk a játéktábla szabad mezőire. A szobák közül az egyik
+        mindenképpen fölösleges marad. A játék folyamán majd mindig az éppen
+        kimaradó szobát használjuk a többi szoba elcsúsztatására. A játékban
+        legfeljebb 24 kincset kell megtalálni. Ezeket véletlen sorrendben
+        felrakjuk a táblára úgy, hogy egy mezőn csak egy kincs lehet, és a
+        sarokba nem rakhatunk, majd az ezeket jelző kártyákat összekeverjük, és
+        egyenlő számban szétosztjuk a játékosok között, felfedve mindig a
+        legfelső kártyát. A játékosokat jelző figurákat a tábla külön sarkaiba
+        helyezzük.
+      </p>
+      <p>
+        A játék során minden játékosnak a kincsei közül azt kell megszereznie,
+        amit az aktuálisan legfelső, mindenki által látható kincskártya mutat.
+        Arra a mezőre kell eljutni. Ahhoz, hogy a célt elérje, a játékosnak
+      </p>
+      <p>
+        1. először a katakombát kell átalakítania a kimaradt szoba
+        becsúsztatásával, és <br /> 2. lépnie mindig csak ez után szabad a
+        figurájával.
+      </p>
+      <p>
+        A katakomba átalakítása a következőképpen történik: A játékos a kimaradt
+        szobát (tetszőlegesen elforgatva) valamelyik oldalról becsúsztathatja a
+        játéktábla területére egy szabadon mozgó sor vagy oszlop szélén, aminek
+        következtében az átellenes oldalon kiesik egy másik szoba. A tábla
+        szélén nyilak jelzik azokat a helyeket, ahol a szobát be lehet
+        csúsztatni. A szoba bárhol betolható, kivétel ott, ahol az imént
+        kilökődött. Nem szabad tehát az előző játékos lépését rögtön
+        „visszacsinálni". Ha a szobák eltolása során a szobával együtt egy
+        figura is kitolódnék – akár másé, akár a miénk -, akkor ezt a figurát az
+        ellenkező oldalról imént becsúsztatott szobába kell helyezni.
+      </p>
+      <p>
+        A szobák eltolását követi a játékos lépése a figurával. A katakomba
+        minden olyan pontjáig el lehet jutni, amelyet a kiindulóponttal
+        folyamatos járatvonal köt össze. Az ilyen járatokban tehát olyan
+        messzire mehetünk el, amilyen messzire csak akarunk, vagyis nem számít,
+        hogy hány szobán lépkedünk végig. Nem kötelező lépni. Figuránkat akár
+        ott is hagyhatjuk, ahol éppen van. Egy mezőn több figura is állhat: a
+        figurák nem ütik ki egymást. Ha valaki nem tud rögtön céljáig eljutni,
+        akkor figurájával addig a pontig célszerű elmennie, ahol feltehetőleg jó
+        helyzetben várhatja következő lépést. Ha valaki elérte a felfedett
+        kincskártya által megjelölt célt, akkor felfedi a következőt, és most
+        ehhez a célhoz igyekszik eljutni, stb.
+      </p>
+      <p>
+        A játék akkor ér véget, ha egy játékos az összes kincskártyájához
+        tartozó kincset megszerezte, és visszavezette a figuráját arra mezőre,
+        ahonnan elindult. Az a győztes, aki valamennyi kincsét megtalálta és
+        figuráját elsőként juttatta vissza a kiindulópontra.
+      </p>
+      <p>
+        A játékosokat körök, a kincseket rombuszok jelölik. Az aktuális játékost
+        és kincskártyát sárga jelöléssel mutatja a játék. Ha egy játékos minden
+        kincskártyáját teljesítette, a játék a játékos kiindulópontját jelöli
+        majd a kincsek jelölési módjával. A becsúsztatás előtt láthatjuk a
+        kiesett mező előnézetét azokon a pontokon ahová éppen szabályosan
+        betolhatunk mezőt. A mező a jobb egérgombbal forgatható a betolás előtt.
+      </p>
+    </div>
 
     <canvas class="" id="statusArea" width="550" height="50"></canvas>
     <canvas class="hidden" id="gameArea" width="550" height="450"></canvas>
@@ -50,6 +141,6 @@
       <h1 id="endtext"></h1>
       <button id="restart" class="btn-primary">Új játék indítása</button>
     </div>
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/index.js"></script>
   </body>
 </html>

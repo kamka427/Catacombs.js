@@ -1,19 +1,18 @@
-body{
+body {
   background-color: #242526;
 }
-h1{
+h1 {
   color: white;
   text-align: center;
 }
-
-#startscreen, #end{
+#startscreen,
+#end {
   background-color: brown;
   border-radius: 5px;
 }
-input{
+input {
   border-radius: 5px;
 }
-
 canvas {
   padding-left: 0;
   padding-right: 0;
@@ -24,7 +23,14 @@ canvas {
 .hidden {
   display: none;
 }
-
-button{
+button {
   border-radius: 5px;
+}
+h2,
+p {
+  color: white;
+  text-align: justify;
+}
+label {
+  color: white;
 }

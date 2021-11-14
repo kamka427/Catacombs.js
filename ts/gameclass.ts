@@ -1,3 +1,6 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
 import {
   startmap,
   startLocations,
@@ -10,7 +13,7 @@ import {
 } from "./constants.js";
 
 import { randomBetween } from "./utils.js";
-
+//A játék osztálya és részei.
 class GameMap {
   map: Array<Array<Field>>;
   randomfield: Field;
@@ -56,7 +59,7 @@ class Player {
   startCol: number;
   number: number;
   treasureCards: Array<Treasure>;
-  isAnimated: boolean
+  isAnimated: boolean;
 
   constructor(
     row: number,
@@ -70,7 +73,7 @@ class Player {
     this.startCol = col;
     this.number = pNumber;
     this.treasureCards = treasures;
-    this.isAnimated = false
+    this.isAnimated = false;
   }
 }
 
@@ -89,7 +92,7 @@ export class Game {
   visited: Array<Array<number>>;
   phase: string;
   ended: boolean;
-  lastPushed: string
+  lastPushed: string;
   constructor(playerNum: number, treasurePerPlayer: number) {
     this.playerNum = playerNum;
     this.treasurePerPlayer = treasurePerPlayer;
@@ -115,8 +118,7 @@ export class Game {
     ];
     this.phase = "insert";
     this.ended = false;
-    this.lastPushed = "none"
-    // graphExplore(this);
+    this.lastPushed = "none";
   }
   genPlayers() {
     const remainingLoc: Array<Array<number>> = [...startLocations];

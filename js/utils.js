@@ -1,7 +1,11 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
-import { game } from "./main.js";
+import { game } from "./index.js";
 import { moveAnim, slideAnimation } from "./anims.js";
+//Segédfüggvények
 export const randomBetween = (min, max) => Math.floor(Math.random() * (max - min));
 const getCol = (arr, n) => arr.map((row) => row[n]);
 let pushedrow;
@@ -197,9 +201,12 @@ export function step(e) {
         offset = 0;
         offsetY = 0;
         offsetX = 0;
-        const runningAnimation = requestAnimationFrame(animLoopStep);
-        if (offset >= 0.9)
-            cancelAnimationFrame(runningAnimation);
+        if (!(game.players[game.currentPlayer].row === pos.convRow &&
+            game.players[game.currentPlayer].col === pos.convCol)) {
+            const runningAnimation = requestAnimationFrame(animLoopStep);
+            if (offset >= 0.9)
+                cancelAnimationFrame(runningAnimation);
+        }
         game.players[game.currentPlayer].row = pos.convRow;
         game.players[game.currentPlayer].col = pos.convCol;
         if (game.players[game.currentPlayer].treasureCards.length !== 0) {
@@ -225,7 +232,6 @@ export function step(e) {
                 game.gameMap.map[i][j].avaliable = false;
             }
         }
-        // animLoopStep();
         endTurn();
         return true;
     }

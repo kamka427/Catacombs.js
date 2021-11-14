@@ -1,4 +1,10 @@
-import { game } from "./main.js";
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
+
+import { game } from "./index.js";
+
+//A játék kirajzolása.
 
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
@@ -51,7 +57,7 @@ export function drawStatus(): void {
           (e.treasureCards[0].row !== null
             ? e.treasureCards[0].row
             : "leesett"),
-        x + 40,
+        x + 38,
         14,
         200
       );
@@ -61,19 +67,19 @@ export function drawStatus(): void {
             ? e.treasureCards[0].col
             : "leesett"
           ).toString(),
-        x + 40,
+        x + 38,
         24,
         200
       );
       ctxs.fillText(
         "Típus: " + e.treasureCards[0].type.toString(),
-        x + 40,
+        x + 38,
         34,
         200
       );
       ctxs.fillText(
-        "Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer,
-        x + 40,
+        "Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer + " még",
+        x + 38,
         44,
         200
       );
@@ -396,12 +402,3 @@ function drawArrow(rotation: number, row: number, col: number, size: number) {
   ctx.stroke();
   ctx.restore();
 }
-
-// export function drawEnd(){
-//   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
-//   ctx.fillStyle = "black"
-//   ctx.fillRect(gameArea.width/2-100,gameArea.height/2-100,100,100)
-//   ctx.fillStyle = "red"
-//   ctx.fillText(game.currentPlayer + 1 + ". játékos nyerte a játékot!",gameArea.width/2-100,gameArea.height/2-100);
-
-// }

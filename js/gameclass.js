@@ -1,5 +1,9 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
 import { startmap, startLocations, gemTypes, genTreasureLocations, remainingElements, Field, } from "./constants.js";
 import { randomBetween } from "./utils.js";
+//A játék osztálya és részei.
 class GameMap {
     constructor() {
         this.generateMap = () => startmap.map((e) => e.map((e) => (e === undefined ? this.generateRandom() : e)));
@@ -61,7 +65,6 @@ export class Game {
         this.phase = "insert";
         this.ended = false;
         this.lastPushed = "none";
-        // graphExplore(this);
     }
     genPlayers() {
         const remainingLoc = [...startLocations];

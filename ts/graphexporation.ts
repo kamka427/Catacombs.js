@@ -1,4 +1,10 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
+
 import { Game } from "./gameclass.js";
+
+//Gráfbejárás
 
 export function graphExplore(game: Game) {
   game.availableFields = [];

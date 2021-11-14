@@ -1,8 +1,14 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
+
 import { Field } from "./constants.js";
 import { drawMap } from "./graphics.js";
 import { getMousePosition } from "./mouse.js";
-import { game } from "./main.js";
+import { game } from "./index.js";
 import { moveAnim, slideAnimation } from "./anims.js";
+
+//Segédfüggvények
 
 export const randomBetween = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min));
@@ -242,8 +248,13 @@ export function step(e: MouseEvent) {
     offset = 0;
     offsetY = 0;
     offsetX = 0;
-    const runningAnimation = requestAnimationFrame(animLoopStep);
-    if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
+    if (
+      !(game.players[game.currentPlayer].row === pos.convRow &&
+      game.players[game.currentPlayer].col === pos.convCol)
+    ) {
+      const runningAnimation = requestAnimationFrame(animLoopStep);
+      if (offset >= 0.9) cancelAnimationFrame(runningAnimation);
+    }
     game.players[game.currentPlayer].row = pos.convRow;
     game.players[game.currentPlayer].col = pos.convCol;
     if (game.players[game.currentPlayer].treasureCards.length !== 0) {
@@ -278,8 +289,6 @@ export function step(e: MouseEvent) {
         game.gameMap.map[i][j].avaliable = false;
       }
     }
-
-    // animLoopStep();
     endTurn();
     return true;
   }
@@ -317,7 +326,7 @@ function animLoopStep() {
   console.log(offsetY);
 
   offset += 0.1;
-  game.players[animpos.player].isAnimated = true
+  game.players[animpos.player].isAnimated = true;
   moveAnim(
     animpos.startX,
     animpos.startY,
@@ -330,7 +339,7 @@ function animLoopStep() {
   const runningAnimation = requestAnimationFrame(animLoopStep);
   if (offset >= 4) {
     cancelAnimationFrame(runningAnimation);
-  game.players[animpos.player].isAnimated = false
+    game.players[animpos.player].isAnimated = false;
     drawMap();
   }
 }

@@ -1,4 +1,8 @@
-import { game } from "./main.js";
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
+import { game } from "./index.js";
+//A játék kirajzolása.
 const gameArea = document.querySelector("canvas#gameArea");
 const ctx = gameArea.getContext("2d");
 const statusArea = document.querySelector("canvas#statusArea");
@@ -39,13 +43,13 @@ export function drawStatus() {
             ctxs.fillText("Sor: " +
                 (e.treasureCards[0].row !== null
                     ? e.treasureCards[0].row
-                    : "leesett"), x + 40, 14, 200);
+                    : "leesett"), x + 38, 14, 200);
             ctxs.fillText("Oszlop: " +
                 (e.treasureCards[0].col !== null
                     ? e.treasureCards[0].col
-                    : "leesett").toString(), x + 40, 24, 200);
-            ctxs.fillText("Típus: " + e.treasureCards[0].type.toString(), x + 40, 34, 200);
-            ctxs.fillText("Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer, x + 40, 44, 200);
+                    : "leesett").toString(), x + 38, 24, 200);
+            ctxs.fillText("Típus: " + e.treasureCards[0].type.toString(), x + 38, 34, 200);
+            ctxs.fillText("Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer + " még", x + 38, 44, 200);
             x += 112.5;
         }
     });
@@ -265,11 +269,4 @@ function drawArrow(rotation, row, col, size) {
     ctx.stroke();
     ctx.restore();
 }
-// export function drawEnd(){
-//   ctx.clearRect(0, 0, gameArea.width, gameArea.height);
-//   ctx.fillStyle = "black"
-//   ctx.fillRect(gameArea.width/2-100,gameArea.height/2-100,100,100)
-//   ctx.fillStyle = "red"
-//   ctx.fillText(game.currentPlayer + 1 + ". játékos nyerte a játékot!",gameArea.width/2-100,gameArea.height/2-100);
-// }
 //# sourceMappingURL=graphics.js.map

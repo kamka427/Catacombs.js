@@ -1,3 +1,6 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
 import {
   determineColor,
   drawArrows,
@@ -6,11 +9,14 @@ import {
   drawPlayer,
   drawTreasure,
 } from "./graphics.js";
-import { game } from "./main.js";
+import { game } from "./index.js";
+
+//Az animációk osztálya.
 const gameArea: HTMLCanvasElement = document.querySelector("canvas#gameArea");
 
 const ctx: CanvasRenderingContext2D = gameArea.getContext("2d");
 
+//A csúsztatás animációja
 export function slideAnimation(
   direction: string,
   index: number,
@@ -317,7 +323,7 @@ export function slideAnimation(
     }
   }
 }
-
+//A mozgatás animációja
 export function moveAnim(
   startX: number,
   startY: number,

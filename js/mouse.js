@@ -1,6 +1,10 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
 import { push } from "./utils.js";
-import { game, gameArea } from "./main.js";
+import { game, gameArea } from "./index.js";
 import { drawMap } from "./graphics.js";
+//Egér pozíció követés.
 export function getMousePosition(event) {
     const rect = gameArea.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -9,54 +13,78 @@ export function getMousePosition(event) {
     const convRow = Math.floor((y * 9) / gameArea.height) - 1;
     return { convRow: convRow, convCol: convCol, x: x, y: y };
 }
-export function dField(e) {
+export function pushPreview(e) {
     if (game.phase === "insert") {
         const loc = getMousePosition(e);
-        if (game.lastPushed !== "down1" && loc.convCol === 1 && loc.convRow === -1) {
+        if (game.lastPushed !== "down1" &&
+            loc.convCol === 1 &&
+            loc.convRow === -1) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "down3" && loc.convCol === 3 && loc.convRow === -1) {
+        else if (game.lastPushed !== "down3" &&
+            loc.convCol === 3 &&
+            loc.convRow === -1) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "down5" && loc.convCol === 5 && loc.convRow === -1) {
+        else if (game.lastPushed !== "down5" &&
+            loc.convCol === 5 &&
+            loc.convRow === -1) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "right1" && loc.convCol === -1 && loc.convRow === 1) {
+        else if (game.lastPushed !== "right1" &&
+            loc.convCol === -1 &&
+            loc.convRow === 1) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "right3" && loc.convCol === -1 && loc.convRow === 3) {
+        else if (game.lastPushed !== "right3" &&
+            loc.convCol === -1 &&
+            loc.convRow === 3) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "right5" && loc.convCol === -1 && loc.convRow === 5) {
+        else if (game.lastPushed !== "right5" &&
+            loc.convCol === -1 &&
+            loc.convRow === 5) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "left1" && loc.convCol === 7 && loc.convRow === 1) {
+        else if (game.lastPushed !== "left1" &&
+            loc.convCol === 7 &&
+            loc.convRow === 1) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "left3" && loc.convCol === 7 && loc.convRow === 3) {
+        else if (game.lastPushed !== "left3" &&
+            loc.convCol === 7 &&
+            loc.convRow === 3) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "left5" && loc.convCol === 7 && loc.convRow === 5) {
+        else if (game.lastPushed !== "left5" &&
+            loc.convCol === 7 &&
+            loc.convRow === 5) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "up1" && loc.convCol === 1 && loc.convRow === 7) {
+        else if (game.lastPushed !== "up1" &&
+            loc.convCol === 1 &&
+            loc.convRow === 7) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "up3" && loc.convCol === 3 && loc.convRow === 7) {
+        else if (game.lastPushed !== "up3" &&
+            loc.convCol === 3 &&
+            loc.convRow === 7) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }
-        else if (game.lastPushed !== "up5" && loc.convCol === 5 && loc.convRow === 7) {
+        else if (game.lastPushed !== "up5" &&
+            loc.convCol === 5 &&
+            loc.convRow === 7) {
             game.draggableField.x = (loc.convCol + 1) * 50;
             game.draggableField.y = (loc.convRow + 1) * 50;
         }

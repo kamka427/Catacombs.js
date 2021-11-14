@@ -1,8 +1,12 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
 import { Game } from "./gameclass.js";
 import { drawMap } from "./graphics.js";
 import { rotate, step } from "./utils.js";
-import { clickArrow, dField } from "./mouse.js";
+import { clickArrow, pushPreview } from "./mouse.js";
 import { graphExplore } from "./graphexporation.js";
+//Főosztály
 export let game;
 export const gameArea = document.querySelector("canvas#gameArea");
 const start = document.querySelector("#startscreen");
@@ -74,6 +78,7 @@ function gameLoop(e) {
     if (game.ended === true) {
         end.classList.remove("hidden");
         gameArea.classList.add("hidden");
+        saveBtn.classList.add("hidden");
         endText.innerHTML =
             "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!";
     }
@@ -93,6 +98,6 @@ loadBtn.addEventListener("click", loadGame);
 restartBtn.addEventListener("click", restart);
 gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
-gameArea.addEventListener("mousemove", dField);
+gameArea.addEventListener("mousemove", pushPreview);
 document.addEventListener("input", inputUpdate);
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=index.js.map

@@ -1,3 +1,7 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
+//Konstans értékek a pályageneráláshoz
 export class Field {
     constructor(type, rotation) {
         this.type = type;
@@ -34,7 +38,7 @@ export const startmap = [
         undefined,
         new Field("triple", 180),
         undefined,
-        new Field("triple", 270),
+        new Field("triple", 180),
     ],
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
     [
@@ -69,12 +73,10 @@ export const genTreasureLocations = () => {
     const treasureLocations = [];
     for (let i = 0; i < startmap.length; i++) {
         for (let j = 0; j < startmap.length; j++) {
-            // if (i === 0 && j === 0) continue;
-            // else if (i === 6 && j === 6) continue;
-            // else if (i === 0 && j === 6) continue;
-            // else if (i === 6 && j === 0) continue;
-            // else treasureLocations.push([i, j]);
-            if (!(i === 0 && j === 0) && !(i === 6 && j === 6) && !(i === 0 && j === 6) && !(i === 6 && j === 0))
+            if (!(i === 0 && j === 0) &&
+                !(i === 6 && j === 6) &&
+                !(i === 0 && j === 6) &&
+                !(i === 6 && j === 0))
                 treasureLocations.push([i, j]);
         }
     }

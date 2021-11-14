@@ -1,9 +1,14 @@
+//Név: Neszlényi Kálmán Balázs
+//Neptun kód: DPU51T
+//Dátum: 2021. 11. 14.
+
 import { Game } from "./gameclass.js";
 import { drawMap } from "./graphics.js";
 import { rotate, step } from "./utils.js";
-import { clickArrow, dField } from "./mouse.js";
+import { clickArrow, pushPreview } from "./mouse.js";
 import { graphExplore } from "./graphexporation.js";
 
+//Főosztály
 export let game: Game;
 export const gameArea: HTMLCanvasElement =
   document.querySelector("canvas#gameArea");
@@ -13,7 +18,7 @@ const startBtn = document.querySelector("#start");
 const manualBtn = document.querySelector("#manual");
 const saveBtn = document.querySelector("#save");
 const loadBtn = document.querySelector("#load");
-const manual = document.querySelector("p");
+const manual = document.querySelector("#manualArea");
 const end = document.querySelector("#end");
 const restartBtn = document.querySelector("#restart");
 const endText = document.querySelector("#endtext");
@@ -43,16 +48,19 @@ if (state !== null) loadBtn.classList.toggle("hidden");
 function startGame() {
   start.classList.add("hidden");
   game = new Game(pCount, tCount);
-  saveBtn.classList.remove("hidden")
+  saveBtn.classList.remove("hidden");
   gameArea.classList.remove("hidden");
+  manual.classList.add("hidden");
+
   drawMap();
 }
 function loadGame() {
   start.classList.add("hidden");
+  manual.classList.add("hidden");
 
   const state = localStorage.getItem("state");
   game = JSON.parse(state);
-  saveBtn.classList.remove("hidden")
+  saveBtn.classList.remove("hidden");
 
   gameArea.classList.remove("hidden");
   drawMap();
@@ -63,8 +71,9 @@ function saveGame() {
 }
 
 function showManual() {
+  
   manual.classList.toggle("hidden");
-  gameArea.classList.toggle("hidden");
+
 }
 
 function gameLoop(e: MouseEvent) {
@@ -91,6 +100,7 @@ function gameLoop(e: MouseEvent) {
   if (game.ended === true) {
     end.classList.remove("hidden");
     gameArea.classList.add("hidden");
+    saveBtn.classList.add("hidden");
     endText.innerHTML =
       "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!";
   }
@@ -100,8 +110,7 @@ function restart() {
   game = null;
   end.classList.add("hidden");
   start.classList.remove("hidden");
-  saveBtn.classList.add("hidden")
-
+  saveBtn.classList.add("hidden");
 }
 
 gameArea.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -112,5 +121,5 @@ loadBtn.addEventListener("click", loadGame);
 restartBtn.addEventListener("click", restart);
 gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
-gameArea.addEventListener("mousemove", dField);
+gameArea.addEventListener("mousemove", pushPreview);
 document.addEventListener("input", inputUpdate);
