@@ -12,7 +12,7 @@ export function drawStatus() {
     ctxs.clearRect(0, 0, statusArea.width, statusArea.height);
     let x = 0;
     game.players.forEach((e) => {
-        if (e.treasureCards.length > 0) {
+        
             let color;
             switch (e.number) {
                 case 0:
@@ -35,11 +35,13 @@ export function drawStatus() {
             if (e.number === game.currentPlayer) {
                 ctxs.strokeRect(x + 1, 0 + 2, 110, 47);
             }
+            
             ctxs.fillStyle = "white";
             ctxs.fillRect(x + 35, 0 + 5, 72, 40);
             ctxs.fillStyle = "white";
             ctxs.fillText((e.number + 1 + ".").toString(), x + 15, statusArea.height / 2, 50);
             ctxs.fillStyle = "black";
+            if (e.treasureCards.length > 0) {
             ctxs.fillText("Sor: " +
                 (e.treasureCards[0].row !== null
                     ? e.treasureCards[0].row
@@ -51,6 +53,15 @@ export function drawStatus() {
             ctxs.fillText("Típus: " + e.treasureCards[0].type.toString(), x + 38, 34, 200);
             ctxs.fillText("Állás: " + e.treasureCards.length + "/" + game.treasurePerPlayer + " még", x + 38, 44, 200);
             x += 112.5;
+        }
+        else{
+            ctxs.fillText("Sor: " +
+                (e.startRow),x + 38, 14, 200);
+            ctxs.fillText("Oszlop: " +
+            (e.startCol),x + 38, 24, 200);
+            ctxs.fillText("Állás: Érj célba!",x + 38, 34, 200);
+            x += 112.5;
+
         }
     });
 }
@@ -191,7 +202,7 @@ function showActualTreasure() {
         }
     }
     else {
-        drawTreasure("yellow", (game.players[game.currentPlayer].startRow + 1) * 50 + 10 + 12, (game.players[game.currentPlayer].startCol + 1) * 50 + 10 + 12, 5);
+        drawTreasure("yellow", (game.players[game.currentPlayer].startCol + 1) * 50 + 10 + 12, (game.players[game.currentPlayer].startRow + 1) * 50 + 10 + 12, 5);
     }
 }
 export function drawField(type, rotation, active, row, col, size) {
@@ -269,4 +280,3 @@ function drawArrow(rotation, row, col, size) {
     ctx.stroke();
     ctx.restore();
 }
-//# sourceMappingURL=graphics.js.map

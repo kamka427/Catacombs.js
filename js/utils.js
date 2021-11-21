@@ -262,8 +262,6 @@ function animLoopStep() {
             ? animpos.endY - animpos.startY
             : animpos.startY - animpos.endY) / 10) /
             (2 + offset);
-    console.log(offsetX);
-    console.log(offsetY);
     offset += 0.1;
     game.players[animpos.player].isAnimated = true;
     moveAnim(animpos.startX, animpos.startY, animpos.endX, animpos.endY, animpos.player, offsetX, offsetY);
@@ -274,4 +272,3 @@ function animLoopStep() {
         drawMap();
     }
 }
-//# sourceMappingURL=utils.js.map

@@ -82,4 +82,3 @@ export const genTreasureLocations = () => {
     }
     return treasureLocations;
 };
-//# sourceMappingURL=constants.js.map

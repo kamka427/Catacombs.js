@@ -102,4 +102,3 @@ class DraggableField {
         this.isDragged = false;
     }
 }
-//# sourceMappingURL=gameclass.js.map

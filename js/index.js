@@ -9,6 +9,7 @@ import { graphExplore } from "./graphexporation.js";
 //Főosztály
 export let game;
 export const gameArea = document.querySelector("canvas#gameArea");
+const statusArea = document.querySelector("canvas#statusArea")
 const start = document.querySelector("#startscreen");
 const startBtn = document.querySelector("#start");
 const manualBtn = document.querySelector("#manual");
@@ -37,7 +38,14 @@ function startGame() {
     game = new Game(pCount, tCount);
     saveBtn.classList.remove("hidden");
     gameArea.classList.remove("hidden");
+    statusArea.classList.remove("hidden");
     manual.classList.add("hidden");
+    game.availableFields = [];
+    for (let i = 0; i < game.gameMap.map.length; i++) {
+        for (let j = 0; j < game.gameMap.map.length; j++) {
+            game.gameMap.map[i][j].avaliable = false;
+        }
+    }
     drawMap();
 }
 function loadGame() {
@@ -45,8 +53,13 @@ function loadGame() {
     manual.classList.add("hidden");
     const state = localStorage.getItem("state");
     game = JSON.parse(state);
+    game.treasuresAll = []
+    for (let i = 0; i < game.players.length; i++) {
+        game.players[i].treasureCards.forEach((e) => game.treasuresAll.push(e));
+    }
     saveBtn.classList.remove("hidden");
     gameArea.classList.remove("hidden");
+    statusArea.classList.remove("hidden");
     drawMap();
 }
 function saveGame() {
@@ -56,7 +69,6 @@ function showManual() {
     manual.classList.toggle("hidden");
 }
 function gameLoop(e) {
-    console.log(game);
     if (game.ended === false) {
         if (game.phase === "insert") {
             if (clickArrow(e) !== false) {
@@ -78,6 +90,7 @@ function gameLoop(e) {
     if (game.ended === true) {
         end.classList.remove("hidden");
         gameArea.classList.add("hidden");
+        statusArea.classList.add("hidden");
         saveBtn.classList.add("hidden");
         endText.innerHTML =
             "Az " + (game.currentPlayer + 1) + ". játékos nyerte a játékot!";
@@ -85,6 +98,7 @@ function gameLoop(e) {
 }
 function restart() {
     gameArea.classList.add("hidden");
+    statusArea.classList.add("hidden");
     game = null;
     end.classList.add("hidden");
     start.classList.remove("hidden");
@@ -100,4 +114,3 @@ gameArea.addEventListener("mouseup", rotate);
 gameArea.addEventListener("click", gameLoop);
 gameArea.addEventListener("mousemove", pushPreview);
 document.addEventListener("input", inputUpdate);
-//# sourceMappingURL=index.js.map

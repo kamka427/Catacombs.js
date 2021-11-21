@@ -216,4 +216,3 @@ function right(col, game, row) {
             (game.gameMap.map[row][col + 1].type === "triple" &&
                 game.gameMap.map[row][col + 1].rotation === 180)));
 }
-//# sourceMappingURL=graphexporation.js.map

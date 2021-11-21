@@ -228,4 +228,3 @@ export function moveAnim(startX, startY, endX, endY, player, offsetX, offsetY) {
             (startX > endX ? 0 : 50), 10, false);
     }
 }
-//# sourceMappingURL=anims.js.map

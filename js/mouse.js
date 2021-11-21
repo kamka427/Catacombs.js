@@ -183,4 +183,3 @@ export function clickArrow(e) {
     }
     return false;
 }
-//# sourceMappingURL=mouse.js.map
