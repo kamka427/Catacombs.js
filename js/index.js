@@ -103,9 +103,9 @@ function restart() {
     end.classList.add("hidden");
     start.classList.remove("hidden");
     saveBtn.classList.add("hidden");
-    const state = localStorage.getItem("state");
-if (state !== null)
-    loadBtn.classList.toggle("hidden");
+    state = localStorage.getItem("state");
+    if (state !== null)
+    loadBtn.classList.remove("hidden");
 }
 gameArea.addEventListener("contextmenu", (e) => e.preventDefault());
 startBtn.addEventListener("click", startGame);
