@@ -4,7 +4,8 @@
 Implementation of a local multiplayer game in Typesript.
 > The task is to collect all of your highlighted treasure and rush back to your starting edge.
 > You can hinder your teammates by rotating an pushing in new rooms at the arrows on the sides.
-The game support:
+
+The game supports:
 - Multiple player locally
 - Canvas drawn graphics
 - Highlighting of the current player and treasure to collect
