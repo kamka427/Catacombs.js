@@ -1,7 +1,7 @@
 # Magical Catacombs
 
 ## Summary
-Implementation of a local multiplayer game in Typesript. \
+Implementation of a local multiplayer game in Typesript.
 > The task is to collect all of your highlighted treasure and rush back to your starting edge.
 > You can hinder your teammates by rotating an pushing in new rooms at the arrows on the sides.
 The game support:
@@ -12,7 +12,7 @@ The game support:
 - Fluid animations when pushing in new rooms and moving with your character
 
 ## Live demo
-```https://kamka427.github.io/Catacombs.js```
+https://kamka427.github.io/Catacombs.js
 
 ## How to run
 ```Serve the project on a web server.```
