@@ -11,6 +11,9 @@ The game support:
 - Graph traversal to show all your possible paths in a round
 - Fluid animations when pushing in new rooms and moving with your character
 
+## Live demo
+```https://kamka427.github.io/Catacombs.js```
+
 ## How to run
 ```Serve the project on a web server.```
 > The CORS policy prevents it from running by opening index.html, because of the use of modules.
