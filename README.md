@@ -1,7 +1,7 @@
 # Magical Catacombs
 
 ## Summary
-Implementation of a local multiplayer game in Typesript.
+Implementation of a local multiplayer game in Typescript.
 > The task is to collect all of your highlighted treasure and rush back to your starting edge.
 > You can hinder your teammates by rotating an pushing in new rooms at the arrows on the sides.
 
